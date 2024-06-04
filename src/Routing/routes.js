@@ -1,4 +1,4 @@
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from '../Layout/Layout'
 import FileTypeList from "../Pages/FileType/FileTypeList";
 import VariableDictionaryList from "../Pages/VariableDictionary/VariableDictionaryList";
@@ -10,8 +10,7 @@ function RouteConfiq() {
 
     <Router>
       <Routes>
-      {/* <Route path="/" element={<Login/>} /> */}
-
+      <Route path="/" element={<Login/>} />
         <Route path="/file-type" element={<Layout Component={FileTypeList} />} />
         <Route path="/variable-dictionary" element={<Layout Component={VariableDictionaryList} />} />
         <Route path="/client-master" element={<Layout Component={ClientMasterList} />} />
