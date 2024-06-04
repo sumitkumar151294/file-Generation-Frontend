@@ -111,7 +111,7 @@ const FileTypeForm = ({
                         </div>
                         <div className="col-sm-12 form-group mb-0 mt-2">
                           <Button
-                            text="{data.name ? update : submit}"
+                            text="Sumbit"
                             icon={"fa fa-arrow-right"}
                             className="btn btn-primary float-right pad-aa mt-2"
                           />

@@ -4,35 +4,11 @@ import { ToastContainer } from "react-toastify";
 import Button from "../../Components/Button";
 import InputField from "../../Components/InputField/InputField";
 import Loader from "../../Components/Loader/Loader";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   onGetSupplierList,
-//   onUpdateSupplierList,
-//   onUpdateSupplierListReset,
-//   onVendorReset,
-//   onVendorSubmit,
-// } from "../../Store/Slices/supplierMasterSlice";
-// import { GetTranslationData } from "../../Components/GetTranslationData/GetTranslationData ";
-// import { ToastContainer, toast } from "react-toastify";
-// import InputField from "../../Components/InputField/InputField";
 import Dropdown from "../../Components/Dropdown/Dropdown";
-// import Button from "../../Components/Button/Button";
-// import {
-//   onGetSupplierResource,
-//   onSupplierResourceSubmit,
-//   onUpdateSupplierResource,
-// } from "../../Store/Slices/supplierResourceSlice";
 
-const ClientMasterForm = ({
-  data,
-  setData,
-  isDelete,
-}) => {
 
-  const statusoptions = [
-    { value: "Active" },
-    { value: "Non-Active"},
-  ];
+const ClientMasterForm = ({ data, setData, isDelete }) => {
+  const statusoptions = [{ value: "Active" }, { value: "Non-Active" }];
   return (
     <>
       <div className="container-fluid form">
@@ -55,7 +31,7 @@ const ClientMasterForm = ({
                       <div className="row">
                         <div className="col-sm-4 form-group mb-2">
                           <label htmlFor="amount">
-                          Client Name
+                            Client Name
                             <span className="text-danger">*</span>
                           </label>
                           <InputField
@@ -68,7 +44,6 @@ const ClientMasterForm = ({
                             //     : "form-control"
                             // }`}
                             className="form-control"
-
                             id="amominThresholdAmountunt"
                             placeholder="₹500000"
                             // onChange={(e) =>
@@ -79,7 +54,7 @@ const ClientMasterForm = ({
 
                         <div className="col-sm-4 form-group mb-2">
                           <label htmlFor="availabelAmount">
-                          Description
+                            Description
                             <span className="text-danger">*</span>
                           </label>
                           <InputField
@@ -92,7 +67,6 @@ const ClientMasterForm = ({
                             //     : "form-control"
                             // }`}
                             className="form-control"
-
                             id="creditAmount"
                             placeholder="₹500000"
                             // onChange={(e) => handleChange(e, "creditAmount")}
@@ -100,7 +74,7 @@ const ClientMasterForm = ({
                         </div>
                         <div className="col-sm-4 form-group mb-2">
                           <label htmlFor="availabelAmount">
-                      URL
+                            URL
                             <span className="text-danger">*</span>
                           </label>
                           <InputField
@@ -113,7 +87,6 @@ const ClientMasterForm = ({
                             //     : "form-control"
                             // }`}
                             className="form-control"
-
                             id="creditAmount"
                             placeholder="₹500000"
                             // onChange={(e) => handleChange(e, "creditAmount")}
@@ -121,7 +94,7 @@ const ClientMasterForm = ({
                         </div>
                         <div className="col-sm-4 form-group mb-2">
                           <label htmlFor="status">
-                            status <span className="text-danger">*</span>
+                            Status <span className="text-danger">*</span>
                           </label>
                           <Dropdown
                             // onChange={(e) => handleChange(e, "status")}
@@ -140,14 +113,12 @@ const ClientMasterForm = ({
                             //     : "form-select"
                             // }`}
                             className="form-select"
-
                             options={statusoptions}
                           />
-
                         </div>
                         <div className="col-sm-12 form-group mb-0 mt-2">
                           <Button
-                            text="{data.name ? update : submit}"
+                            text="Submit"
                             icon={"fa fa-arrow-right"}
                             className="btn btn-primary float-right pad-aa mt-2"
                           />

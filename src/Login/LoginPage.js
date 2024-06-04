@@ -1,162 +1,50 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Layout/Footer/Footer";
 import Button from "../Components/Button";
 import InputField from "../Components/InputField/InputField";
-// import { onLoginSubmit } from "../../Store/Slices/loginSlice";
-// import { useDispatch } from "react-redux";
-// import { useSelector } from "react-redux/es/hooks/useSelector";
-// import InputField from "../../Components/InputField/InputField";
-// import Button from "../../Components/Button/Button";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import Loader from "../../Components/Loader/Loader";
-// import Footer from "../../Layout/Footer/Footer";
-// import image from "../../Assets/img/logo.png";
-// import { GetTranslationData } from "../../Components/GetTranslationData/GetTranslationData ";
-// import { useNavigate } from "react-router";
-// import { onClientLoginSubmit } from "../../Store/Slices/loginSlice";
-
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { onLoginSubmit } from "../Store/Slices/LoginSlice";
+import { useNavigate } from "react-router-dom";
+import Loader from "../Components/Loader/Loader";
 const LoginPage = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const [showLoder, setShowLoader] = useState(false);
-  // const [isSubmit, setIsSubmit] = useState(false);
-  // const loginDetails = useSelector((state) => state.loginReducer);
-  // const [loginData, setLoginData] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const [errors, setErrors] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const invalidEmail = GetTranslationData("UIAdmin", "invalid_Email");
-  // const sign = GetTranslationData("UIAdmin", "sign");
-  // const email_label = GetTranslationData("UIAdmin", "email_label");
-  // const email_placeholder = GetTranslationData("UIAdmin", "email_placeholder");
-  // const password_label = GetTranslationData("UIAdmin", "password_label");
-  // const password_placeholder = GetTranslationData(
-  //   "UIAdmin",
-  //   "password_placeholder"
-  // );
-  // const req_field = GetTranslationData("UIAdmin", "req_field");
-  // const remember = GetTranslationData("UIAdmin", "remember");
-  // const sign_me_label = GetTranslationData("UIAdmin", "sign_Me_Label");
+  const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.loginReducer);
+  const navigate = useNavigate();
+  const [Sumbit,setSumbit]=useState(false)
+  const loginValidations = Yup.object().shape({
+    email: Yup.string()
+      .matches(
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        "Invalid email address"
+      )
+      .required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
 
-  // const handleChange = (e, fieldName) => {
-  //   // Destructure the value from the event object
-  //   const { value } = e.target;
-  //   // Create a new object with updated field value
-  //   const newLoginData = {
-  //     ...loginData,
-  //     [fieldName]: value,
-  //   };
-  //   // Update the state with the new login data
-  //   setLoginData(newLoginData);
+  const handleSubmit = (values, { resetForm }) => {
+    debugger;
+    if (values) {
+      dispatch(onLoginSubmit(values));
+      setSumbit(true)
+    }
+  };
 
-  //   if (fieldName === "email") {
-  //     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  //     const isValidEmail = emailRegex.test(value);
-
-  //     setErrors({
-  //       ...errors,
-  //       [fieldName]: isValidEmail ? "" : invalidEmail,
-  //     });
-  //   } else {
-  //     setErrors({
-  //       ...errors,
-  //       [fieldName]: "",
-  //     });
-  //   }
-  // };
-
-  // const handleCheckboxChange = async (e) => {
-  //   const { checked } = e.target;
-  //   if (checked) {
-  //     // To encrypt the passoword
-
-
-  //     localStorage.setItem("userEmail", loginData.email);
-  //     localStorage.setItem("userPassword", loginData.password);
-  //   } else {
-  //     localStorage.removeItem("userEmail");
-  //     localStorage.removeItem("userPassword");
-  //   }
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   // Prevent the default form submission behavior
-  //   e.preventDefault();
-  //   setIsSubmit(false);
-  //   // Initialize a variable to track form validation status
-  //   let isValid = true;
-
-  //   // Create a copy of the errors state
-  //   const newErrors = { ...errors };
-
-  //   // Iterate through each key in loginData
-  //   for (const key in loginData) {
-  //     if (loginData[key] === "") {
-  //       newErrors[key] = " ";
-  //       isValid = false;
-  //     } else if (key === "email" && newErrors[key] !== "") {
-  //       isValid = false;
-  //     } else {
-  //       newErrors[key] = "";
-  //     }
-  //   }
-
-  //   // Update the errors state with the new error messages
-  //   setErrors(newErrors);
-
-  //   if (isValid) {
-  //     try {
-  //       setShowLoader(true);
-
-  //       // Wait for the dispatch to complete
-  //       if (loginDetails?.partner_Key === "UIClient") {
-  //         dispatch(onClientLoginSubmit(loginData));
-  //       } else {
-  //         dispatch(onLoginSubmit(loginData));
-  //       }
-  //       setIsSubmit(true);
-  //       // Define a function to show a toast notification based on loginDetails
-  //     } catch (error) {
-  //       // Handle any errors during dispatch
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (
-  //     loginDetails.partner_Key === "UIClient" &&
-  //     loginDetails?.status_code === "201" &&
-  //     isSubmit
-  //   ) {
-  //     setShowLoader(false);
-  //     navigate("/lc-user-admin/dashboard");
-  //   } else if (
-  //     loginDetails.partner_Key === "UIAdmin" &&
-  //     loginDetails?.status_code === "201" &&
-  //     isSubmit
-  //   ) {
-  //     if (loginDetails?.data?.[0]?.adminRoleId) {
-  //       setShowLoader(false);
-  //       navigate("/lc-admin/dashboard");
-  //     } else {
-  //       setShowLoader(false);
-  //       toast.error("Invalid Credentials");
-  //     }
-  //   } else if (isSubmit && loginDetails?.status_code) {
-  //     setShowLoader(false);
-  //     toast.error(loginDetails?.message);
-  //   }
-  // }, [loginDetails]);
-
+  useEffect(() => {
+    if (Sumbit && loginData.status_code === "201") {
+      toast.success(loginData?.message)
+      navigate("/dashboard")
+    }else if(Sumbit && loginData.status_code){
+      toast.error(loginData?.message)
+    }
+  }, [loginData])
   return (
     <>
-      <div className="vh-100">
+      {loginData.isLoading ? <Loader /> : <div className="vh-100">
         <div className="authincation h-100">
           <div className="container h-100">
             <div className="row justify-content-center h-100 align-items-center">
@@ -168,76 +56,84 @@ const LoginPage = () => {
                         <div className="text-center mb-3">
                           {/* <img className="w-100" src={image} alt="" /> */}
                         </div>
-                        <h4 className="text-center mb-4">Sign in to your account</h4>
-                        <form
-                        // onSubmit={(e) => handleSubmit(e)}
+                        <h4 className="text-center mb-4">
+                          Sign in to your account
+                        </h4>
+                        <Formik
+                          initialValues={{
+                            email: "",
+                            password: "",
+                          }}
+                          validationSchema={loginValidations}
+                          onSubmit={handleSubmit}
                         >
-                          <div className="mb-3">
-                            <label className="mb-1">
-                              <strong>Email</strong>
-                              {/* <span className="text-danger">*</span> */}
-                            </label>
-                            <InputField
-                              type="email"
-                              // className={` ${
-                              //   errors.email ? "border-danger" : "form-control"
-                              // }`}
-                              className="form-control"
-
-                              placeholder="{email_placeholder}"
-                              // onChange={(e) => handleChange(e, "email")}
-                              // error={errors.email}
-                            />
-                            {/* <p className="text-danger">{errors.email}</p> */}
-                          </div>
-                          <div className="mb-3">
-                            <label className="mb-1">
-                              <strong>Password</strong>
-                            </label>
-                            <InputField
-                              type="password"
-                              // className={` ${
-                              //   errors.password
-                              //     ? "border-danger"
-                              //     : "form-control"
-                              // }`}
-                              className="form-control"
-                              // onChange={(e) => handleChange(e, "password")}
-                              placeholder="{password_placeholder}"
-                            />
-                          </div>
-                          {/* {showLoder && <Loader />} */}
-                          <div className="row d-flex justify-content-between mt-4 mb-2 d-nonemo">
-                            <div className="mb-3">
-                              {/* <span
-                                className="form-check-label"
-                                htmlFor="basic_checkbox_1"
-                              >
-                                req_field
-                              </span> */}
-                              <div className="form-check custom-checkbox ms-1">
-                                <InputField
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  id="basic_checkbox_1"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="basic_checkbox_1"
-                                >
-                                  Remember my preference
+                          {({ errors, touched }) => (
+                            <Form>
+                              <div className="mb-3">
+                                <label className="mb-1">
+                                  <strong>Email</strong>
                                 </label>
+                                <Field
+                                  type="email"
+                                  name="email"
+                                  placeholder="hello@example.com"
+                                  className={`form-control ${errors.email && touched.email
+                                      ? "is-invalid"
+                                      : ""
+                                    }`}
+                                />
+                                <ErrorMessage
+                                  name="email"
+                                  component="div"
+                                  className="error-message"
+                                />
                               </div>
-                            </div>
-                          </div>
-                          <div className="text-center">
-                            <Button
-                              text="Sign me in"
-                              className="btn btn-primary btn-block btn-sm float-right p-btn mt-2"
-                            />
-                            {/* <ToastContainer /> */}
-                          </div>
-                        </form>
+                              <div className="mb-3">
+                                <label className="mb-1">
+                                  <strong>Password</strong>
+                                </label>
+                                <Field
+                                  type="password"
+                                  name="password"
+                                  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                  className={`form-control ${errors.password && touched.password
+                                      ? "is-invalid"
+                                      : ""
+                                    }`}
+                                />
+                                <ErrorMessage
+                                  name="password"
+                                  component="div"
+                                  className="error-message"
+                                />
+                              </div>
+                              <div className="row d-flex justify-content-between mt-4 mb-2 d-nonemo">
+                                <div className="mb-3">
+                                  <div className="form-check custom-checkbox ms-1">
+                                    <InputField
+                                      type="checkbox"
+                                      className="form-check-input"
+                                      id="basic_checkbox_1"
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor="basic_checkbox_1"
+                                    >
+                                      Remember my preference
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-center">
+                                <Button
+                                  type="sumbit"
+                                  text="Sign me in"
+                                  className="btn btn-primary btn-block btn-sm float-right p-btn mt-2"
+                                />
+                              </div>
+                            </Form>
+                          )}
+                        </Formik>
                       </div>
                     </div>
                   </div>
@@ -246,7 +142,9 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
+      <ToastContainer />
+
       <Footer />
     </>
   );

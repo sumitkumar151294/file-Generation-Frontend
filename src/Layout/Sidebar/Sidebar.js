@@ -6,8 +6,18 @@ import add from "../../Assets/img/Add.png";
 import content from "../../Assets/img/content.png";
 import segment from "../../Assets/img/segment.png";
 import dashboard from "../../Assets/img/dashboard.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { onLogout } from "../../Store/Slices/LoginSlice";
 const Sidebar = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+
+  const handleLogout=(e)=>{
+    e.preventDefault();
+    dispatch(onLogout())
+    navigate("/");
+  }
   return (
     <div className="deznav">
       <div className="deznav-scroll mm-active ps ps--active-y">
@@ -85,9 +95,9 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link className="ai-icon " aria-expanded="false">
+            <Link className="ai-icon" aria-expanded="false" onClick={handleLogout}>
               <img className="w-20px" src={logout} alt="file not exist" />
-              <span className="nav-text ps-1"> Logout</span>
+              <span className="nav-text ps-1" >Logout</span>
             </Link>
           </li>
         </ul>

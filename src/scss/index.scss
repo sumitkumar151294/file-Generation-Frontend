@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
 @import './Components/Button';
 @import './Components/PageError500';
 @import './Components/Footer';
@@ -177,4 +177,9 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+.error-message{
+  margin-top: 0.3rem;
+  margin-left: 0.4rem;
+  color: red;
 }

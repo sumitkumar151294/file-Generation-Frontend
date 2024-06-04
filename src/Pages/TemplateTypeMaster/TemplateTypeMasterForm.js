@@ -6,7 +6,7 @@ import InputField from "../../Components/InputField/InputField";
 import Loader from "../../Components/Loader/Loader";
 
 import Dropdown from "../../Components/Dropdown/Dropdown";
- 
+
 const TemplateTypeMasterForm = ({
   data,
   setData,
@@ -110,7 +110,7 @@ const TemplateTypeMasterForm = ({
                         </div>
                         <div className="col-sm-12 form-group mb-0 mt-2">
                           <Button
-                            text="{data.name ? update : submit}"
+                            text="Submit"
                             icon={"fa fa-arrow-right"}
                             className="btn btn-primary float-right pad-aa mt-2"
                           />
