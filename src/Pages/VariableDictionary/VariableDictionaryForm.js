@@ -1,15 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button";
 import InputField from "../../Components/InputField/InputField";
 import Loader from "../../Components/Loader/Loader";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { onPostVariable, onPostVariableReset } from "../../Store/Slices/variableSlice";
 
-const VariableDictionaryForm = ({
-  data,
-  setData,
-  isDelete,
-}) => {
+const VariableDictionaryForm = () => {
+  const variableData = useSelector((state) => state.variableReducer);
+  const dispatch = useDispatch();
+  const variableValidations = Yup.object().shape({
+    variable: Yup.string().required("Variable is required"),
+    variable_name: Yup.string().required("Variable Name is required"),
+  });
+  const handleSubmit = (values) => {
+    dispatch(onPostVariable(values));
+  };
+ useEffect(()=>{
+if(variableData?.post_status_code==="201"){
+  toast.success(variableData.postMessage)
+  dispatch(onPostVariableReset())
+}else if(variableData?.post_status_code){
+  toast.error(variableData.postMessage)
+  dispatch(onPostVariableReset())
+}
+ },[variableData])
   return (
     <>
       <div className="container-fluid form">
@@ -20,71 +38,76 @@ const VariableDictionaryForm = ({
                 <h4 className="card-title">Variable Dictionary</h4>
               </div>
               <div className="card-body">
-                {false ? (
-                  <div style={{ height: "400px" }}>
+                {variableData?.postLoading ? (
+                  <div style={{ height: "150px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>
                 ) : (
                   <div className="container-fluid">
-                    <form
-                    // onSubmit={handleSubmit}
+                    <Formik
+                      initialValues={{
+                        variable: "",
+                        variable_name: "",
+                      }}
+                      validationSchema={variableValidations}
+                      onSubmit={handleSubmit}
                     >
-                      <div className="row">
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="amount">
-                          Variable Name
-                            <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="text"
-                            name="text"
-                            // value={vendorData?.balanceThresholdAmount}
-                            // className={` ${
-                            //   errors.balanceThresholdAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
+                      {({ errors, touched }) => (
+                        <Form>
+                          <div className="row">
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="amount">
+                                Variable Name
+                                <span className="text-danger">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                name="variable_name"
+                                className={`form-control ${
+                                  errors.variable_name && touched.variable_name
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
+                              />
+                              <ErrorMessage
+                                name="variable_name"
+                                component="div"
+                                className="error-message"
+                              />
+                            </div>
 
-                            id="amominThresholdAmountunt"
-                            // placeholder="₹500000"
-                            // onChange={(e) =>
-                            //   handleChange(e, "balanceThresholdAmount")
-                            // }
-                          />
-                        </div>
-
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="availabelAmount">
-                          Variable
-                            <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="text"
-                            name="text"
-                            // value={vendorData.creditAmount}
-                            // className={` ${
-                            //   errors.creditAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
-
-                            id="creditAmount"
-                            // placeholder="₹500000"
-                            // onChange={(e) => handleChange(e, "creditAmount")}
-                          />
-                        </div>
-                        <div className="col-sm-12 form-group mb-0 mt-2">
-                          <Button
-                            text="Submit"
-                            icon={"fa fa-arrow-right"}
-                            className="btn btn-primary float-right pad-aa mt-2"
-                          />
-                          <ToastContainer />
-                        </div>
-                      </div>
-                    </form>
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="availabelAmount">
+                                Variable
+                                <span className="text-danger">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                name="variable"
+                                className={`form-control ${
+                                  errors.variable && touched.variable
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
+                              />
+                              <ErrorMessage
+                                name="variable"
+                                component="div"
+                                className="error-message"
+                              />
+                            </div>
+                            <div className="col-sm-12 form-group mb-0 mt-2">
+                              <Button
+                                text="Submit"
+                                icon="fa fa-arrow-right"
+                                className="btn btn-primary float-right pad-aa mt-2"
+                              />
+                              <ToastContainer />
+                            </div>
+                          </div>
+                        </Form>
+                      )}
+                    </Formik>
                   </div>
                 )}
               </div>

@@ -8,7 +8,7 @@ import segment from "../../Assets/img/segment.png";
 import dashboard from "../../Assets/img/dashboard.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { onLogout } from "../../Store/Slices/LoginSlice";
+import { onLogout } from "../../Store/Slices/loginSlice";
 const Sidebar = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();

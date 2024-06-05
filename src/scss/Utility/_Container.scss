@@ -73,3 +73,17 @@ body {
     font-size: 0.875rem;
   }
 }
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+table th,
+table td {
+    padding: .625em;
+    text-align: left;
+    color: #111010;
+    background-color:white;
+    font-size:15px;
+}

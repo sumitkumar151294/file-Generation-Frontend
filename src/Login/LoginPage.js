@@ -8,14 +8,18 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { onLoginSubmit } from "../Store/Slices/LoginSlice";
+import { onLoginSubmit } from "../Store/Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
 const LoginPage = () => {
   const dispatch = useDispatch();
+  //login data from redux using state
   const loginData = useSelector((state) => state.loginReducer);
+  //navigate to route on other pages
   const navigate = useNavigate();
-  const [Sumbit,setSumbit]=useState(false)
+  //state to show toast one time
+  const [Sumbit, setSumbit] = useState(false);
+  //functions for validations in login form for formik
   const loginValidations = Yup.object().shape({
     email: Yup.string()
       .matches(
@@ -25,115 +29,125 @@ const LoginPage = () => {
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
-
-  const handleSubmit = (values, { resetForm }) => {
+  //function to handle login on sumbit
+  /*
+params:{
+  values: to acess all the input of inputfileds
+}
+*/
+  const handleSubmit = (values) => {
     debugger;
     if (values) {
       dispatch(onLoginSubmit(values));
-      setSumbit(true)
+      setSumbit(true);
     }
   };
-
+  //componentdidmopount to handle success and error
   useEffect(() => {
     if (Sumbit && loginData.status_code === "201") {
-      toast.success(loginData?.message)
-      navigate("/dashboard")
-    }else if(Sumbit && loginData.status_code){
-      toast.error(loginData?.message)
+      toast.success(loginData?.message);
+      navigate("/dashboard");
+    } else if (Sumbit && loginData.status_code) {
+      toast.error(loginData?.message);
     }
-  }, [loginData])
+  }, [loginData]);
   return (
     <>
-      {loginData.isLoading ? <Loader /> : <div className="vh-100">
-        <div className="authincation h-100">
-          <div className="container h-100">
-            <div className="row justify-content-center h-100 align-items-center">
-              <div className="col-md-6">
-                <div className="authincation-content">
-                  <div className="row no-gutters">
-                    <div className="col-xl-12">
-                      <div className="auth-form">
-                        <div className="text-center mb-3">
-                          {/* <img className="w-100" src={image} alt="" /> */}
-                        </div>
-                        <h4 className="text-center mb-4">
-                          Sign in to your account
-                        </h4>
-                        <Formik
-                          initialValues={{
-                            email: "",
-                            password: "",
-                          }}
-                          validationSchema={loginValidations}
-                          onSubmit={handleSubmit}
-                        >
-                          {({ errors, touched }) => (
-                            <Form>
-                              <div className="mb-3">
-                                <label className="mb-1">
-                                  <strong>Email</strong>
-                                </label>
-                                <Field
-                                  type="email"
-                                  name="email"
-                                  placeholder="hello@example.com"
-                                  className={`form-control ${errors.email && touched.email
-                                      ? "is-invalid"
-                                      : ""
-                                    }`}
-                                />
-                                <ErrorMessage
-                                  name="email"
-                                  component="div"
-                                  className="error-message"
-                                />
-                              </div>
-                              <div className="mb-3">
-                                <label className="mb-1">
-                                  <strong>Password</strong>
-                                </label>
-                                <Field
-                                  type="password"
-                                  name="password"
-                                  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-                                  className={`form-control ${errors.password && touched.password
-                                      ? "is-invalid"
-                                      : ""
-                                    }`}
-                                />
-                                <ErrorMessage
-                                  name="password"
-                                  component="div"
-                                  className="error-message"
-                                />
-                              </div>
-                              <div className="row d-flex justify-content-between mt-4 mb-2 d-nonemo">
+      {loginData.isLoading ? (
+        <Loader />
+      ) : (
+        <div className="vh-100">
+          <div className="authincation h-100">
+            <div className="container h-100">
+              <div className="row justify-content-center h-100 align-items-center">
+                <div className="col-md-6">
+                  <div className="authincation-content">
+                    <div className="row no-gutters">
+                      <div className="col-xl-12">
+                        <div className="auth-form">
+                          <div className="text-center mb-3">
+                          </div>
+                          <h4 className="text-center mb-4">
+                            Sign in to your account
+                          </h4>
+                          <Formik
+                            initialValues={{
+                              email: "",
+                              password: "",
+                            }}
+                            validationSchema={loginValidations}
+                            onSubmit={handleSubmit}
+                          >
+                            {({ errors, touched }) => (
+                              <Form>
                                 <div className="mb-3">
-                                  <div className="form-check custom-checkbox ms-1">
-                                    <InputField
-                                      type="checkbox"
-                                      className="form-check-input"
-                                      id="basic_checkbox_1"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="basic_checkbox_1"
-                                    >
-                                      Remember my preference
-                                    </label>
+                                  <label className="mb-1">
+                                    <strong>Email</strong>
+                                  </label>
+                                  <Field
+                                    type="email"
+                                    name="email"
+                                    placeholder="hello@example.com"
+                                    className={`form-control ${
+                                      errors.email && touched.email
+                                        ? "is-invalid"
+                                        : ""
+                                    }`}
+                                  />
+                                  <ErrorMessage
+                                    name="email"
+                                    component="div"
+                                    className="error-message"
+                                  />
+                                </div>
+                                <div className="mb-3">
+                                  <label className="mb-1">
+                                    <strong>Password</strong>
+                                  </label>
+                                  <Field
+                                    type="password"
+                                    name="password"
+                                    placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                    className={`form-control ${
+                                      errors.password && touched.password
+                                        ? "is-invalid"
+                                        : ""
+                                    }`}
+                                  />
+                                  <ErrorMessage
+                                    name="password"
+                                    component="div"
+                                    className="error-message"
+                                  />
+                                </div>
+                                <div className="row d-flex justify-content-between mt-4 mb-2 d-nonemo">
+                                  <div className="mb-3">
+                                    <div className="form-check custom-checkbox ms-1">
+                                      <InputField
+                                        type="checkbox"
+                                        className="form-check-input"
+                                        id="basic_checkbox_1"
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="basic_checkbox_1"
+                                      >
+                                        Remember my preference
+                                      </label>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="text-center">
-                                <Button
-                                  type="sumbit"
-                                  text="Sign me in"
-                                  className="btn btn-primary btn-block btn-sm float-right p-btn mt-2"
-                                />
-                              </div>
-                            </Form>
-                          )}
-                        </Formik>
+                                <div className="text-center">
+                                  <Button
+                                    type="sumbit"
+                                    text="Sign me in"
+                                    className="btn btn-primary btn-block btn-sm float-right p-btn mt-2"
+                                  />
+                                </div>
+                              </Form>
+                            )}
+                          </Formik>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -142,7 +156,7 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-      </div>}
+      )}
       <ToastContainer />
 
       <Footer />
