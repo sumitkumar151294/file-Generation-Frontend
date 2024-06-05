@@ -68,6 +68,7 @@ if(variableData?.post_status_code==="201"){
                                     ? "is-invalid"
                                     : ""
                                 }`}
+                                placeholder="Enter Variable Name"
                               />
                               <ErrorMessage
                                 name="variable_name"
@@ -89,6 +90,8 @@ if(variableData?.post_status_code==="201"){
                                     ? "is-invalid"
                                     : ""
                                 }`}
+                                placeholder="Enter Variable"
+
                               />
                               <ErrorMessage
                                 name="variable"

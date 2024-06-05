@@ -1,32 +1,19 @@
-import React from "react";
+import React from 'react';
 
-const Dropdown = ({
-  value,
-  onChange,
-  error,
-  ariaLabel,
-  defaultSelected = "Select",
-  className,
-  options,
-}) => {
+const Dropdown = ({ field, form, options, ...props }) => {
+  const handleChange = (event) => {
+    form.setFieldValue(field.name, event.target.value);
+  };
+
   return (
-    <div>
-      <select
-        value={value}
-        onChange={onChange}
-        aria-label={ariaLabel}
-        className={` ${
-          error ? "border-danger border-danger-select" : className
-        }`}
-      >
-        <option>{defaultSelected}</option>
-        {options?.map((option, index) => (
-          <option key={index} value={option.value} name={option?.data}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select {...field} {...props} onChange={handleChange}>
+      <option value="">Select</option>
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   );
 };
 

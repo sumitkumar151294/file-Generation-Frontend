@@ -6,6 +6,7 @@ import { onGetVariable } from "../../Store/Slices/variableSlice";
 import Loader from "../../Components/Loader/Loader";
 import Norecord from '../../Components/NoRecord/NoRecord'
 import ReactPaginate from "react-paginate";
+import InputField from "../../Components/InputField/InputField";
 const VariableDictionaryList = () => {
   const variableData = useSelector((state) => state?.variableReducer);
   const [page, setPage] = useState(1);
@@ -19,6 +20,16 @@ const VariableDictionaryList = () => {
 
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
+  };
+  const [filterValue, setFilterValue] = useState('');
+  const [filteredData, setFilteredData] = useState(variableData?.getVariableData);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setFilterValue(value);
+    const filtered = variableData?.getVariableData.filter(item =>
+      item.variableName.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
   };
   return (
     <>
@@ -34,16 +45,16 @@ const VariableDictionaryList = () => {
                   </div>
                   <div class="customer-search mb-sm-0 mb-3">
                     <div class="input-group search-area">
-                      <input
-                        type="text"
-                        class="form-control only-high"
-                        placeholder="Search here......"
-                      />
-                      <span class="input-group-text">
-                        <a href="javascript:void(0)">
-                          <i class="flaticon-381-search-2"></i>
-                        </a>
-                      </span>
+                    <InputField
+                              type="text"
+                              className="form-control only-high"
+                              placeholder="Search here...."
+                              value={filterValue}
+                              onChange={handleInputChange}
+                            />
+                            <span className="input-group-text">
+                              <i className="fa fa-search"></i>
+                            </span>
                     </div>
                   </div>
 
@@ -55,7 +66,7 @@ const VariableDictionaryList = () => {
                   {(variableData?.isLoading) ? (<div style={{ height: "150px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>) :
-                    variableData?.getVariableData ? (
+                  filteredData.length ? (
                       <div class="table-responsive">
                         <table className="table header-border table-responsive-sm">
                           <thead>
@@ -67,7 +78,7 @@ const VariableDictionaryList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {variableData?.getVariableData.slice(startIndex, endIndex).map((item, index) => (
+                            {filteredData.slice(startIndex, endIndex).map((item, index) => (
                               <tr key={index}>
                                 <td>{item.variableName}</td>
                                 <td>{item.variable}</td>
@@ -86,7 +97,7 @@ const VariableDictionaryList = () => {
                             ))}
                           </tbody>
                         </table>
-                        {variableData?.getVariableData.length > 5 && (
+                        {filteredData.length > 5 && (
                             <div className="pagination-container">
                               <ReactPaginate
                                 previousLabel={"<"}
