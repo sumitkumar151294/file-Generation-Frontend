@@ -60,45 +60,6 @@ export const loginSlice = createSlice({
         message: "",
       };
     },
-
-    onClientLoginSubmit: (state) => {
-      return {
-        ...state,
-        isLoading: true,
-        status_code: null,
-        isAdminLogin:null,
-      };
-    },
-
-    onClientLoginSubmitSuccess: (state, { payload }) => {
-      const { data, message, status_code = 201 } = payload;
-      return {
-        ...state,
-        data,
-        isLoading: false,
-        status_code,
-        isAdminLogin:false,
-        message,
-      };
-    },
-
-    onClientLoginSubmitError: (state, { payload }) => {
-      const { message, status_code = 400 } = payload;
-      return {
-        ...state,
-        status_code,
-        isLoading: false,
-        isError: true,
-        message,
-        isAdminLogin:null,
-      };
-    },
-    onPartnerKeyLoginSubmit: (state, { payload }) => {
-      return {
-        ...state,
-        partner_Key: payload,
-      };
-    },
   },
 });
 export const {
@@ -106,10 +67,6 @@ export const {
   onLoginSubmitError,
   onLoginSubmitSuccess,
   onLogout,
-  onClientLoginSubmit,
-  onClientLoginSubmitError,
-  onClientLoginSubmitSuccess,
-  onPartnerKeyLoginSubmit,
 } = loginSlice.actions;
 
 export default loginSlice.reducer;

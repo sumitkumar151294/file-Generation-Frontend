@@ -2,14 +2,12 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   onLoginSubmit,
   onLoginSubmitError,
-  onLoginSubmitSuccess,
-  onClientLoginSubmit,
-  onClientLoginSubmitError,
-  onClientLoginSubmitSuccess,
-} from "../Store/Slices/LoginSlice";
+  onLoginSubmitSuccess
+} from "../Store/Slices/loginSlice";
 import { callLoginApi } from "../Context/loginApi";
 
 function* Login({ payload }) {
+  debugger
   try {
     debugger
     const loginResponse = yield call(callLoginApi, payload);
@@ -31,7 +29,7 @@ function* Login({ payload }) {
     }
   } catch (error) {
     const message = error?.response?.data?.ErrorMessage || "Something went wrong";
-    yield put(onLoginSubmitError({ data: {}, message, status_code: 400 }));
+    yield put(onLoginSubmitError({ data: [], message, status_code: 400 }));
   }
 }
 

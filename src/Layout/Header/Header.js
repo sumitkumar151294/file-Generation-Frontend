@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import user from "../../Assets/img/user-profile.png";
-import image from "../../Assets/img/logo.png";
+import image from "../../Assets/img/logo.png"
 import { Link } from "react-router-dom/dist";
 const Header = ({ setSideBar, sidebar }) => {
   const [hamburgerClass, setHamburgerClass] = useState(false);
