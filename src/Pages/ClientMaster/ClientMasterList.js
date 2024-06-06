@@ -7,13 +7,15 @@ import Norecord from '../../Components/NoRecord/NoRecord'
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import ClientMasterForm from "./ClientMasterForm";
-import ScrollToTop from '../../Components/ScrollToTop/ScrollToTop'
+import Button from "../../Components/Button";
+import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 const ClientMasterList = () => {
-  const variableData = useSelector((state) => state?.variableReducer);
+  const clientMasterData = useSelector((state) => state?.clientMasterReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
+  const [istrue,setistrue]=useState(true)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(onGetVariable());
@@ -22,6 +24,22 @@ const ClientMasterList = () => {
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
+  useEffect(()=>{
+dispatch(onGetclientMaster())
+  },[])
+  const [filterValue, setFilterValue] = useState('');
+  const [filteredData, setFilteredData] = useState(clientMasterData?.getclientMasterData);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setFilterValue(value);
+    const filtered = clientMasterData?.getclientMasterData.filter(item =>
+      item.clientName?.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+  const handledelete=(data)=>{
+console.log(data)
+  }
   return (
     <>
 
@@ -37,16 +55,16 @@ const ClientMasterList = () => {
                   </div>
                   <div class="customer-search mb-sm-0 mb-3">
                     <div class="input-group search-area">
-                    <InputField
-                              type="text"
-                              className="form-control only-high"
-                              placeholder="Search here...."
-                              // value={searchQuery}
-                              // onChange={handleSearch}
-                            />
-                            <span className="input-group-text">
-                              <i className="fa fa-search"></i>
-                            </span>
+                      <InputField
+                        type="text"
+                        className="form-control only-high"
+                        placeholder="Search here...."
+                        value={filterValue}
+                        onChange={handleInputChange}
+                      />
+                      <span className="input-group-text">
+                        <i className="fa fa-search"></i>
+                      </span>
                     </div>
                   </div>
 
@@ -55,10 +73,10 @@ const ClientMasterList = () => {
               </div>
               <div class="container-fluid">
                 <div class="card-body">
-                  {(variableData?.isLoading) ? (<div style={{ height: "150px" }}>
+                  {(clientMasterData?.isLoading) ? (<div style={{ height: "150px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>) :
-                    variableData?.getVariableData ? (
+               filteredData.length ? (
                       <div class="table-responsive">
                         <table className="table header-border table-responsive-sm">
                           <thead>
@@ -71,44 +89,52 @@ const ClientMasterList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {variableData?.getVariableData.slice(startIndex, endIndex).map((item, index) => (
-                              <tr key={index}>
-                                <td>{item.variableName}</td>
-                                <td>{item.variable}</td>
-                                <td>{item.date}</td>
-                                <td>{item.date}</td>
-                                <td>
-                                  <div className="d-flex">
-                                    <a
-                                      href="#"
-                                      className="btn btn-danger shadow btn-xs sharp"
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </a>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
+  {filteredData.slice(startIndex, endIndex).map((item, index) => (
+    istrue && (
+      <tr key={index}>
+        <td>{item.clientName}</td>
+        <td>{item.description}</td>
+        <td>{item.date}</td>
+        <td>
+          <span
+            className={
+              item.status === "Active" ? "badge badge-success" : "badge badge-danger"
+            }
+          >
+            {item.status === "Active" ? "active" : "nonActive"}
+          </span>
+        </td>
+        <td>
+          <div className="d-flex">
+            <Button className="btn btn-danger shadow btn-xs sharp" onClick={()=>handledelete(item)} icon={"fa fa-trash"}>
+              <i className="fa fa-trash"></i>
+            </Button>
+          </div>
+        </td>
+      </tr>
+    )
+  ))}
+</tbody>
+
                         </table>
-                        {variableData?.getVariableData.length > 5 && (
-                            <div className="pagination-container">
-                              <ReactPaginate
-                                previousLabel={"<"}
-                                nextLabel={" >"}
-                                breakLabel={"..."}
-                                pageCount={Math.ceil(
-                                  variableData?.getVariableData.length / rowsPerPage
-                                )}
-                                marginPagesDisplayed={2}
-                                onPageChange={handlePageChange}
-                                containerClassName={"pagination"}
-                                activeClassName={"active"}
-                                initialPage={page - 1}
-                                previousClassName={page === 0 ? "disabled_Text" : ""}
-                              />
-                            </div>
-                          )}
+                        {filteredData.length > 5 && (
+                          <div className="pagination-container">
+                            <ReactPaginate
+                              previousLabel={"<"}
+                              nextLabel={" >"}
+                              breakLabel={"..."}
+                              pageCount={Math.ceil(
+                                filteredData.length / rowsPerPage
+                              )}
+                              marginPagesDisplayed={2}
+                              onPageChange={handlePageChange}
+                              containerClassName={"pagination"}
+                              activeClassName={"active"}
+                              initialPage={page - 1}
+                              previousClassName={page === 0 ? "disabled_Text" : ""}
+                            />
+                          </div>
+                        )}
                       </div>) : (<Norecord />)
                   }
                 </div>

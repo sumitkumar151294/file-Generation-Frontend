@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import  loginReducer from './Slices/loginSlice';
 import variableReducer from './Slices/variableSlice';
+import  clientMasterReducer  from './Slices/clientMasterSlice';
 const reducers = combineReducers({
     loginReducer:loginReducer,
-    variableReducer:variableReducer
+    variableReducer:variableReducer,
+    clientMasterReducer:clientMasterReducer
 
 });
 

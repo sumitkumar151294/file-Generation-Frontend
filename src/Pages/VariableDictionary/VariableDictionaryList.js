@@ -66,7 +66,7 @@ const VariableDictionaryList = () => {
                   {(variableData?.isLoading) ? (<div style={{ height: "150px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>) :
-                  filteredData.length ? (
+                  filteredData?.length ? (
                       <div class="table-responsive">
                         <table className="table header-border table-responsive-sm">
                           <thead>
@@ -86,7 +86,7 @@ const VariableDictionaryList = () => {
                                 <td>
                                   <div className="d-flex">
                                     <a
-                                      href="#"
+                                    href="/none"
                                       className="btn btn-danger shadow btn-xs sharp"
                                     >
                                       <i className="fa fa-trash"></i>
@@ -97,7 +97,7 @@ const VariableDictionaryList = () => {
                             ))}
                           </tbody>
                         </table>
-                        {filteredData.length > 5 && (
+                        {filteredData?.length > 5 && (
                             <div className="pagination-container">
                               <ReactPaginate
                                 previousLabel={"<"}

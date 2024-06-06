@@ -1,7 +1,9 @@
 const API={
    login:"/postlogin",
    postVariable:"/postvariable",
-   getVariable:"/getvariable"
+   getVariable:"/getvariable",
+   postClientMaster:"/postclientmaster",
+   getClientMaster:"/getclientmaster"
 
 }
 export default API;

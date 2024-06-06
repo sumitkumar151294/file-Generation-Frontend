@@ -1,232 +1,122 @@
 import React from "react";
-import Loader from "../../Components/Loader/Loader";
-import InputField from "../../Components/InputField/InputField";
-import Button from "../../Components/Button";
-import { ToastContainer } from "react-toastify";
 import Dropdown from "../../Components/Dropdown/Dropdown";
-
+import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 const TemplateMasterForm = () => {
-  const statusoptions = [{ value: "Active" }, { value: "Non-Active" }];
+  const statusOptions = [
+    { value: "Active", label: "Active" },
+    { value: "Non-Active", label: "Non-Active" }]
   return (
-    <div style={{ display: "flex" }}>
-      <div className="container-fluid form">
-        <div className="row">
-          <div className="col-xl-12 col-xxl-12">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title">Template Master</h4>
-              </div>
-              <div className="card-body">
-                {false ? (
-                  <div style={{ height: "400px" }}>
-                    <Loader classType={"absoluteLoader"} />
-                  </div>
-                ) : (
-                  <div className="container-fluid">
-                    <form
-                    // onSubmit={handleSubmit}
-                    >
-                      <div className="row">
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="status">
-                            Client <span className="text-danger">*</span>
-                          </label>
-                          <Dropdown
-                            // onChange={(e) => handleChange(e, "status")}
-                            // error={errors?.enabled}
-                            // value={
-                            //   vendorData?.enabled
-                            //     ? active
-                            //     : vendorData?.enabled === undefined ||
-                            //       vendorData?.enabled === ""
-                            //     ? ""
-                            //     : nonActive
-                            // }
-                            // className={`${
-                            //   errors.enabled
-                            //     ? "border-danger-select"
-                            //     : "form-select"
-                            // }`}
-                            className="form-select"
-                            options={statusoptions}
-                          />
-                        </div>
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="amount">
-                            Template Name
-                            <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="text"
-                            name="text"
-                            // value={vendorData?.balanceThresholdAmount}
-                            // className={` ${
-                            //   errors.balanceThresholdAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
-                            id="amominThresholdAmountunt"
-                            placeholder="₹500000"
-                          />
-                        </div>
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h4 class="card-title">Template Master</h4>
+          </div>
 
-                        <div className="form-group mb-2">
-                          <label htmlFor="name-f">Template Content</label>
-                          <div className="">
-                            <InputField
-                              type="text"
-                              className="bootstrap-tagsinput"
-                              data-role="tagsinput"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="status">
-                            Template Type <span className="text-danger">*</span>
-                          </label>
-                          <Dropdown
-                            className="form-select"
-                            options={statusoptions}
-                          />
-                        </div>
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="status">
-                            File Type <span className="text-danger">*</span>
-                          </label>
-                          <Dropdown
-                            className="form-select"
-                            options={statusoptions}
-                          />
-                        </div>
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="status">
-                            Status <span className="text-danger">*</span>
-                          </label>
-                          <Dropdown
-                            className="form-select"
-                            options={statusoptions}
-                          />
-                        </div>
-                        <div className="col-sm-12 form-group mb-0 mt-2">
-                          <Button
-                            text="Sumbit"
-                            icon={"fa fa-arrow-right"}
-                            className="btn btn-primary float-right pad-aa mt-2"
-                          />
-                          <ToastContainer />
-                        </div>
-                      </div>
-                    </form>
+          <div class="card-body ">
+            <div class="container-fluid">
+              <div class="row">
+              <div class="col-sm-4 form-group mb-2">
+                  <label for="pass"> Template Type </label>
+                <Dropdown
+                className="form-select"
+                options={statusOptions}
+                />
+                </div>
+
+                <div class="col-sm-8 form-group mb-2">
+                  <label for="status">Template Name</label>
+                  <input
+                    type="text"
+                    name="code"
+                    class="form-control"
+                    id="code"
+                    placeholder="Enter Template Name"
+                    required
+                  />
+                </div>
+
+                <div className="form-group mb-2">
+                  <label htmlFor="name-f">Template Content </label>
+
+                  <HtmlEditor />
+                </div>
+
+                <div class="col-sm-4 form-group mb-2">
+                  <label for="pass"> Template Type </label>
+                <Dropdown
+                className="form-select"
+                options={statusOptions}
+                />
+                </div>
+
+                <div class="col-sm-4 form-group mb-2">
+                  <label for="pass"> Template Type </label>
+                <Dropdown
+                className="form-select"
+                options={statusOptions}
+                />
+                </div>
+                <div class="col-sm-4 form-group mb-2">
+                  <label for="pass"> Template Type </label>
+                <Dropdown
+                className="form-select"
+                options={statusOptions}
+                />
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 form-group mb-0 mt-2">
+                    <button class="btn btn-primary float-right pad-aa">
+                      Submit <i class="fa fa-arrow-right"></i>
+                    </button>
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <div className="container-fluid form">
-        <div className="row">
-          <div className="col-xl-12 col-xxl-12">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title">File Type</h4>
-              </div>
-              <div className="card-body">
-                {false ? (
-                  <div style={{ height: "400px" }}>
-                    <Loader classType={"absoluteLoader"} />
-                  </div>
-                ) : (
-                  <div className="container-fluid">
-                    <form
-                    // onSubmit={handleSubmit}
-                    >
-                      <div className="row">
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="amount">
-                            File type
-                            <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="number"
-                            name="text"
-                            // value={vendorData?.balanceThresholdAmount}
-                            // className={` ${
-                            //   errors.balanceThresholdAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
-                            id="amominThresholdAmountunt"
-                            placeholder="₹500000"
-                            // onChange={(e) =>
-                            //   handleChange(e, "balanceThresholdAmount")
-                            // }
-                          />
-                        </div>
 
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="availabelAmount">
-                            File Extension
-                            <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="number"
-                            name="text"
-                            // value={vendorData.creditAmount}
-                            // className={` ${
-                            //   errors.creditAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
-                            id="creditAmount"
-                            placeholder="₹500000"
-                            // onChange={(e) => handleChange(e, "creditAmount")}
-                          />
-                        </div>
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="status">
-                            status <span className="text-danger">*</span>
-                          </label>
-                          <Dropdown
-                            // onChange={(e) => handleChange(e, "status")}
-                            // error={errors?.enabled}
-                            // value={
-                            //   vendorData?.enabled
-                            //     ? active
-                            //     : vendorData?.enabled === undefined ||
-                            //       vendorData?.enabled === ""
-                            //     ? ""
-                            //     : nonActive
-                            // }
-                            // className={`${
-                            //   errors.enabled
-                            //     ? "border-danger-select"
-                            //     : "form-select"
-                            // }`}
-                            className="form-select"
-                            options={statusoptions}
-                          />
-                        </div>
-                        <div className="col-sm-12 form-group mb-0 mt-2">
-                          <Button
-                            text="Sumbit"
-                            icon={"fa fa-arrow-right"}
-                            className="btn btn-primary float-right pad-aa mt-2"
-                          />
-                          <ToastContainer />
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+      <div class="col-lg-4">
+        <h2>Variable Dictionary</h2>
+        <div class="loafer">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Variable Name</th>
+                <th scope="col">Variable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Account">name</td>
+                <td data-label="Account">@name</td>
+              </tr>
+              <tr>
+                <td data-label="Account">username</td>
+                <td data-label="Account">@username</td>
+              </tr>
+              <tr>
+                <td data-label="Account">orderno</td>
+                <td data-label="Account">@orderno</td>
+              </tr>
+              <tr>
+                <td data-label="Account">otp</td>
+                <td data-label="Account">@otp</td>
+              </tr>
+              <tr>
+                <td data-label="Account">totalpoint</td>
+                <td data-label="Account">@totalpoint</td>
+              </tr>
+              <tr>
+                <td data-label="Account">total quantity</td>
+                <td data-label="Account">@totalqty</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

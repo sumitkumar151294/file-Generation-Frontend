@@ -1,14 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+import React, { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button";
-import InputField from "../../Components/InputField/InputField";
 import Loader from "../../Components/Loader/Loader";
 import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { onPostclientMaster, onPostclientMasterReset } from "../../Store/Slices/clientMasterSlice";
 
 const ClientMasterForm = () => {
+  const clientMasterData = useSelector((state) => state.clientMasterReducer);
+  const dispatch = useDispatch();
   const clientFormValidations = Yup.object().shape({
     clientName: Yup.string().required("Client Name is required"),
     description: Yup.string().required("Description Name is required"),
@@ -16,14 +19,25 @@ const ClientMasterForm = () => {
     status: Yup.string().required("Status Name is required"),
   });
   const handleSubmit = (values) => {
-    console.log(values);
+    dispatch(onPostclientMaster(values))
   };
+  useEffect(()=>{
+    debugger
+    if(clientMasterData?.post_status_code==="201"){
+      toast.success(clientMasterData.postMessage)
+      dispatch(onPostclientMasterReset())
+    }else if(clientMasterData?.post_status_code){
+      toast.error(clientMasterData.postMessage)
+      dispatch(onPostclientMasterReset())
+    }
+     },[clientMasterData]);
   const statusOptions = [
     { value: "Active", label: "Active" },
     { value: "Non-Active", label: "Non-Active" }
-  ]; return (
+  ];
+   return (
     <>
-    
+    <ToastContainer/>
       <div className="container-fluid form">
         <div className="row">
           <div className="col-xl-12 col-xxl-12">
@@ -32,8 +46,8 @@ const ClientMasterForm = () => {
                 <h4 className="card-title">Client Master</h4>
               </div>
               <div className="card-body">
-                {false ? (
-                  <div style={{ height: "400px" }}>
+                {clientMasterData?.postLoading ? (
+                  <div style={{ height: "200px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>
                 ) : (
@@ -113,7 +127,9 @@ const ClientMasterForm = () => {
                             <div className="col-sm-4 form-group mb-2">
                               <label htmlFor="status">
                                 Status
+                              <span className="text-danger">*</span>
                               </label>
+
                               <Field
                                 name="status"
                                 component={Dropdown}
@@ -133,7 +149,6 @@ const ClientMasterForm = () => {
                                 icon="fa fa-arrow-right"
                                 className="btn btn-primary float-right pad-aa mt-2"
                               />
-                              <ToastContainer />
                             </div>
                           </div>
                         </Form>

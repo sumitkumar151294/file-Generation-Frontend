@@ -84,7 +84,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="template-master"
+              to="/template-master"
               className="ai-icon "
               // onClick={handleLogout}
               aria-expanded="false"

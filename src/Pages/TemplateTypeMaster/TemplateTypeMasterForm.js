@@ -1,123 +1,159 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+import React, { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button";
-import InputField from "../../Components/InputField/InputField";
 import Loader from "../../Components/Loader/Loader";
-
 import Dropdown from "../../Components/Dropdown/Dropdown";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { onPostclientMaster, onPostclientMasterReset } from "../../Store/Slices/clientMasterSlice";
 
-const TemplateTypeMasterForm = ({
-  data,
-  setData,
-  isDelete,
-}) => {
-
-  const statusoptions = [
-    { value: "Active" },
-    { value: "Non-Active"},
+const ClientMasterForm = () => {
+  const clientMasterData = useSelector((state) => state.clientMasterReducer);
+  const dispatch = useDispatch();
+  const clientFormValidations = Yup.object().shape({
+    clientName: Yup.string().required("Client Name is required"),
+    description: Yup.string().required("Description Name is required"),
+    url: Yup.string().required("Url Name is required"),
+    status: Yup.string().required("Status Name is required"),
+  });
+  const handleSubmit = (values) => {
+    dispatch(onPostclientMaster(values))
+  };
+  useEffect(()=>{
+    debugger
+    if(clientMasterData?.post_status_code==="201"){
+      toast.success(clientMasterData.postMessage)
+      dispatch(onPostclientMasterReset())
+    }else if(clientMasterData?.post_status_code){
+      toast.error(clientMasterData.postMessage)
+      dispatch(onPostclientMasterReset())
+    }
+     },[clientMasterData]);
+  const statusOptions = [
+    { value: "Active", label: "Active" },
+    { value: "Non-Active", label: "Non-Active" }
   ];
-  return (
+   return (
     <>
+    <ToastContainer/>
       <div className="container-fluid form">
         <div className="row">
           <div className="col-xl-12 col-xxl-12">
             <div className="card">
               <div className="card-header">
-                <h4 className="card-title">Template Type</h4>
+                <h4 className="card-title">Client Master</h4>
               </div>
               <div className="card-body">
-                {false ? (
-                  <div style={{ height: "400px" }}>
+                {clientMasterData?.postLoading ? (
+                  <div style={{ height: "200px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>
                 ) : (
                   <div className="container-fluid">
-                    <form
-                    // onSubmit={handleSubmit}
+                    <Formik
+                      initialValues={{
+                        clientName: "",
+                        description: "",
+                        url: "",
+                        status: "",
+                      }}
+                      validationSchema={clientFormValidations}
+                      onSubmit={handleSubmit}
                     >
-                      <div className="row">
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="amount">
-                          Template Type
-                            <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="number"
-                            name="text"
-                            // value={vendorData?.balanceThresholdAmount}
-                            // className={` ${
-                            //   errors.balanceThresholdAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
+                      {({ errors, touched }) => (
+                        <Form>
+                          <div className="row">
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="amount">
+                                Client Name
+                                <span className="text-danger">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                name="clientName"
+                                className={`form-control ${errors.clientName && touched.clientName
+                                  ? "is-invalid"
+                                  : ""
+                                  }`}
+                                placeholder="Enter Client Name"
+                              />
+                              <ErrorMessage
+                                name="clientName"
+                                component="div"
+                                className="error-message"
+                              />
+                            </div>
 
-                            id="amominThresholdAmountunt"
-                            placeholder="₹500000"
-                            // onChange={(e) =>
-                            //   handleChange(e, "balanceThresholdAmount")
-                            // }
-                          />
-                        </div>
-
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="availabelAmount">
-                          Template Type Description
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="availabelAmount">
+                                Description
+                                <span className="text-danger">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                name="description"
+                                className={`form-control ${errors.description && touched.description
+                                  ? "is-invalid"
+                                  : ""
+                                  }`}
+                                placeholder="Enter Discription"
+                              />
+                              <ErrorMessage
+                                name="description"
+                                component="div"
+                                className="error-message"
+                              />
+                            </div>
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="availabelAmount">
+                                URL
+                                <span className="text-danger">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                name="url"
+                                className={`form-control ${errors.url && touched.url ? "is-invalid" : ""
+                                  }`}
+                                placeholder="Enter URL"
+                              />
+                              <ErrorMessage
+                                name="url"
+                                component="div"
+                                className="error-message"
+                              />
+                            </div>
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="status">
+                                Status
                               <span className="text-danger">*</span>
-                          </label>
-                          <InputField
-                            type="number"
-                            name="text"
-                            // value={vendorData.creditAmount}
-                            // className={` ${
-                            //   errors.creditAmount
-                            //     ? "border-danger"
-                            //     : "form-control"
-                            // }`}
-                            className="form-control"
+                              </label>
 
-                            id="creditAmount"
-                            placeholder="₹500000"
-                            // onChange={(e) => handleChange(e, "creditAmount")}
-                          />
-                        </div>
-                        <div className="col-sm-4 form-group mb-2">
-                          <label htmlFor="status">
-                            status <span className="text-danger">*</span>
-                          </label>
-                          <Dropdown
-                            // onChange={(e) => handleChange(e, "status")}
-                            // error={errors?.enabled}
-                            // value={
-                            //   vendorData?.enabled
-                            //     ? active
-                            //     : vendorData?.enabled === undefined ||
-                            //       vendorData?.enabled === ""
-                            //     ? ""
-                            //     : nonActive
-                            // }
-                            // className={`${
-                            //   errors.enabled
-                            //     ? "border-danger-select"
-                            //     : "form-select"
-                            // }`}
-                            className="form-select"
+                              <Field
+                                name="status"
+                                component={Dropdown}
+                                options={statusOptions}
+                                className="form-select"
+                              />
+                              <ErrorMessage
+                                name="status"
+                                component="div"
+                                className="error-message"
+                              />
 
-                            options={statusoptions}
-                          />
-
-                        </div>
-                        <div className="col-sm-12 form-group mb-0 mt-2">
-                          <Button
-                            text="Submit"
-                            icon={"fa fa-arrow-right"}
-                            className="btn btn-primary float-right pad-aa mt-2"
-                          />
-                          <ToastContainer />
-                        </div>
-                      </div>
-                    </form>
+                            </div>
+                            <div className="col-sm-12 form-group mb-0 mt-2">
+                              <Button
+                                text="Submit"
+                                icon="fa fa-arrow-right"
+                                className="btn btn-primary float-right pad-aa mt-2"
+                              />
+                            </div>
+                          </div>
+                        </Form>
+                      )}
+                    </Formik>
                   </div>
                 )}
               </div>
@@ -129,5 +165,5 @@ const TemplateTypeMasterForm = ({
   );
 };
 
-export default TemplateTypeMasterForm;
+export default ClientMasterForm;
 /* eslint-enable react-hooks/exhaustive-deps */

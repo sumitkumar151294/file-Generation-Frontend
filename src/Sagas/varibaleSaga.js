@@ -6,9 +6,6 @@ import {
   onPostVariable,
   onPostVariableError,
   onPostVariableSuccess,
-  onUpdateVariable,
-  onUpdateVariableSuccess,
-  onUpdateVariableError,
 } from "../Store/Slices/variableSlice";
 
 import { getVariable, postVariable } from "../Context/variableApi";
