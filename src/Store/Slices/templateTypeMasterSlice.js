@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const variableSlice = createSlice({
-  name: "variable",
+export const templateTypeMaster = createSlice({
+  name: "template-type-master",
   initialState: {
     isLoading: false,
     isError: false,
@@ -9,35 +9,35 @@ export const variableSlice = createSlice({
     message: "",
   },
   reducers: {
-    onGetVariable: (state) => {
+    onGettemplateTypeMaster: (state) => {
       return {
         ...state,
         isLoading: true,
         isError: false,
-       getVariableData: [],
+       gettemplateTypeMasterData: [],
         error: [],
         message: "",
       };
     },
 
-    onGetVariableSuccess: (state, { payload }) => {
+    onGettemplateTypeMasterSuccess: (state, { payload }) => {
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
         isLoading: false,
         isError: false,
-        getVariableData:data,
+        gettemplateTypeMasterData:data,
         message,
         status_code,
         error: [],
       };
     },
 
-    onGetVariableError: (state, { payload }) => {
+    onGettemplateTypeMasterError: (state, { payload }) => {
       const { data = [], message = "", status_code = 400 } = payload;
       return {
         ...state,
-        getVariableData:data,
+        gettemplateTypeMasterData:data,
         message,
         status_code,
         isLoading: false,
@@ -45,46 +45,46 @@ export const variableSlice = createSlice({
         error: [],
       };
     },
-    onGetVariableReset: (state) => {
+    onGettemplateTypeMasterReset: (state) => {
       return {
         ...state,
         isLoading: false,
-        getVariableData: [],
+        gettemplateTypeMasterData: [],
         message: "",
         error: [],
         status_code: null,
         isError: false,
       };
     },
-      onPostVariable: (state) => {
+      onPosttemplateTypeMaster: (state) => {
         return {
           ...state,
           postLoading: true,
           isError: false,
-          postVariableData: [],
+          posttemplateTypeMasterData: [],
           error: [],
           postMessage: "",
         };
       },
-    onPostVariableSuccess: (state, { payload }) => {
+    onPosttemplateTypeMasterSuccess: (state, { payload }) => {
 
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
         postLoading: false,
         isError: false,
-        postVariableData:data,
+        posttemplateTypeMasterData:data,
         postMessage:message,
         post_status_code:status_code,
         error: [],
       };
     },
 
-    onPostVariableError: (state, {payload}) => {
+    onPosttemplateTypeMasterError: (state, {payload}) => {
       const { data = [], message = "", status_code = 400 } = payload;
       return {
         ...state,
-        postVariableData:data,
+        posttemplateTypeMasterData:data,
         postMessage:message,
         post_status_code:status_code,
         postLoading: false,
@@ -92,11 +92,11 @@ export const variableSlice = createSlice({
         error: [],
       };
     },
-    onPostVariableReset: (state) => {
+    onPosttemplateTypeMasterReset: (state) => {
       return {
         ...state,
         postLoading: false,
-        postVariableData: null,
+        posttemplateTypeMasterData: null,
         postMessage: "",
         error: [],
         post_status_code: null,
@@ -104,35 +104,35 @@ export const variableSlice = createSlice({
       };
     },
 
-    onUpdateVariable: (state) => {
+    onUpdatetemplateTypeMaster: (state) => {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        updatedVariable: [],
+        updatedtemplateTypeMaster: [],
         error: [],
         updateMessage: "",
       };
     },
 
-    onUpdateVariableSuccess: (state, { payload }) => {
+    onUpdatetemplateTypeMasterSuccess: (state, { payload }) => {
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
         isLoading: false,
         isError: false,
-        updatedVariable: data,
+        updatedtemplateTypeMaster: data,
         updateMessage:message,
         update_status_code:status_code,
         error: [],
       };
     },
 
-    onUpdateVariableError: (state, { payload }) => {
+    onUpdatetemplateTypeMasterError: (state, { payload }) => {
       const { data = [], message = "", status_code = 400 } = payload;
       return {
         ...state,
-        updatedVariable: data,
+        updatedtemplateTypeMaster: data,
         updateMessage:message,
         update_status_code:status_code,
         isLoading: false,
@@ -140,11 +140,11 @@ export const variableSlice = createSlice({
         error: [],
       };
     },
-    onUpdateVariableReset: (state) => {
+    onUpdatetemplateTypeMasterReset: (state) => {
       return {
         ...state,
         isLoading: false,
-        updatedVariable: [],
+        updatedtemplateTypeMaster: [],
         updateMessage: "",
         error: [],
         update_status_code: null,
@@ -154,17 +154,17 @@ export const variableSlice = createSlice({
   },
 });
 export const { 
-  onGetVariable,
-  onGetVariableSuccess,
-  onGetVariableError,
-  onPostVariable,
-  onPostVariableSuccess,
-  onPostVariableError,
-  onPostVariableReset,
-  onUpdateVariable,
-  onUpdateVariableSuccess,
-  onUpdateVariableError,
-  onUpdateVariableReset
-} = variableSlice.actions;
+  onGettemplateTypeMaster,
+  onGettemplateTypeMasterSuccess,
+  onGettemplateTypeMasterError,
+  onPosttemplateTypeMaster,
+  onPosttemplateTypeMasterSuccess,
+  onPosttemplateTypeMasterError,
+  onPosttemplateTypeMasterReset,
+  onUpdatetemplateTypeMaster,
+  onUpdatetemplateTypeMasterSuccess,
+  onUpdatetemplateTypeMasterError,
+  onUpdatetemplateTypeMasterReset
+} = templateTypeMaster.actions;
 
-export default variableSlice.reducer;
+export default templateTypeMaster.reducer;

@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button";
-import InputField from "../../Components/InputField/InputField";
 import Loader from "../../Components/Loader/Loader";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -68,6 +67,7 @@ if(variableData?.post_status_code==="201"){
                                     ? "is-invalid"
                                     : ""
                                 }`}
+                                placeholder="Enter Variable Name"
                               />
                               <ErrorMessage
                                 name="variable_name"
@@ -89,6 +89,8 @@ if(variableData?.post_status_code==="201"){
                                     ? "is-invalid"
                                     : ""
                                 }`}
+                                placeholder="Enter Variable"
+
                               />
                               <ErrorMessage
                                 name="variable"

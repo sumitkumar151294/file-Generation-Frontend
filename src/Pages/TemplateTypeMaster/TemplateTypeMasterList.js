@@ -1,216 +1,168 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-// import { CSVLink } from "react-csv";
+import { useDispatch, useSelector } from "react-redux";
+import { onGetVariable } from "../../Store/Slices/variableSlice";
 import Loader from "../../Components/Loader/Loader";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   onGetSupplierList,
-//   onUpdateSupplierList,
-// } from "../../Store/Slices/supplierMasterSlice";
-// import NoRecord from "../../Components/NoRecord/NoRecord";
-// import { GetTranslationData } from "../../Components/GetTranslationData/GetTranslationData ";
-
+import Norecord from "../../Components/NoRecord/NoRecord";
+import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
-// import Button from "../../Components/Button/Button";
-// import { onGetSupplierResource } from "../../Store/Slices/supplierResourceSlice";
-// import ReactPaginate from "react-paginate";
-import PageError from "../../Components/PageError/PageError";
-import ClientMasterForm from "./TemplateTypeMasterForm";
 import TemplateTypeMasterForm from "./TemplateTypeMasterForm";
+import Button from "../../Components/Button";
+import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 const TemplateTypeMasterList = () => {
-  return (
-    <div>
-      {true ? (
-        <>
-          {true && (
-            <TemplateTypeMasterForm
-              // data={vendorData}
-              // setData={setVendorData}
-              // isDelete={isDelete}
-              // setIsDelete={setIsDelete}
+  const templateTypeMasterData = useSelector((state) => state?.templateTypeMasterReducer);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage] = useState(5);
+  const startIndex = (page - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(onGetVariable());
+  }, []);
 
-            />
-          )}
-          <div className="container-fluid pt-0">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="card">
-                  {false ? (
-                    <div style={{ height: "400px" }}>
+  const handlePageChange = (selected) => {
+    setPage(selected.selected + 1);
+  };
+  useEffect(() => {
+    dispatch(onGettemplateTypeMaster());
+  }, []);
+  const [filterValue, setFilterValue] = useState("");
+  const [filteredData, setFilteredData] = useState(
+    templateTypeMasterData?.gettemplateTypeMasterData
+  );
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setFilterValue(value);
+    const filtered = templateTypeMasterData?.gettemplateTypeMasterData.filter((item) =>
+      item.type?.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+  const handledelete = (data) => {
+    console.log(data);
+  };
+  return (
+    <>
+      <TemplateTypeMasterForm />
+      <div class="container-fluid pt-0">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="container-fluid mt-2 mb-2">
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                  <div class="card-header">
+                    <h4 class="card-title">Template Type List</h4>
+                  </div>
+                  <div class="customer-search mb-sm-0 mb-3">
+                    <div class="input-group search-area">
+                      <InputField
+                        type="text"
+                        className="form-control only-high"
+                        placeholder="Search here...."
+                        value={filterValue}
+                        onChange={handleInputChange}
+                      />
+                      <span className="input-group-text">
+                        <i className="fa fa-search"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
+                </div>
+              </div>
+              <div class="container-fluid">
+                <div class="card-body">
+                  {templateTypeMasterData?.isLoading ? (
+                    <div style={{ height: "150px" }}>
                       <Loader classType={"absoluteLoader"} />
                     </div>
-                  ) : (
-                    <>
-                      <div className="container-fluid pt-1">
-                        <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-                          <div className="card-header">
-                            <h4 className="card-title">Template Type List</h4>
-                          </div>
-                          { true && (
-                            <div className="customer-search mb-sm-0 mb-3">
-                              <div className="input-group search-area">
-                                <InputField
-                                  type="text"
-                                  className="form-control only-high"
-                                  // placeholder={search_here_label}
-                                  // value={searchQuery}
-                                  // onChange={handleSearch}
-                                />
-                                <span className="input-group-text">
-                                  <i className="fa fa-search"></i>
-                                </span>
-                              </div>
-                            </div>
-                          )}
+                  ) : filteredData?.length ? (
+                    <div class="table-responsive">
+                      <table className="table header-border table-responsive-sm">
+                        <thead>
+                          <tr>
+                            <th>Template Type</th>
+                            <th>Template Type Description</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredData
+                            .slice(startIndex, endIndex)
+                            .map((item, index) => (
+                              <tr key={index}>
+                                <td>{item.type}</td>
+                                <td>{item.description}</td>
+                                <td>{item.date}</td>
+                                <td>
+                                  <span
+                                    className={
+                                      item.status === "Active"
+                                        ? "badge badge-success"
+                                        : "badge badge-danger"
+                                    }
+                                  >
+                                    {item.status === "Active"
+                                      ? "active"
+                                      : "nonActive"}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div className="d-flex">
+                                  <Button
+                                      className="btn btn-danger shadow btn-xs sharp"
+                                      onClick={() => handledelete(item)}
+                                      icon={"fa fa-trash"}
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </Button> <Button
+                                      className="btn btn-primary shadow btn-xs sharp me-1"
+                                      onClick={() => handledelete(item)}
+                                      icon="fas fa-pencil-alt"
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </Button>
 
-                          {/* <div className="d-flex align-items-center flex-wrap">
-                            {true&& (
-                                <CSVLink
-                                  data={excelData}
-                                  headers={headers}
-                                  filename={"SupplierMaster.csv"}
-                                >
-                                  {filteredVendorList.length > 0 && (
-                                    <Button
-                                      className="btn btn-primary btn-sm btn-rounded me-3 mb-2"
-                                      icons={"fa fa-file-excel"}
-                                      text={export_label}
-                                    />
-                                  )}
-                                </CSVLink>
-                              )}
-                          </div> */}
-                        </div>
-                      </div>
-
-                      {/* <>
-                        {true (
-                          <div className="card-body position-relative">
-                            <div className="table-responsive">
-                              <>
-                                <table className="table header-border table-responsive-sm">
-                                  <thead>
-                                    <tr>
-                                      <th>supplierName</th>
-                                      <th>supplierClientID</th>
-                                      <th>balance_Available</th>
-                                      <th>minThresholdAmount}</th>
-                                      <th>{status}</th>
-                                      {getRoleAccess[0]?.editAccess && (
-                                        <th>{action}</th>
-                                      )}
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {filteredVendorList.length > 0 ? (
-                                      Array.isArray(filteredVendorList) &&
-                                      filteredVendorList
-                                        .slice(startIndex, endIndex)
-                                        .map((vendor, index) => (
-                                          <tr key={index}>
-                                            <td>{vendor.name}</td>
-                                            <td>{vendor.id}</td>
-                                            <td>
-                                              <span className="text-muted">
-                                                {vendor.creditAmount}
-                                              </span>
-                                            </td>
-                                            <td>
-                                              {vendor.balanceThresholdAmount}
-                                            </td>
-                                            <td>
-                                              <span
-                                                className={`badge ${
-                                                  vendor.enabled
-                                                    ? "badge-success"
-                                                    : "badge-danger"
-                                                }`}
-                                              >
-                                                {vendor.enabled
-                                                  ? active
-                                                  : nonActive}
-                                              </span>
-                                            </td>
-                                            {getRoleAccess[0]?.editAccess && (
-                                              <td>
-                                                <div className="d-flex">
-                                                  <button
-                                                    className="btn btn-primary shadow btn-xs sharp me-1"
-                                                    icon={"fas fa-pencil-alt"}
-                                                    onClick={() =>
-                                                      handleEdit(vendor)
-                                                    }
-                                                  >
-                                                    <i className="fas fa-pencil-alt"></i>
-                                                  </button>
-                                                  <button
-                                                    className="btn btn-danger shadow btn-xs sharp"
-                                                    icon={"fa fa-trash"}
-                                                    onClick={() =>
-                                                      handleDelete(vendor)
-                                                    }
-                                                  >
-                                                    <i className="fa fa-trash"></i>
-                                                  </button>
-                                                </div>
-                                              </td>
-                                            )}
-                                          </tr>
-                                        ))
-                                    ) : (
-                                      <NoRecord />
-                                    )}
-                                  </tbody>
-                                </table>
-                                {filteredVendorList.length > 5 && (
-                                  <div className="pagination-container">
-                                    <ReactPaginate
-                                      previousLabel={"<"}
-                                      nextLabel={" >"}
-                                      breakLabel={"..."}
-                                      pageCount={Math.ceil(
-                                        filteredVendorList.length / rowsPerPage
-                                      )}
-                                      marginPagesDisplayed={2}
-                                      onPageChange={handlePageChange}
-                                      containerClassName={"pagination"}
-                                      activeClassName={"active"}
-                                      initialPage={page - 1} // Use initialPage instead of forcePage
-                                      previousClassName={
-                                        page === 0 ? disabled_Text : ""
-                                      }
-                                    />
                                   </div>
-                                )}
-                              </>
-                            </div>
-                          </div>
-                        ) : (
-                          <div>
-                            <NoRecord />
-                          </div>
-                        )}
-                      </> */}
-                    </>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                      {filteredData?.length > 5 && (
+                        <div className="pagination-container">
+                          <ReactPaginate
+                            previousLabel={"<"}
+                            nextLabel={" >"}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(
+                              filteredData.length / rowsPerPage
+                            )}
+                            marginPagesDisplayed={2}
+                            onPageChange={handlePageChange}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            initialPage={page - 1}
+                            previousClassName={
+                              page === 0 ? "disabled_Text" : ""
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Norecord />
                   )}
                 </div>
               </div>
             </div>
           </div>
-        </>
-      ) : (
-        <PageError
-          pageError={{
-            StatusCode: "401",
-            ErrorName: "Permission Denied",
-            ErrorDesription:
-              "Your application url is not registerd to our application",
-            url: "/",
-            buttonText: "Back to Home",
-          }}
-        />
-      )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

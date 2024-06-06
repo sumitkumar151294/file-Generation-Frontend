@@ -102,3 +102,10 @@ th {
        .scroll-Table-x{ overflow-x: auto;
         -webkit-overflow-scrolling: touch;}
     }
+    table th, table td {
+        padding: .625em;
+        text-align: left;
+        color: #111010;
+        background-color: white;
+        font-size: 15px;
+    }

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const variableSlice = createSlice({
-  name: "variable",
+export const clientMaster = createSlice({
+  name: "client-master",
   initialState: {
     isLoading: false,
     isError: false,
@@ -9,35 +9,35 @@ export const variableSlice = createSlice({
     message: "",
   },
   reducers: {
-    onGetVariable: (state) => {
+    onGetclientMaster: (state) => {
       return {
         ...state,
         isLoading: true,
         isError: false,
-       getVariableData: [],
+       getclientMasterData: [],
         error: [],
         message: "",
       };
     },
 
-    onGetVariableSuccess: (state, { payload }) => {
+    onGetclientMasterSuccess: (state, { payload }) => {
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
         isLoading: false,
         isError: false,
-        getVariableData:data,
+        getclientMasterData:data,
         message,
         status_code,
         error: [],
       };
     },
 
-    onGetVariableError: (state, { payload }) => {
+    onGetclientMasterError: (state, { payload }) => {
       const { data = [], message = "", status_code = 400 } = payload;
       return {
         ...state,
-        getVariableData:data,
+        getclientMasterData:data,
         message,
         status_code,
         isLoading: false,
@@ -45,46 +45,46 @@ export const variableSlice = createSlice({
         error: [],
       };
     },
-    onGetVariableReset: (state) => {
+    onGetclientMasterReset: (state) => {
       return {
         ...state,
         isLoading: false,
-        getVariableData: [],
+        getclientMasterData: [],
         message: "",
         error: [],
         status_code: null,
         isError: false,
       };
     },
-      onPostVariable: (state) => {
+      onPostclientMaster: (state) => {
         return {
           ...state,
           postLoading: true,
           isError: false,
-          postVariableData: [],
+          postclientMasterData: [],
           error: [],
           postMessage: "",
         };
       },
-    onPostVariableSuccess: (state, { payload }) => {
+    onPostclientMasterSuccess: (state, { payload }) => {
 
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
         postLoading: false,
         isError: false,
-        postVariableData:data,
+        postclientMasterData:data,
         postMessage:message,
         post_status_code:status_code,
         error: [],
       };
     },
 
-    onPostVariableError: (state, {payload}) => {
+    onPostclientMasterError: (state, {payload}) => {
       const { data = [], message = "", status_code = 400 } = payload;
       return {
         ...state,
-        postVariableData:data,
+        postclientMasterData:data,
         postMessage:message,
         post_status_code:status_code,
         postLoading: false,
@@ -92,11 +92,11 @@ export const variableSlice = createSlice({
         error: [],
       };
     },
-    onPostVariableReset: (state) => {
+    onPostclientMasterReset: (state) => {
       return {
         ...state,
         postLoading: false,
-        postVariableData: null,
+        postclientMasterData: null,
         postMessage: "",
         error: [],
         post_status_code: null,
@@ -104,35 +104,35 @@ export const variableSlice = createSlice({
       };
     },
 
-    onUpdateVariable: (state) => {
+    onUpdateclientMaster: (state) => {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        updatedVariable: [],
+        updatedclientMaster: [],
         error: [],
         updateMessage: "",
       };
     },
 
-    onUpdateVariableSuccess: (state, { payload }) => {
+    onUpdateclientMasterSuccess: (state, { payload }) => {
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
         isLoading: false,
         isError: false,
-        updatedVariable: data,
+        updatedclientMaster: data,
         updateMessage:message,
         update_status_code:status_code,
         error: [],
       };
     },
 
-    onUpdateVariableError: (state, { payload }) => {
+    onUpdateclientMasterError: (state, { payload }) => {
       const { data = [], message = "", status_code = 400 } = payload;
       return {
         ...state,
-        updatedVariable: data,
+        updatedclientMaster: data,
         updateMessage:message,
         update_status_code:status_code,
         isLoading: false,
@@ -140,11 +140,11 @@ export const variableSlice = createSlice({
         error: [],
       };
     },
-    onUpdateVariableReset: (state) => {
+    onUpdateclientMasterReset: (state) => {
       return {
         ...state,
         isLoading: false,
-        updatedVariable: [],
+        updatedclientMaster: [],
         updateMessage: "",
         error: [],
         update_status_code: null,
@@ -154,17 +154,17 @@ export const variableSlice = createSlice({
   },
 });
 export const { 
-  onGetVariable,
-  onGetVariableSuccess,
-  onGetVariableError,
-  onPostVariable,
-  onPostVariableSuccess,
-  onPostVariableError,
-  onPostVariableReset,
-  onUpdateVariable,
-  onUpdateVariableSuccess,
-  onUpdateVariableError,
-  onUpdateVariableReset
-} = variableSlice.actions;
+  onGetclientMaster,
+  onGetclientMasterSuccess,
+  onGetclientMasterError,
+  onPostclientMaster,
+  onPostclientMasterSuccess,
+  onPostclientMasterError,
+  onPostclientMasterReset,
+  onUpdateclientMaster,
+  onUpdateclientMasterSuccess,
+  onUpdateclientMasterError,
+  onUpdateclientMasterReset
+} = clientMaster.actions;
 
-export default variableSlice.reducer;
+export default clientMaster.reducer;

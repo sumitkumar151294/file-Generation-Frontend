@@ -8,7 +8,7 @@ export const loginSlice = createSlice({
     data: {},
     error: {},
     message: "",
-    isAdminLogin:null
+    isUserLogin:null
   },
   reducers: {
     onLoginSubmit: (state) => {
@@ -17,20 +17,19 @@ export const loginSlice = createSlice({
         isLoading: true,
         isError: false,
         error: {},
-        isAdminLogin:null,
+        isUserLogin:null,
         status_code: null,
       };
     },
 
     onLoginSubmitSuccess: (state, { payload }) => {
-      debugger
       const { data, message, status_code = 200 } = payload;
       return {
         ...state,
         data,
         isLoading: false,
         isError: false,
-        isAdminLogin:true,
+        isUserLogin:true,
         status_code,
         message,
         error: {},
@@ -45,7 +44,7 @@ export const loginSlice = createSlice({
         isLoading: false,
         isError: true,
         message,
-        isAdminLogin:null,
+        isUserLogin:null,
         error: {},
       };
     },
@@ -56,7 +55,7 @@ export const loginSlice = createSlice({
         isError: false,
         isLoading: false,
         error: {},
-        isAdminLogin:null,
+        isUserLogin:null,
         message: "",
       };
     },

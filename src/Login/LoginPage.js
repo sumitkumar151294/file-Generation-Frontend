@@ -30,13 +30,7 @@ const LoginPage = () => {
     password: Yup.string().required("Password is required"),
   });
   //function to handle login on sumbit
-  /*
-params:{
-  values: to acess all the input of inputfileds
-}
-*/
   const handleSubmit = (values) => {
-    debugger;
     if (values) {
       dispatch(onLoginSubmit(values));
       setSumbit(true);
@@ -46,6 +40,7 @@ params:{
   useEffect(() => {
     if (Sumbit && loginData.status_code === "201") {
       toast.success(loginData?.message);
+      sessionStorage.setItem("userLogin",loginData?.isUserLogin)
       navigate("/dashboard");
     } else if (Sumbit && loginData.status_code) {
       toast.error(loginData?.message);
@@ -53,7 +48,7 @@ params:{
   }, [loginData]);
   return (
     <>
-      {loginData.isLoading ? (
+      {loginData?.isLoading ? (
         <Loader />
       ) : (
         <div className="vh-100">
