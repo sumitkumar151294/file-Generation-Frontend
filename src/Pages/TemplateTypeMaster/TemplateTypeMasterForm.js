@@ -7,30 +7,28 @@ import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { onPostclientMaster, onPostclientMasterReset } from "../../Store/Slices/clientMasterSlice";
+import { onPosttemplateTypeMaster, onPosttemplateTypeMasterReset } from "../../Store/Slices/templateTypeMasterSlice";
 
-const ClientMasterForm = () => {
-  const clientMasterData = useSelector((state) => state.clientMasterReducer);
+const TemplateTypeMasterForm = () => {
+  const templateTypemasterData = useSelector((state) => state.templateTypeMasterReducer);
   const dispatch = useDispatch();
-  const clientFormValidations = Yup.object().shape({
-    clientName: Yup.string().required("Client Name is required"),
-    description: Yup.string().required("Description Name is required"),
-    url: Yup.string().required("Url Name is required"),
-    status: Yup.string().required("Status Name is required"),
+  const validations = Yup.object().shape({
+    templatetype: Yup.string().required("Template Name is required"),
+    description: Yup.string().required("Description is required"),
+    status: Yup.string().required("Status is required"),
   });
   const handleSubmit = (values) => {
-    dispatch(onPostclientMaster(values))
+    dispatch(onPosttemplateTypeMaster(values))
   };
   useEffect(()=>{
-    debugger
-    if(clientMasterData?.post_status_code==="201"){
-      toast.success(clientMasterData.postMessage)
-      dispatch(onPostclientMasterReset())
-    }else if(clientMasterData?.post_status_code){
-      toast.error(clientMasterData.postMessage)
-      dispatch(onPostclientMasterReset())
+    if(templateTypemasterData?.post_status_code==="201"){
+      toast.success(templateTypemasterData.postMessage)
+      dispatch(onPosttemplateTypeMasterReset())
+    }else if(templateTypemasterData?.post_status_code){
+      toast.error(templateTypemasterData.postMessage)
+      dispatch(onPosttemplateTypeMasterReset())
     }
-     },[clientMasterData]);
+     },[templateTypemasterData]);
   const statusOptions = [
     { value: "Active", label: "Active" },
     { value: "Non-Active", label: "Non-Active" }
@@ -43,23 +41,22 @@ const ClientMasterForm = () => {
           <div className="col-xl-12 col-xxl-12">
             <div className="card">
               <div className="card-header">
-                <h4 className="card-title">Client Master</h4>
+                <h4 className="card-title">Template Type Master</h4>
               </div>
               <div className="card-body">
-                {clientMasterData?.postLoading ? (
-                  <div style={{ height: "200px" }}>
+                {templateTypemasterData?.postLoading ? (
+                  <div style={{ height: "100px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>
                 ) : (
                   <div className="container-fluid">
                     <Formik
                       initialValues={{
-                        clientName: "",
+                        templatetype: "",
                         description: "",
-                        url: "",
                         status: "",
                       }}
-                      validationSchema={clientFormValidations}
+                      validationSchema={validations}
                       onSubmit={handleSubmit}
                     >
                       {({ errors, touched }) => (
@@ -67,20 +64,20 @@ const ClientMasterForm = () => {
                           <div className="row">
                             <div className="col-sm-4 form-group mb-2">
                               <label htmlFor="amount">
-                                Client Name
+                                Template Name
                                 <span className="text-danger">*</span>
                               </label>
                               <Field
                                 type="text"
-                                name="clientName"
-                                className={`form-control ${errors.clientName && touched.clientName
+                                name="templatetype"
+                                className={`form-control ${errors.templatetype && touched.templatetype
                                   ? "is-invalid"
                                   : ""
                                   }`}
-                                placeholder="Enter Client Name"
+                                placeholder="Enter Template Name"
                               />
                               <ErrorMessage
-                                name="clientName"
+                                name="templatetype"
                                 component="div"
                                 className="error-message"
                               />
@@ -107,24 +104,6 @@ const ClientMasterForm = () => {
                               />
                             </div>
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="availabelAmount">
-                                URL
-                                <span className="text-danger">*</span>
-                              </label>
-                              <Field
-                                type="text"
-                                name="url"
-                                className={`form-control ${errors.url && touched.url ? "is-invalid" : ""
-                                  }`}
-                                placeholder="Enter URL"
-                              />
-                              <ErrorMessage
-                                name="url"
-                                component="div"
-                                className="error-message"
-                              />
-                            </div>
-                            <div className="col-sm-4 form-group mb-2">
                               <label htmlFor="status">
                                 Status
                               <span className="text-danger">*</span>
@@ -134,8 +113,10 @@ const ClientMasterForm = () => {
                                 name="status"
                                 component={Dropdown}
                                 options={statusOptions}
-                                className="form-select"
-                              />
+                                className={`form-select ${errors.status && touched.status
+                                  ? "is-invalid"
+                                  : ""
+                                  }`}                              />
                               <ErrorMessage
                                 name="status"
                                 component="div"
@@ -165,5 +146,5 @@ const ClientMasterForm = () => {
   );
 };
 
-export default ClientMasterForm;
+export default TemplateTypeMasterForm;
 /* eslint-enable react-hooks/exhaustive-deps */

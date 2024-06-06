@@ -7,9 +7,7 @@ import {
 import { callLoginApi } from "../Context/loginApi";
 
 function* Login({ payload }) {
-  debugger
   try {
-    debugger
     const loginResponse = yield call(callLoginApi, payload);
     if (loginResponse) {
       yield put(

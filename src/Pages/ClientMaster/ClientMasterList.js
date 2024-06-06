@@ -76,7 +76,7 @@ console.log(data)
                   {(clientMasterData?.isLoading) ? (<div style={{ height: "150px" }}>
                     <Loader classType={"absoluteLoader"} />
                   </div>) :
-               filteredData.length ? (
+               filteredData?.length ? (
                       <div class="table-responsive">
                         <table className="table header-border table-responsive-sm">
                           <thead>

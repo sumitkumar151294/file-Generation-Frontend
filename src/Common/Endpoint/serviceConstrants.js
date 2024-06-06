@@ -3,7 +3,9 @@ const API={
    postVariable:"/postvariable",
    getVariable:"/getvariable",
    postClientMaster:"/postclientmaster",
-   getClientMaster:"/getclientmaster"
+   getClientMaster:"/getclientmaster",
+   posttemplatetypemaster :"/posttemplatetypemaster",
+   gettemplatetypemaster:"/gettemplatetypemaster"
 
 }
 export default API;

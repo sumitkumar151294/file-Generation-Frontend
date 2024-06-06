@@ -1,13 +1,19 @@
-import React from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import Quill's styles
-const HtmlEditor = ({onChange,value}) => {
+import React from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+const HtmlEditor = ({ field, form }) => {
+  const handleChange = (content) => {
+    form.setFieldValue(field.name, content);
+    form.setFieldTouched(field.name, true);
+  };
+
   return (
     <div>
       <ReactQuill
         theme="snow"
-        value={value}
-        onChange={onChange}
+        value={field.value}
+        onChange={handleChange}
         modules={HtmlEditor.modules}
         formats={HtmlEditor.formats}
         placeholder="Write something..."

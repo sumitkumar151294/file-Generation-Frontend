@@ -14,15 +14,14 @@ const ClientMasterForm = () => {
   const dispatch = useDispatch();
   const clientFormValidations = Yup.object().shape({
     clientName: Yup.string().required("Client Name is required"),
-    description: Yup.string().required("Description Name is required"),
-    url: Yup.string().required("Url Name is required"),
-    status: Yup.string().required("Status Name is required"),
+    description: Yup.string().required("Description is required"),
+    url: Yup.string().required("Url is required"),
+    status: Yup.string().required("Status is required"),
   });
   const handleSubmit = (values) => {
     dispatch(onPostclientMaster(values))
   };
   useEffect(()=>{
-    debugger
     if(clientMasterData?.post_status_code==="201"){
       toast.success(clientMasterData.postMessage)
       dispatch(onPostclientMasterReset())
@@ -134,8 +133,8 @@ const ClientMasterForm = () => {
                                 name="status"
                                 component={Dropdown}
                                 options={statusOptions}
-                                className="form-select"
-                              />
+                                className={`form-select ${errors.status && touched.status ? "is-invalid" : ""
+                              }`}                              />
                               <ErrorMessage
                                 name="status"
                                 component="div"
