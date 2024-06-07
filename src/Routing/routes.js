@@ -9,7 +9,6 @@ import Dashboard from '../Pages/Dashboard/Dashboard';
 import TemplateMasterList from "../Pages/TemplateMaster/TemplateMasterList";
 function RouteConfiq() {
   return (
-
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />

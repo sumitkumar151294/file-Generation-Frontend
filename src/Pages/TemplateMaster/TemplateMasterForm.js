@@ -17,8 +17,13 @@ const TemplateMasterForm = () => {
     fileType: Yup.string().required("File Type is required"),
     status: Yup.string().required("Status is required"),
   });
+  const handleSumbit=(values)=>{
+    debugger
+  }
   return (
-    <div class="rofileTypew">
+< div className="d-flex">
+
+
       <div class="col-xl-8">
         <div class="card mb-4">
           <div class="card-header">
@@ -37,7 +42,7 @@ const TemplateMasterForm = () => {
                   status: "",
                 }}
                 validationSchema={validations}
-                // onSubmit={handleSubmit}
+                onSubmit={handleSumbit}
               >
                 {({ errors, touched }) => (
                   <Form>
@@ -83,7 +88,6 @@ const TemplateMasterForm = () => {
                         <Field
                           name="templateContent"
                           component={HtmlEditor}
-                          className="form-select"
                         />
                         <ErrorMessage
                           name="templateContent"
@@ -201,7 +205,8 @@ const TemplateMasterForm = () => {
           </table>
         </div>
       </div>
-    </div>
+</div>
+
   );
 };
 
