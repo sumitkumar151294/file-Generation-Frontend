@@ -19,7 +19,7 @@ const Dashboard = () => {
                                         <div className="d-inline-block position-relative donut-chart-sale">
                                             <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/8</span>
                                             <small className="text-black">
-                                                <img className="w-35px" src="img/category.png"/>
+                                                <img className="w-35px" src="img/category.png" alt="dsdff"/>
                                             </small>
                                         </div>
                                     </div>
@@ -35,7 +35,7 @@ const Dashboard = () => {
                                         <div className="d-inline-block position-relative donut-chart-sale">
                                             <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/6</span>
                                             <small className="text-black">
-                                                <img className="w-35px" src="img/product1.png"/>
+                                                <img className="w-35px" src="img/product1.png" alt="vdvsf"/>
                                             </small>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@ const Dashboard = () => {
                                         <div className="d-inline-block position-relative donut-chart-sale">
                                             <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/8</span>
                                             <small className="text-black">
-                                                <img className="w-35px" src="img/customer1.png"/>
+                                                <img className="w-35px" src="img/customer1.png" alt="dfdfg"/>
                                             </small>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@ const Dashboard = () => {
                                         <div className="d-inline-block position-relative donut-chart-sale">
                                             <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/7</span>
                                             <small className="text-black">
-                                                <img className="w-35px" src="img/category.png"/>
+                                                <img className="w-35px" src="img/category.png" alt="ddf"/>
                                             </small>
                                         </div>
                                     </div>
