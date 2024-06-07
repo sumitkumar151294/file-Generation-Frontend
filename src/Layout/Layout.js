@@ -12,7 +12,7 @@ useEffect(()=>{
   if(!userLoginAccess){
 navigate("/")
   }
-},[])
+})
   return (
     <>
       <div

@@ -6,7 +6,7 @@ import Loader from "../../Components/Loader/Loader";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { onPostVariable, onPostVariableReset } from "../../Store/Slices/variableSlice";
+import { onGetVariable, onPostVariable, onPostVariableReset } from "../../Store/Slices/variableSlice";
 
 const VariableDictionaryForm = () => {
   const variableData = useSelector((state) => state.variableReducer);
@@ -22,6 +22,7 @@ const VariableDictionaryForm = () => {
 if(variableData?.post_status_code==="201"){
   toast.success(variableData.postMessage)
   dispatch(onPostVariableReset())
+  dispatch(onGetVariable())
 }else if(variableData?.post_status_code){
   toast.error(variableData.postMessage)
   dispatch(onPostVariableReset())
@@ -29,7 +30,6 @@ if(variableData?.post_status_code==="201"){
  },[variableData])
   return (
     <>
-      <div className="container-fluid form">
         <div className="row">
           <div className="col-xl-12 col-xxl-12">
             <div className="card">
@@ -116,7 +116,6 @@ if(variableData?.post_status_code==="201"){
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

@@ -37,7 +37,6 @@ const ClientMasterForm = () => {
    return (
     <>
     <ToastContainer/>
-      <div className="container-fluid form">
         <div className="row">
           <div className="col-xl-12 col-xxl-12">
             <div className="card">
@@ -159,7 +158,6 @@ const ClientMasterForm = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

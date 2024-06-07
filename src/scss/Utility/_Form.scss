@@ -110,9 +110,9 @@ $rgba-primary-17: var(--rgba-primary-17);
 .ql-container.ql-snow {
   border-bottom-left-radius: 0.75rem;
   border-bottom-right-radius: 0.75rem;
-  border-bottom: 3px solid var(--primary-greyish) !important;
-  border-right: 3px solid var(--primary-greyish) !important;
-  border-left: 3px solid var(--primary-greyish) !important;
+  border-bottom: 3px solid var(--primary-greyish) ;
+  border-right: 3px solid var(--primary-greyish) ;
+  border-left: 3px solid var(--primary-greyish) ;
   &:focus {
     border-color: var(--bs-cream);
     outline: 0;

@@ -3,7 +3,7 @@ import {
   onLoginSubmit,
   onLoginSubmitError,
   onLoginSubmitSuccess
-} from "../Store/Slices/loginSlice";
+} from "../Store/Slices/LoginSlice";
 import { callLoginApi } from "../Context/loginApi";
 
 function* Login({ payload }) {

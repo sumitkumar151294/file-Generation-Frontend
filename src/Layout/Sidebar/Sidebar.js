@@ -8,59 +8,43 @@ import segment from "../../Assets/img/segment.png";
 import dashboard from "../../Assets/img/dashboard.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { onLogout } from "../../Store/Slices/loginSlice";
-const Sidebar = () => {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+import { onLogout } from "../../Store/Slices/LoginSlice";
 
-  const handleLogout=(e)=>{
+const menuItems = [
+  { path: "/dashboard", icon: dashboard, text: "Dashboard" },
+  { path: "/file-type", icon: segment, text: "File Type" },
+  { path: "/variable-dictionary", icon: segment, text: "Variable Dictionary" },
+  { path: "/client-master", icon: content, text: "Client Master" },
+  { path: "/templatetype-master", icon: section, text: "Template Type Master" },
+  { path: "/template-master", icon: add, text: "Template Master" },
+];
+
+const Sidebar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
     e.preventDefault();
-    sessionStorage.clear()
-    dispatch(onLogout())
+    sessionStorage.clear();
+    dispatch(onLogout());
     navigate("/");
-  }
+  };
+
   const location = useLocation();
   const { pathname } = location;
+
   return (
     <div className="deznav">
       <div className="deznav-scroll mm-active ps ps--active-y">
         <ul className="metismenu mm-show" id="menu">
-          <li className={pathname === '/dashboard' ? 'mm-active' : ''}>
-            <Link to="/dashboard" className="ai-icon" aria-expanded="false">
-              <img className="w-20px" src={dashboard} alt="file not exist" />
-              <span className="nav-text ps-1">Dashboard</span>
-            </Link>
-          </li>
-          <li className={pathname === '/file-type' ? 'mm-active' : ''}>
-            <Link to="/file-type" className="ai-icon" aria-expanded="false">
-              <img className="w-20px" src={segment} alt="file not exist" />
-              <span className="nav-text ps-1">File Type</span>
-            </Link>
-          </li>
-          <li className={pathname === '/variable-dictionary' ? 'mm-active' : ''}>
-            <Link to="/variable-dictionary" className="ai-icon" aria-expanded="false">
-              <img className="w-20px" src={segment} alt="file not exist" />
-              <span className="nav-text ps-1">Variable Dictionary</span>
-            </Link>
-          </li>
-          <li className={pathname === '/client-master' ? 'mm-active' : ''}>
-            <Link to="/client-master" className="ai-icon" aria-expanded="false">
-              <img className="w-20px" src={content} alt="file not exist" />
-              <span className="nav-text ps-1">Client Master</span>
-            </Link>
-          </li>
-          <li className={pathname === '/templatetype-master' ? 'mm-active' : ''}>
-            <Link to="/templatetype-master" className="ai-icon" aria-expanded="false">
-              <img className="w-20px" src={section} alt="file not exist" />
-              <span className="nav-text ps-1">Template Type Master</span>
-            </Link>
-          </li>
-          <li className={pathname === '/template-master' ? 'mm-active' : ''}>
-            <Link to="/template-master" className="ai-icon" aria-expanded="false">
-              <img className="w-20px" src={add} alt="file not exist" />
-              <span className="nav-text ps-1">Template Master</span>
-            </Link>
-          </li>
+          {menuItems.map((item, index) => (
+            <li key={index} className={pathname === item.path ? "mm-active" : ""}>
+              <Link to={item.path} className="ai-icon" aria-expanded="false">
+                <img className="w-20px" src={item.icon} alt="file not exist" />
+                <span className="nav-text ps-1">{item.text}</span>
+              </Link>
+            </li>
+          ))}
           <li>
             <Link className="ai-icon" aria-expanded="false" onClick={handleLogout}>
               <img className="w-20px" src={logout} alt="file not exist" />

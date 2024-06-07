@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="copyright">
-      <p>Footer
-        {/* {GetTranslationData("UIAdmin", "footer_text")} */}
-      {/* <Link to="https://www.way2webworld.com/" target="_blank" className="footer-link"> Way2web World</Link> {new Date().getFullYear()} */}
+      <p>
+        Copyright @ LC Reward Dev & Developed by
+      <Link to="https://www.way2webworld.com/" target="_blank" className="footer-link"> Way2web World</Link> {new Date().getFullYear()}
       </p>
       </div>
     </div>

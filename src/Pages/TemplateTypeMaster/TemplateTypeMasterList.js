@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { onGetVariable } from "../../Store/Slices/variableSlice";
 import Loader from "../../Components/Loader/Loader";
 import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
@@ -16,16 +15,17 @@ const TemplateTypeMasterList = () => {
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(onGetVariable());
-  }, []);
-
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
   useEffect(() => {
     dispatch(onGettemplateTypeMaster());
   }, []);
+  useEffect(() => {
+    if (templateTypeMasterData?.gettemplateTypeMasterData) {
+      setFilteredData(templateTypeMasterData?.gettemplateTypeMasterData);
+    }
+  }, [templateTypeMasterData?.gettemplateTypeMasterData]);
   const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState(
     templateTypeMasterData?.gettemplateTypeMasterData
@@ -42,7 +42,8 @@ const TemplateTypeMasterList = () => {
     console.log(data);
   };
   return (
-    <>
+    <div className="container-fluid">
+
       <TemplateTypeMasterForm />
       <div class="container-fluid pt-0">
         <div class="row">
@@ -162,7 +163,7 @@ const TemplateTypeMasterList = () => {
           </div>
         </div>
       </div>
-    </>
+      </div>
   );
 };
 
