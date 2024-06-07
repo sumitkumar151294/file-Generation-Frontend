@@ -10,20 +10,8 @@
 @import './Components/Loader';
 @import './Components/NoRecord';
 @import './Components/Sidebar';
-@import './Pages/BrandCatalogue';
-@import './Pages/BrandDetail';
-@import './Pages/ClientMaster';
 @import './Pages/Dashboard';
 @import './Pages/LoginPage';
-@import './Pages/RoleMaster';
-@import './Pages/UserMaster';
-@import './Pages/ClientAdmin/AbandonedCartReport';
-@import './Pages/SupplierProductList';
-@import './Pages/ClientAdmin/CustomerList';
-@import './Pages/ClientAdmin/OfferMaster';
-@import './Pages/ClientAdmin/EmailEventMaster';
-@import './Pages/ClientAdmin/FailedOrders';
-@import './Pages/ClientAdmin/AbandonedCartReport';
 @import './Utility/Card';
 @import './Utility/Rows';
 @import './Utility/Column';
@@ -167,7 +155,6 @@
   --bs-dark-brown: #fd683e40;
   --bs-light: #c8c8c8;
   --bs-dark: #6e6e6e;
-  /* width */
   --vh100: 100vh;
   --w100: 100%;
   --h100: 100%;

@@ -43,45 +43,45 @@ const ClientMasterList = () => {
     console.log(data);
   };
   return (
-    <div className="container-fluid">
+    <div classNameName="container-fluid">
 
       <TemplateMasterForm />
-      <div class="container-fluid pt-0">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="container-fluid mt-2 mb-2">
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-                  <div class="card-header">
-                    <h4 class="card-title">Template Master List</h4>
+      <div className="container-fluid pt-0">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="card">
+              <div className="container-fluid mt-2 mb-2">
+                <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                  <div className="card-header">
+                    <h4 className="card-title">Template Master List</h4>
                   </div>
-                  <div class="customer-search mb-sm-0 mb-3">
-                    <div class="input-group search-area">
+                  <div className="customer-search mb-sm-0 mb-3">
+                    <div className="input-group search-area">
                       <InputField
                         type="text"
-                        className="form-control only-high"
+                        classNameName="form-control only-high"
                         placeholder="Search here...."
                         value={filterValue}
                         onChange={handleInputChange}
                       />
-                      <span className="input-group-text">
-                        <i className="fa fa-search"></i>
+                      <span classNameName="input-group-text">
+                        <i classNameName="fa fa-search"></i>
                       </span>
                     </div>
                   </div>
 
-                  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
+                  <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
                 </div>
               </div>
-              <div class="container-fluid">
-                <div class="card-body">
+              <div className="container-fluid">
+                <div className="card-body">
                   {clientMasterData?.isLoading ? (
                     <div style={{ height: "150px" }}>
-                      <Loader classType={"absoluteLoader"} />
+                      <Loader classNameType={"absoluteLoader"} />
                     </div>
                   ) : filteredData?.length ? (
-                    <div class="table-responsive">
-                      <table className="table header-border table-responsive-sm">
+                    <div className="table-responsive">
+                      <table classNameName="table header-border table-responsive-sm">
                         <thead>
                           <tr>
                             <th>Client Code</th>
@@ -105,7 +105,7 @@ const ClientMasterList = () => {
                                 <td>{item.date}</td>
                                 <td>
                                   <span
-                                    className={
+                                    classNameName={
                                       item.status === "Active"
                                         ? "badge badge-success"
                                         : "badge badge-danger"
@@ -117,13 +117,13 @@ const ClientMasterList = () => {
                                   </span>
                                 </td>
                                 <td>
-                                  <div className="d-flex">
+                                  <div classNameName="d-flex">
                                     <Button
-                                      className="btn btn-danger shadow btn-xs sharp"
+                                      classNameName="btn btn-danger shadow btn-xs sharp"
                                       onClick={() => handledelete(item)}
                                       icon={"fa fa-trash"}
                                     >
-                                      <i className="fa fa-trash"></i>
+                                      <i classNameName="fa fa-trash"></i>
                                     </Button>
                                   </div>
                                 </td>
@@ -132,7 +132,7 @@ const ClientMasterList = () => {
                         </tbody>
                       </table>
                       {filteredData.length > 5 && (
-                        <div className="pagination-container">
+                        <div classNameName="pagination-container">
                           <ReactPaginate
                             previousLabel={"<"}
                             nextLabel={" >"}
