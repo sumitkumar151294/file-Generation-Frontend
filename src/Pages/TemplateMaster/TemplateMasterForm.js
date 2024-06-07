@@ -17,19 +17,21 @@ const TemplateMasterForm = () => {
     fileType: Yup.string().required("File Type is required"),
     status: Yup.string().required("Status is required"),
   });
-  const handleSumbit = (values) => {
-    debugger;
-  };
+  const handleSumbit=(values)=>{
+    debugger
+  }
   return (
-    <div classNameName="d-flex">
-      <div className="col-xl-8">
-        <div className="card mb-4">
-          <div className="card-header">
-            <h4 className="card-title">Template Master</h4>
+< div className="d-flex">
+
+
+      <div class="col-xl-8">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h4 class="card-title">Template Master</h4>
           </div>
 
-          <div className="card-body ">
-            <div className="container-fluid">
+          <div class="card-body ">
+            <div class="container-fluid">
               <Formik
                 initialValues={{
                   client: "",
@@ -44,113 +46,114 @@ const TemplateMasterForm = () => {
               >
                 {({ errors, touched }) => (
                   <Form>
-                    <div className="row">
-                      <div className="col-sm-4 form-group mb-2">
+                    <div class="row">
+                      <div class="col-sm-4 form-group mb-2">
                         <label> Client </label>
                         <Field
                           name="client"
                           component={Dropdown}
                           options={statusOptions}
-                          classNameName={`form-select ${
-                            errors.client && touched.client ? "is-invalid" : ""
-                          }`}
+                          className={`form-select ${errors.client && touched.client
+                            ? "is-invalid"
+                            : ""
+                            }`}
                         />
                         <ErrorMessage
                           name="client"
                           component="div"
-                          classNameName="error-message"
+                          className="error-message"
                         />
                       </div>
 
-                      <div className="col-sm-8 form-group mb-2">
+                      <div class="col-sm-8 form-group mb-2">
                         <label>Template Name</label>
                         <Field
                           type="text"
                           name="templateName"
-                          classNameName={`form-control ${
-                            errors.templateName && touched.templateName
-                              ? "is-invalid"
-                              : ""
-                          }`}
+                          className={`form-control ${errors.templateName && touched.templateName
+                            ? "is-invalid"
+                            : ""
+                            }`}
                           placeholder="Enter Template Name"
                         />
                         <ErrorMessage
                           name="templateName"
                           component="div"
-                          classNameName="error-message"
+                          className="error-message"
                         />
                       </div>
 
-                      <div classNameName="form-group mb-2">
+                      <div className="form-group mb-2">
                         <label>Template Content </label>
-                        <Field name="templateContent" component={HtmlEditor} />
+                        <Field
+                          name="templateContent"
+                          component={HtmlEditor}
+                        />
                         <ErrorMessage
                           name="templateContent"
                           component="div"
-                          classNameName="error-message"
+                          className="error-message"
                         />
                       </div>
 
-                      <div className="col-sm-4 form-group mb-2">
+                      <div class="col-sm-4 form-group mb-2">
                         <label for="pass"> Template Type </label>
                         <Field
                           name="templateType"
                           component={Dropdown}
                           options={statusOptions}
-                          classNameName={`form-select ${
-                            errors.templateType && touched.templateType
-                              ? "is-invalid"
-                              : ""
-                          }`}
+                          className={`form-select ${errors.templateType && touched.templateType
+                            ? "is-invalid"
+                            : ""
+                            }`}
                         />
                         <ErrorMessage
                           name="templateType"
                           component="div"
-                          classNameName="error-message"
+                          className="error-message"
                         />
                       </div>
 
-                      <div className="col-sm-4 form-group mb-2">
+                      <div class="col-sm-4 form-group mb-2">
                         <label for="pass"> File Type </label>
                         <Field
                           name="fileType"
                           component={Dropdown}
                           options={statusOptions}
-                          classNameName={`form-select ${
-                            errors.fileType && touched.fileType
-                              ? "is-invalid"
-                              : ""
-                          }`}
+                          className={`form-select ${errors.fileType && touched.fileType
+                            ? "is-invalid"
+                            : ""
+                            }`}
                         />
                         <ErrorMessage
                           name="fileType"
                           component="div"
-                          classNameName="error-message"
+                          className="error-message"
                         />
                       </div>
-                      <div className="col-sm-4 form-group mb-2">
+                      <div class="col-sm-4 form-group mb-2">
                         <label for="pass"> Status </label>
                         <Field
                           name="status"
                           component={Dropdown}
                           options={statusOptions}
-                          classNameName={`form-select ${
-                            errors.status && touched.status ? "is-invalid" : ""
-                          }`}
-                        />
+                          className={`form-select ${errors.status && touched.status
+                            ? "is-invalid"
+                            : ""
+                            }`}                        />
                         <ErrorMessage
                           name="status"
                           component="div"
-                          classNameName="error-message"
+                          className="error-message"
                         />
                       </div>
 
-                      <div className="row">
-                        <div className="col-sm-12 form-group mb-0 mt-2">
+                      <div class="row">
+                        <div class="col-sm-12 form-group mb-0 mt-2">
                           <Button
                             text="Submit"
                             icon="fa fa-arrow-right"
-                            classNameName="btn btn-primary float-right pad-aa mt-2"
+                            className="btn btn-primary float-right pad-aa mt-2"
                           />
                         </div>
                       </div>
@@ -163,9 +166,9 @@ const TemplateMasterForm = () => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div class="col-lg-4">
         <h2>Variable Dictionary</h2>
-        <div className="loafer">
+        <div class="loafer">
           <table>
             <thead>
               <tr>
@@ -202,7 +205,8 @@ const TemplateMasterForm = () => {
           </table>
         </div>
       </div>
-    </div>
+</div>
+
   );
 };
 
