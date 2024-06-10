@@ -43,7 +43,7 @@ dispatch(onPosttemplateMaster(values))
     <>
 
     <ToastContainer/>
-    <div className="d-flex">
+    <div className="row">
       <div class="col-xl-8">
         <div class="card mb-4">
           <div class="card-header">

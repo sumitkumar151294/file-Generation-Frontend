@@ -97,3 +97,19 @@ th {
         background-color:var(--bs-white);
         font-size: 15px;
     }
+    table tr {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: .35em;
+    }
+    thead, tbody, tfoot, tr, td, th {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0;
+        height:50px;
+    }thead, tbody, tfoot, tr, td, th {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0;
+        height:50px !important;
+    }
