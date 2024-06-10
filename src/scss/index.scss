@@ -10,20 +10,9 @@
 @import './Components/Loader';
 @import './Components/NoRecord';
 @import './Components/Sidebar';
-@import './Pages/BrandCatalogue';
-@import './Pages/BrandDetail';
-@import './Pages/ClientMaster';
+@import './Components/HtmlEditor';
 @import './Pages/Dashboard';
 @import './Pages/LoginPage';
-@import './Pages/RoleMaster';
-@import './Pages/UserMaster';
-@import './Pages/ClientAdmin/AbandonedCartReport';
-@import './Pages/SupplierProductList';
-@import './Pages/ClientAdmin/CustomerList';
-@import './Pages/ClientAdmin/OfferMaster';
-@import './Pages/ClientAdmin/EmailEventMaster';
-@import './Pages/ClientAdmin/FailedOrders';
-@import './Pages/ClientAdmin/AbandonedCartReport';
 @import './Utility/Card';
 @import './Utility/Rows';
 @import './Utility/Column';
@@ -52,10 +41,7 @@
   --primary-white-2: #fbfbfb;
   --primary-black: #000;
   --primary-skin-2: #ededed;
-  --primary-dark-skin: #e6cbc2;
-  --primary-dark-alice: #ffe1d8;
   --primary-light-alice: #ecd0c8;
-  --primary-dark-alice-2: #f2d6cd;
   --primary-light-blue: #1947e1;
   --primary-skin: #EEEEEE;
   --primary-blue: #0074fc;
@@ -181,5 +167,5 @@
 .error-message{
   margin-top: 0.3rem;
   margin-left: 0.4rem;
-  color: var(--primary-red-3)
+  color: var(--bs-red)
 }

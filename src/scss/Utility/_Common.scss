@@ -182,14 +182,14 @@ label {
   border-color: var(--bs-danger);
 }
 .btn-success {
-  color: #000;
-  background-color: #68e365;
-  border-color: #68e365;
+  color:var(--primary-black);
+  background-color: var(--bs-success);
+  border-color: var(--bs-success);
 }
 .btn-warning {
   color: #000;
-  background-color: #FFA41D;
-  border-color: #FFA41D;
+  background-color: var(--bs-warning);
+  border-color: var(--bs-warning);
 }
 .btn-danger:hover {
   color: var(--primary-black);

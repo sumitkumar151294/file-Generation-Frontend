@@ -7,7 +7,9 @@ const API={
    postClientMaster:"/postclientmaster",
    getClientMaster:"/getclientmaster",
    posttemplatetypemaster :"/posttemplatetypemaster",
-   gettemplatetypemaster:"/gettemplatetypemaster"
+   gettemplatetypemaster:"/gettemplatetypemaster",
+   gettemplatemaster:"/gettemplatemaster",
+   posttemplatemaster:"/posttemplatemaster"
 
 }
 export default API;

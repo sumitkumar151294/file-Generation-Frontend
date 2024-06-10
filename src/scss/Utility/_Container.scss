@@ -75,15 +75,15 @@ body {
 }
 
 table tr {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  background-color: var(--primary-alice-2);
+  border: 1px solid var(--bs-white);
   padding: .35em;
 }
 table th,
 table td {
     padding: .625em;
     text-align: left;
-    color: #111010;
-    background-color:white;
+    color: var(--primary-black);
+    background-color:var(--primary-black);
     font-size:15px;
 }
