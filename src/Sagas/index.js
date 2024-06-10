@@ -5,7 +5,7 @@ import VariableSaga from "./varibaleSaga";
 import clientMasterSaga from "./clientMasterSaga";
 import templateTypeMasterSaga from "./templateTypeMasterSaga";
 import fileTypeSaga from "./fileTypeSaga";
-// import templateMasterSaga from "./templateMasterSaga";
+import templateMasterSaga from "./templateMasterSaga";
 export default function* rootSaga() {
   yield all([
    loginSaga(),
@@ -13,7 +13,7 @@ export default function* rootSaga() {
 VariableSaga(),
 clientMasterSaga(),
 templateTypeMasterSaga(),
-// templateMasterSaga()
+templateMasterSaga()
 
     ]);
 }

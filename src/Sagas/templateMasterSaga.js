@@ -7,12 +7,12 @@ import {
   onPosttemplateMasterError,
   onPosttemplateMasterSuccess,
 } from "../Store/Slices/templateMasterSlice";
-import { gettemplateMasterApi, posttemplateMasterApi } from "../Context/templateMasterApi";
+import { getTemplateMasterApi, postTemplateMasterApi } from "../Context/templateMaster";
 
 
 function* GettemplateMaster() {
   try {
-    const gettemplateMasterResponse = yield call(gettemplateMasterApi);
+    const gettemplateMasterResponse = yield call(getTemplateMasterApi);
     if (gettemplateMasterResponse.httpStatusCode === "200") {
       yield put(
         onGettemplateMasterSuccess({
@@ -35,7 +35,7 @@ function* GettemplateMaster() {
 }
 function* PosttemplateMaster({ payload }) {
   try {
-    const posttemplateMasterResponse = yield call(posttemplateMasterApi, payload);
+    const posttemplateMasterResponse = yield call(postTemplateMasterApi, payload);
     if (posttemplateMasterResponse.httpStatusCode === "201") {
       yield put(
     onPosttemplateMasterSuccess({

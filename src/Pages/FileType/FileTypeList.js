@@ -6,10 +6,10 @@ import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import Button from "../../Components/Button";
-import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import FileTypeForm from "./FileTypeForm";
-const ClientMasterList = () => {
-  const clientMasterData = useSelector((state) => state?.clientMasterReducer);
+import { onGetfileType } from "../../Store/Slices/fileTypeSlice";
+const FileTypeList = () => {
+  const fileTypeData = useSelector((state) => state?.fileTypeReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
@@ -19,22 +19,23 @@ const ClientMasterList = () => {
     setPage(selected.selected + 1);
   };
   useEffect(() => {
-    dispatch(onGetclientMaster());
+    dispatch(onGetfileType());
   }, []);
   useEffect(() => {
-    if (clientMasterData?.getclientMasterData) {
-      setFilteredData(clientMasterData?.getclientMasterData);
+    if (fileTypeData?.getfileTypeData) {
+      debugger
+      setFilteredData(fileTypeData?.getfileTypeData);
     }
-  }, [clientMasterData?.getclientMasterData]);
+  }, [fileTypeData?.getfileTypeData]);
   const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState(
-    clientMasterData?.getclientMasterData
+    fileTypeData?.getfileTypeData
   );
   const handleInputChange = (e) => {
     const value = e.target.value;
     setFilterValue(value);
-    const filtered = clientMasterData?.getclientMasterData.filter((item) =>
-      item.clientName?.toLowerCase().includes(value.toLowerCase())
+    const filtered = fileTypeData?.getfileTypeData.filter((item) =>
+      item.fileType?.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -73,7 +74,7 @@ const ClientMasterList = () => {
               </div>
               <div class="container-fluid">
                 <div class="card-body">
-                  {clientMasterData?.isLoading ? (
+                  {fileTypeData?.isLoading ? (
                     <div style={{ height: "150px" }}>
                       <Loader classType={"absoluteLoader"} />
                     </div>
@@ -94,8 +95,8 @@ const ClientMasterList = () => {
                             .slice(startIndex, endIndex)
                             .map((item, index) => (
                               <tr key={index}>
-                                <td>{item.clientName}</td>
-                                <td>{item.description}</td>
+                                <td>{item.fileType}</td>
+                                <td>{item.fileExtension}</td>
                                 <td>{item.date}</td>
                                 <td>
                                   <span
@@ -159,5 +160,5 @@ const ClientMasterList = () => {
   );
 };
 
-export default ClientMasterList;
+export default FileTypeList;
 /* eslint-enable react-hooks/exhaustive-deps */

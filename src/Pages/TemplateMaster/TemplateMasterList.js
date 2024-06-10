@@ -6,11 +6,10 @@ import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import Button from "../../Components/Button";
-import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
-// import FileTypeForm from "./FileTypeForm";
 import TemplateMasterForm from "./TemplateMasterForm";
+import { onGettemplateMaster } from "../../Store/Slices/templateMasterSlice";
 const ClientMasterList = () => {
-  const clientMasterData = useSelector((state) => state?.clientMasterReducer);
+  const templateMasterData = useSelector((state) => state?.templateMasterReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
@@ -20,22 +19,22 @@ const ClientMasterList = () => {
     setPage(selected.selected + 1);
   };
   useEffect(() => {
-    dispatch(onGetclientMaster());
+    dispatch(onGettemplateMaster());
   }, []);
   useEffect(() => {
-    if (clientMasterData?.getclientMasterData) {
-      setFilteredData(clientMasterData?.getclientMasterData);
+    if (templateMasterData?.gettemplateMasterData) {
+      setFilteredData(templateMasterData?.gettemplateMasterData);
     }
-  }, [clientMasterData?.getclientMasterData]);
+  }, [templateMasterData?.gettemplateMasterData]);
   const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState(
-    clientMasterData?.getclientMasterData
+    templateMasterData?.gettemplateMasterData
   );
   const handleInputChange = (e) => {
     const value = e.target.value;
     setFilterValue(value);
-    const filtered = clientMasterData?.getclientMasterData.filter((item) =>
-      item.clientName?.toLowerCase().includes(value.toLowerCase())
+    const filtered = templateMasterData?.gettemplateMasterData.filter((item) =>
+      item.templateName?.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
@@ -75,7 +74,7 @@ const ClientMasterList = () => {
               </div>
               <div class="container-fluid">
                 <div class="card-body">
-                  {clientMasterData?.isLoading ? (
+                  {templateMasterData?.isLoading ? (
                     <div style={{ height: "150px" }}>
                       <Loader classType={"absoluteLoader"} />
                     </div>
@@ -98,10 +97,10 @@ const ClientMasterList = () => {
                             .slice(startIndex, endIndex)
                             .map((item, index) => (
                               <tr key={index}>
-                                <td>{item.clientName}</td>
-                                <td>{item.description}</td>
-                                <td>{item.description}</td>
-                                <td>{item.description}</td>
+                                <td>{item.clientCode}</td>
+                                <td>{item.fileType}</td>
+                                <td>{item.templateName}</td>
+                                <td>{item.templateType}</td>
                                 <td>{item.date}</td>
                                 <td>
                                   <span
