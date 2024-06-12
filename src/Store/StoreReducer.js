@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import  loginReducer from './Slices/loginSlice';
+import  loginReducer from './Slices/LoginSlice';
 import fileTypeReducer  from './Slices/fileTypeSlice';
 import variableReducer from './Slices/variableSlice';
 import  clientMasterReducer  from './Slices/clientMasterSlice';

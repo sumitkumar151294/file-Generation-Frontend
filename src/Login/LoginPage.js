@@ -8,7 +8,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { onLoginSubmit } from "../Store/Slices/loginSlice";
+import { onLoginSubmit } from "../Store/Slices/LoginSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
 const LoginPage = () => {

@@ -8,7 +8,7 @@ import segment from "../../Assets/img/segment.png";
 import dashboard from "../../Assets/img/dashboard.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { onLogout } from "../../Store/Slices/loginSlice";
+import { onLogout } from "../../Store/Slices/LoginSlice";
 
 const menuItems = [
   { path: "/dashboard", icon: dashboard, text: "Dashboard" },
