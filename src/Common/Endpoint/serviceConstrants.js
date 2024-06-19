@@ -1,11 +1,14 @@
 const API={
    login:"/postlogin",
-   postfileType:"/postfiletype",
-   getfileType:"/getfiletype",
+   postfileType:"/file-type",
+   getfileType:"/file-type",
+   updatefileType:"/file-type",
    postVariable:"/postvariable",
    getVariable:"/getvariable",
-   postClientMaster:"/postclientmaster",
-   getClientMaster:"/getclientmaster",
+   postClientMaster:"/client-master",
+   getClientMaster:"/client-master",
+   putClientMaster:"/client-master",
+
    posttemplatetypemaster :"/posttemplatetypemaster",
    gettemplatetypemaster:"/gettemplatetypemaster",
    gettemplatemaster:"/gettemplatemaster",

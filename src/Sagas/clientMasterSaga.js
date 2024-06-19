@@ -6,8 +6,11 @@ import {
   onPostclientMaster,
   onPostclientMasterError,
   onPostclientMasterSuccess,
+  onUpdateclientMaster,
+  onUpdateclientMasterError,
+  onUpdateclientMasterSuccess,
 } from "../Store/Slices/clientMasterSlice";
-import { getClientMasterApi, postClientMasterApi } from "../Context/clientMasterApi";
+import { getClientMasterApi, postClientMasterApi, putClientMasterApi } from "../Context/clientMasterApi";
 
 
 function* GetclientMaster() {
@@ -53,41 +56,40 @@ function* PostclientMaster({ payload }) {
       );
     }
   } catch (error) {
-    // const message = error.response || "Something went wrong";
     yield put(onPostclientMasterError({ data: [], message:error?.response?.data?.ErrorMessage, status_code: error?.response?.data?.HttpStatusCode }));
   }
 }
 
-// function* UpdateclientMaster({ payload }) {
-//   try {
-//     const updateclientMasterResponse = yield call(
-//       callCreateclientMasterUpdateApi,
-//       payload
-//     );
-//     if (updateclientMasterResponse.httpStatusCode === "201") {
-//       yield put(
-//         onUpdateclientMasterSuccess({
-//           data: updateclientMasterResponse.response,
-//           message: updateclientMasterResponse.errorMessage,
-//           status_code: updateclientMasterResponse.httpStatusCode,
-//         })
-//       );
-//     } else {
-//       yield put(
-//         onUpdateclientMasterError({
-//           data: updateclientMasterResponse.response,
-//           message: updateclientMasterResponse.errorMessage,
-//         })
-//       );
-//     }
-//   } catch (error) {
-//     const message = error.response || "Something went wrong";
-//     yield put(onUpdateclientMasterError({ data: [], message, status_code: 400 }));
-//   }
-// }
+function* UpdateclientMaster({ payload }) {
+  try {
+    const updateclientMasterResponse = yield call(
+      putClientMasterApi,
+      payload
+    );
+    if (updateclientMasterResponse.httpStatusCode === "201") {
+      yield put(
+        onUpdateclientMasterSuccess({
+          data: updateclientMasterResponse.response,
+          message: updateclientMasterResponse.errorMessage,
+          status_code: updateclientMasterResponse.httpStatusCode,
+        })
+      );
+    } else {
+      yield put(
+        onUpdateclientMasterError({
+          data: updateclientMasterResponse.response,
+          message: updateclientMasterResponse.errorMessage,
+        })
+      );
+    }
+  } catch (error) {
+    const message = error.response || "Something went wrong";
+    yield put(onUpdateclientMasterError({ data: [], message, status_code: 400 }));
+  }
+}
 
 export default function* clientMasterSaga() {
   yield takeLatest(onGetclientMaster.type, GetclientMaster);
   yield takeLatest(onPostclientMaster.type, PostclientMaster);
-  // yield takeLatest(onUpdateclientMaster.type, UpdateclientMaster);
+  yield takeLatest(onUpdateclientMaster.type, UpdateclientMaster);
 }

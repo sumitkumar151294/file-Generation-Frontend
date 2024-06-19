@@ -23,7 +23,6 @@ const FileTypeList = () => {
   }, []);
   useEffect(() => {
     if (fileTypeData?.getfileTypeData) {
-      debugger
       setFilteredData(fileTypeData?.getfileTypeData);
     }
   }, [fileTypeData?.getfileTypeData]);
@@ -39,8 +38,8 @@ const FileTypeList = () => {
     );
     setFilteredData(filtered);
   };
-  const handledelete = (data) => {
-    console.log(data);
+  const handleData = (fileData) => {
+    console.log(fileData);
   };
   return (
     <div className="container-fluid">
@@ -93,30 +92,37 @@ const FileTypeList = () => {
                         <tbody>
                           {filteredData
                             .slice(startIndex, endIndex)
-                            .map((item, index) => (
+                            .map((fileData, index) => (
                               <tr key={index}>
-                                <td>{item.fileType}</td>
-                                <td>{item.fileExtension}</td>
-                                <td>{item.date}</td>
+                                <td>{fileData.fileType}</td>
+                                <td>{fileData.extension}</td>
+                                <td>{fileData.date}</td>
                                 <td>
                                   <span
                                     className={
-                                      item.status === "Active"
+                                      fileData.status === "Active"
                                         ? "badge badge-success"
                                         : "badge badge-danger"
                                     }
                                   >
-                                    {item.status === "Active"
+                                    {fileData.status === "Active"
                                       ? "active"
                                       : "nonActive"}
                                   </span>
                                 </td>
                                 <td>
-                                  <div className="d-flex">
+                                <div className="d-flex">
+                                    <Button
+                                      className="btn btn-primary shadow btn-xs sharp me-1"
+                                      icon={"fas fa-pencil-alt"}
+                                      onClick={() => handleData(fileData)}
+                                    >
+                                      <i className="fas fa-pencil-alt"></i>
+                                    </Button>
                                     <Button
                                       className="btn btn-danger shadow btn-xs sharp"
-                                      onClick={() => handledelete(item)}
                                       icon={"fa fa-trash"}
+                                      onClick={() => handleData(fileData)}
                                     >
                                       <i className="fa fa-trash"></i>
                                     </Button>

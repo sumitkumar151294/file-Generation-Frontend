@@ -8,11 +8,11 @@ const Layout = (props) => {
   const [showSideBar, setShowSideBar] = useState(false);
   const userLoginAccess=sessionStorage.getItem("userLogin")
   const navigate=useNavigate();
-useEffect(()=>{
-  if(!userLoginAccess){
-navigate("/")
-  }
-})
+// useEffect(()=>{
+//   if(!userLoginAccess){
+// navigate("/")
+//   }
+// })
   return (
     <>
       <div

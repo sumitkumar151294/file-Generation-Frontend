@@ -105,6 +105,7 @@ export const clientMaster = createSlice({
     },
 
     onUpdateclientMaster: (state) => {
+      
       return {
         ...state,
         isLoading: true,
@@ -116,6 +117,7 @@ export const clientMaster = createSlice({
     },
 
     onUpdateclientMasterSuccess: (state, { payload }) => {
+
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,
@@ -143,7 +145,6 @@ export const clientMaster = createSlice({
     onUpdateclientMasterReset: (state) => {
       return {
         ...state,
-        isLoading: false,
         updatedclientMaster: [],
         updateMessage: "",
         error: [],

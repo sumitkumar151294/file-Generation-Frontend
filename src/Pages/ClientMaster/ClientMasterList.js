@@ -6,14 +6,19 @@ import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import ClientMasterForm from "./ClientMasterForm";
-import Button from "../../Components/Button";
-import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
+import {
+  onGetclientMaster,
+  onUpdateclientMaster,
+  onUpdateclientMasterReset,
+} from "../../Store/Slices/clientMasterSlice";
+import { toast } from "react-toastify";
 const ClientMasterList = () => {
   const clientMasterData = useSelector((state) => state?.clientMasterReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
+  const [clientData, setClientData] = useState();
   const dispatch = useDispatch();
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
@@ -38,12 +43,47 @@ const ClientMasterList = () => {
     );
     setFilteredData(filtered);
   };
-  const handledelete = (data) => {
-    console.log(data);
+  const handleData = (clientData, isEdit) => {
+    debugger;
+    const clientInfo = {
+      enabled: true,
+      deleted: true,
+      createdBy: 0,
+      updatedBy: 0,
+      clientName: clientData?.clientName,
+      clientCode: clientData.clientCode,
+      description: clientData.description,
+      url: clientData.url,
+      id: clientData.id,
+    };
+    if (isEdit) {
+      setClientData(
+        {
+          enabled: true,
+          deleted: true,
+          createdBy: 0,
+          updatedBy: 0,
+          clientName: clientData?.clientName,
+          clientCode: clientData.clientCode,
+          description: clientData.description,
+          url: clientData.url,
+          id: clientData.id,
+        },
+      );
+    } else {
+      dispatch(onUpdateclientMaster(clientInfo));
+    }
   };
+  useEffect(() => {
+    if (clientMasterData?.update_status_code === "201") {
+      toast.success(clientMasterData.updateMessage);
+      dispatch(onGetclientMaster());
+      dispatch(onUpdateclientMasterReset());
+    }
+  }, [clientMasterData]);
   return (
     <div className="container-fluid">
-      <ClientMasterForm />
+      <ClientMasterForm clientData={clientData} />
       <div class="container-fluid pt-0">
         <div class="row">
           <div class="col-lg-12">
@@ -92,33 +132,42 @@ const ClientMasterList = () => {
                         <tbody>
                           {filteredData
                             .slice(startIndex, endIndex)
-                            .map((item, index) => (
+                            .map((clientData, index) => (
                               <tr key={index}>
-                                <td>{item.clientName}</td>
-                                <td>{item.description}</td>
-                                <td>{item.date}</td>
+                                <td>{clientData.clientName}</td>
+                                <td>{clientData.description}</td>
+                                <td>{clientData.date}</td>
                                 <td>
                                   <span
                                     className={
-                                      item.status === "Active"
+                                      clientData.status === "Active"
                                         ? "badge badge-success"
                                         : "badge badge-danger"
                                     }
                                   >
-                                    {item.status === "Active"
+                                    {clientData.status === "Active"
                                       ? "active"
                                       : "nonActive"}
                                   </span>
                                 </td>
                                 <td>
                                   <div className="d-flex">
-                                    <Button
+                                    <button
+                                      className="btn btn-primary shadow btn-xs sharp me-1"
+                                      icon={"fas fa-pencil-alt"}
+                                      onClick={() =>
+                                        handleData(clientData, { isEdit: true })
+                                      }
+                                    >
+                                      <i className="fas fa-pencil-alt"></i>
+                                    </button>
+                                    <button
                                       className="btn btn-danger shadow btn-xs sharp"
-                                      onClick={() => handledelete(item)}
                                       icon={"fa fa-trash"}
+                                      onClick={() => handleData(clientData)}
                                     >
                                       <i className="fa fa-trash"></i>
-                                    </Button>
+                                    </button>
                                   </div>
                                 </td>
                               </tr>
@@ -147,7 +196,7 @@ const ClientMasterList = () => {
                       )}
                     </div>
                   ) : (
-                    <Norecord />
+                    !filteredData.length && <Norecord />
                   )}
                 </div>
               </div>
@@ -155,7 +204,7 @@ const ClientMasterList = () => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 

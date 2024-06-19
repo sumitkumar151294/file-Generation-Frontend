@@ -31,7 +31,7 @@ const TemplateTypeMasterForm = () => {
      },[templateTypemasterData]);
   const statusOptions = [
     { value: "Active", label: "Active" },
-    { value: "Non-Active", label: "Non-Active" }
+    { value: "Non-Active", label: "Non Active" }
   ];
    return (
     <>

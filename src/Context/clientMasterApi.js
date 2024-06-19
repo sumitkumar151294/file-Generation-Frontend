@@ -8,5 +8,8 @@ export const getClientMasterApi = async (payload) => {
     const { data = {} } = await axiosInstance.get(API.getClientMaster, payload);
     return data;
   };
-
+  export const putClientMasterApi = async (payload) => {
+    const { data = {} } = await axiosInstance.put(API.putClientMaster, payload);
+    return data;
+  };
 

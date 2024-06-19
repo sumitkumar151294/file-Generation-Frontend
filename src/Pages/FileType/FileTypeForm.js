@@ -7,22 +7,27 @@ import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { onPostfileType, onPostfileTypeReset } from "../../Store/Slices/fileTypeSlice";
+import { onGetfileType, onPostfileType, onPostfileTypeReset } from "../../Store/Slices/fileTypeSlice";
 
 const FileTypeForm = () => {
   const fileTypeData = useSelector((state) => state.fileTypeReducer);
   const dispatch = useDispatch();
   const Validations = Yup.object().shape({
     fileType: Yup.string().required("File Type is required"),
-    fileExtension: Yup.string().required("File Extension is required"),
-    status: Yup.string().required("Status is required"),
+    extension: Yup.string().required("File Extension is required"),
+    enabled: Yup.string().required("Status is required"),
   });
   const handleSubmit = (values) => {
-    dispatch(onPostfileType(values))
+    const fileTypeData={
+      ...values,
+      enabled: values.enabled === "true" ? true : false
+    }
+    dispatch(onPostfileType(fileTypeData))
   };
   useEffect(()=>{
     if(fileTypeData?.post_status_code==="201"){
       toast.success(fileTypeData.postMessage)
+      dispatch(onGetfileType())
       dispatch(onPostfileTypeReset())
     }else if(fileTypeData?.post_status_code){
       toast.error(fileTypeData.postMessage)
@@ -30,8 +35,8 @@ const FileTypeForm = () => {
     }
      },[fileTypeData]);
   const statusOptions = [
-    { value: "Active", label: "Active" },
-    { value: "Non-Active", label: "Non-Active" }
+    { value: false, label: "Active" },
+    { value:false, label: "Non Active" }
   ];
    return (
     <>
@@ -52,8 +57,8 @@ const FileTypeForm = () => {
                     <Formik
                       initialValues={{
                         fileType: "",
-                        fileExtension: "",
-                        status: "",
+                        extension: "",
+                        enabled: "",
                       }}
                       validationSchema={Validations}
                       onSubmit={handleSubmit}
@@ -89,15 +94,15 @@ const FileTypeForm = () => {
                               </label>
                               <Field
                                 type="text"
-                                name="fileExtension"
-                                className={`form-control ${errors.fileExtension && touched.fileExtension
+                                name="extension"
+                                className={`form-control ${errors.extension && touched.extension
                                   ? "is-invalid"
                                   : ""
                                   }`}
                                 placeholder="Enter File Extension"
                               />
                               <ErrorMessage
-                                name="fileExtension"
+                                name="extension"
                                 component="div"
                                 className="error-message"
                               />
@@ -110,13 +115,13 @@ const FileTypeForm = () => {
                               </label>
 
                               <Field
-                                name="status"
+                                name="enabled"
                                 component={Dropdown}
                                 options={statusOptions}
-                                className={`form-select ${errors.status && touched.status ? "is-invalid" : ""
+                                className={`form-select ${errors.enabled && touched.enabled ? "is-invalid" : ""
                               }`}                              />
                               <ErrorMessage
-                                name="status"
+                                name="enabled"
                                 component="div"
                                 className="error-message"
                               />

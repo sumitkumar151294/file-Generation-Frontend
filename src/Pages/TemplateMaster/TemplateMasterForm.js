@@ -14,7 +14,7 @@ const TemplateMasterForm = () => {
   const dispatch=useDispatch();
   const statusOptions = [
     { value: "Active", label: "Active" },
-    { value: "Non-Active", label: "Non-Active" },
+    { value: "Non-Active", label: "Non Active" },
   ];
   const templateMasterData=useSelector(state=>state.templateMasterReducer)
   const validations = Yup.object().shape({
