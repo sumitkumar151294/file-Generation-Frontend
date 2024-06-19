@@ -6,8 +6,11 @@ import {
   onPostfileType,
   onPostfileTypeError,
   onPostfileTypeSuccess,
+  onUpdatefileType,
+  onUpdatefileTypeError,
+  onUpdatefileTypeSuccess,
 } from "../Store/Slices/fileTypeSlice";
-import { getfileTypeApi, postfileTypeApi } from "../Context/fileTypeApi";
+import { getfileTypeApi, postfileTypeApi, updatefileTypeApi } from "../Context/fileTypeApi";
 
 
 function* GetfileType() {
@@ -58,36 +61,36 @@ function* PostfileType({ payload }) {
   }
 }
 
-// function* UpdatefileType({ payload }) {
-//   try {
-//     const updatefileTypeResponse = yield call(
-//       callCreatefileTypeUpdateApi,
-//       payload
-//     );
-//     if (updatefileTypeResponse.httpStatusCode === "201") {
-//       yield put(
-//         onUpdatefileTypeSuccess({
-//           data: updatefileTypeResponse.response,
-//           message: updatefileTypeResponse.errorMessage,
-//           status_code: updatefileTypeResponse.httpStatusCode,
-//         })
-//       );
-//     } else {
-//       yield put(
-//         onUpdatefileTypeError({
-//           data: updatefileTypeResponse.response,
-//           message: updatefileTypeResponse.errorMessage,
-//         })
-//       );
-//     }
-//   } catch (error) {
-//     const message = error.response || "Something went wrong";
-//     yield put(onUpdatefileTypeError({ data: [], message, status_code: 400 }));
-//   }
-// }
+function* UpdatefileType({ payload }) {
+  try {
+    const updatefileTypeResponse = yield call(
+      updatefileTypeApi,
+      payload
+    );
+    if (updatefileTypeResponse.httpStatusCode === "201") {
+      yield put(
+        onUpdatefileTypeSuccess({
+          data: updatefileTypeResponse.response,
+          message: updatefileTypeResponse.errorMessage,
+          status_code: updatefileTypeResponse.httpStatusCode,
+        })
+      );
+    } else {
+      yield put(
+        onUpdatefileTypeError({
+          data: updatefileTypeResponse.response,
+          message: updatefileTypeResponse.errorMessage,
+        })
+      );
+    }
+  } catch (error) {
+    const message = error.response || "Something went wrong";
+    yield put(onUpdatefileTypeError({ data: [], message, status_code: 400 }));
+  }
+}
 
 export default function* fileTypeSaga() {
   yield takeLatest(onGetfileType.type, GetfileType);
   yield takeLatest(onPostfileType.type, PostfileType);
-  // yield takeLatest(onUpdatefileType.type, UpdatefileType);
+  yield takeLatest(onUpdatefileType.type, UpdatefileType);
 }

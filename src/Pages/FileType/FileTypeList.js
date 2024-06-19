@@ -7,13 +7,15 @@ import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import Button from "../../Components/Button";
 import FileTypeForm from "./FileTypeForm";
-import { onGetfileType } from "../../Store/Slices/fileTypeSlice";
+import { fileType, onGetfileType, onUpdatefileType, onUpdatefileTypeReset } from "../../Store/Slices/fileTypeSlice";
+import { toast } from "react-toastify";
 const FileTypeList = () => {
   const fileTypeData = useSelector((state) => state?.fileTypeReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
+  const [fileData, setFileType] = useState();
   const dispatch = useDispatch();
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
@@ -38,12 +40,33 @@ const FileTypeList = () => {
     );
     setFilteredData(filtered);
   };
-  const handleData = (fileData) => {
-    console.log(fileData);
+  const handleData = (fileData,isEdit) => {
+  const fileInfo={
+    enabled: true,
+    deleted: true,
+    createdBy: 0,
+    updatedBy: 0,
+    fileType: fileData.fileType,
+    extension: fileData.extension,
+    id: fileData.id
+  }
+  if(isEdit){
+setFileType(fileInfo)
+  }else{
+
+    dispatch(onUpdatefileType(fileInfo))
+  }
   };
+  useEffect(()=>{
+  if(fileTypeData.update_status_code==="201"){
+  toast.success(fileTypeData.updateMessage)
+  dispatch(onGetfileType());
+  dispatch(onUpdatefileTypeReset())
+  }
+  },[fileTypeData])
   return (
     <div className="container-fluid">
-      <FileTypeForm />
+      <FileTypeForm  fileData={fileData}/>
       <div class="container-fluid pt-0">
         <div class="row">
           <div class="col-lg-12">
@@ -115,7 +138,7 @@ const FileTypeList = () => {
                                     <Button
                                       className="btn btn-primary shadow btn-xs sharp me-1"
                                       icon={"fas fa-pencil-alt"}
-                                      onClick={() => handleData(fileData)}
+                                      onClick={() => handleData(fileData, { isEdit: true })}
                                     >
                                       <i className="fas fa-pencil-alt"></i>
                                     </Button>

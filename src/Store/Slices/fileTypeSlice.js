@@ -143,7 +143,6 @@ export const fileType = createSlice({
     onUpdatefileTypeReset: (state) => {
       return {
         ...state,
-        isLoading: false,
         updatedfileType: [],
         updateMessage: "",
         error: [],

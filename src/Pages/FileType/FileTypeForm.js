@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button";
 import Loader from "../../Components/Loader/Loader";
@@ -7,9 +7,10 @@ import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { onGetfileType, onPostfileType, onPostfileTypeReset } from "../../Store/Slices/fileTypeSlice";
+import { onGetfileType, onPostfileType, onPostfileTypeReset, onUpdatefileType } from "../../Store/Slices/fileTypeSlice";
 
-const FileTypeForm = () => {
+const FileTypeForm = ({fileData}) => {
+  const [button, setButton] = useState("Submit");
   const fileTypeData = useSelector((state) => state.fileTypeReducer);
   const dispatch = useDispatch();
   const Validations = Yup.object().shape({
@@ -17,12 +18,35 @@ const FileTypeForm = () => {
     extension: Yup.string().required("File Extension is required"),
     enabled: Yup.string().required("Status is required"),
   });
+  const [intialValue, setInitialValue] = useState({
+    fileType: "",
+    extension: "",
+    enabled: "",
+  })
   const handleSubmit = (values) => {
-    const fileTypeData={
-      ...values,
-      enabled: values.enabled === "true" ? true : false
+    if(button==="Submit"){
+      const fileTypeData={
+        ...values,
+        enabled: values.enabled === "true" ? true : false
+      }
+      dispatch(onPostfileType(fileTypeData))
+    }else{
+      debugger
+      const fileTypeData={
+        ...values,
+        deleted:false
+      }
+      setInitialValue(
+        {
+          fileType: "",
+          extension: "",
+          enabled: "",
+        }
+      )
+      setButton("Submit")
+      dispatch(onUpdatefileType(fileTypeData))
     }
-    dispatch(onPostfileType(fileTypeData))
+
   };
   useEffect(()=>{
     if(fileTypeData?.post_status_code==="201"){
@@ -35,9 +59,16 @@ const FileTypeForm = () => {
     }
      },[fileTypeData]);
   const statusOptions = [
-    { value: false, label: "Active" },
+    { value: true, label: "Active" },
     { value:false, label: "Non Active" }
   ];
+  useEffect(()=>{
+    if (fileData) {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      setInitialValue(fileData);
+      setButton("Update");
+    }
+  },[fileData])
    return (
     <>
     <ToastContainer/>
@@ -55,13 +86,11 @@ const FileTypeForm = () => {
                 ) : (
                   <div className="container-fluid">
                     <Formik
-                      initialValues={{
-                        fileType: "",
-                        extension: "",
-                        enabled: "",
-                      }}
+                      initialValues={intialValue}
                       validationSchema={Validations}
                       onSubmit={handleSubmit}
+                    enableReinitialize={true}
+
                     >
                       {({ errors, touched }) => (
                         <Form>
@@ -129,7 +158,7 @@ const FileTypeForm = () => {
                             </div>
                             <div className="col-sm-12 form-group mb-0 mt-2">
                               <Button
-                                text="Submit"
+                                text={button}
                                 icon="fa fa-arrow-right"
                                 className="btn btn-primary float-right pad-aa mt-2"
                               />

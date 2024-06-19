@@ -58,17 +58,7 @@ const ClientMasterList = () => {
     };
     if (isEdit) {
       setClientData(
-        {
-          enabled: true,
-          deleted: true,
-          createdBy: 0,
-          updatedBy: 0,
-          clientName: clientData?.clientName,
-          clientCode: clientData.clientCode,
-          description: clientData.description,
-          url: clientData.url,
-          id: clientData.id,
-        },
+   clientInfo
       );
     } else {
       dispatch(onUpdateclientMaster(clientInfo));

@@ -7,10 +7,15 @@ import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { onGetclientMaster, onPostclientMaster, onPostclientMasterReset, onUpdateclientMaster } from "../../Store/Slices/clientMasterSlice";
+import {
+  onGetclientMaster,
+  onPostclientMaster,
+  onPostclientMasterReset,
+  onUpdateclientMaster,
+} from "../../Store/Slices/clientMasterSlice";
 
 const ClientMasterForm = ({ clientData }) => {
-  const [button, setButton] = useState("Submit")
+  const [button, setButton] = useState("Submit");
   const clientMasterData = useSelector((state) => state.clientMasterReducer);
   const [intialValue, setInitialValue] = useState({
     clientName: "",
@@ -18,7 +23,7 @@ const ClientMasterForm = ({ clientData }) => {
     url: "",
     enabled: "",
     clientCode: "",
-  })
+  });
   const dispatch = useDispatch();
   const clientFormValidations = Yup.object().shape({
     clientName: Yup.string().required("Client Name is required"),
@@ -27,19 +32,18 @@ const ClientMasterForm = ({ clientData }) => {
     clientCode: Yup.string().required("Client Code is required"),
   });
   const handleSubmit = (values, { resetForm }) => {
-
     if (button === "Submit") {
       const clientData = {
         ...values,
         enabled: values.enabled === "true" ? true : false,
-        clientCode: String(values.clientCode)
+        clientCode: String(values.clientCode),
       };
-      dispatch(onPostclientMaster(clientData))
+      dispatch(onPostclientMaster(clientData));
     } else {
       const clientData = {
         ...values,
         deleted: false,
-        clientCode: String(values.clientCode)
+        clientCode: String(values.clientCode),
       };
       setInitialValue({
         clientName: "",
@@ -47,34 +51,32 @@ const ClientMasterForm = ({ clientData }) => {
         url: "",
         enabled: "",
         clientCode: "",
-      })
-      setButton("Submit")
-      dispatch(onUpdateclientMaster(clientData))
+      });
+      setButton("Submit");
+      dispatch(onUpdateclientMaster(clientData));
     }
   };
   useEffect(() => {
     if (clientMasterData?.post_status_code === "201") {
-      toast.success(clientMasterData.postMessage)
-      dispatch(onGetclientMaster())
-      dispatch(onPostclientMasterReset())
+      toast.success(clientMasterData.postMessage);
+      dispatch(onGetclientMaster());
+      dispatch(onPostclientMasterReset());
     } else if (clientMasterData?.post_status_code) {
-      toast.error(clientMasterData.postMessage)
-      dispatch(onPostclientMasterReset())
+      toast.error(clientMasterData.postMessage);
+      dispatch(onPostclientMasterReset());
     }
   }, [clientMasterData]);
   const statusOptions = [
     { value: true, label: "Active" },
-    { value: false, label: "Non Active" }
+    { value: false, label: "Non Active" },
   ];
   useEffect(() => {
-
     if (clientData) {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-      setInitialValue(clientData)
-      setButton("Update")
+      setInitialValue(clientData);
+      setButton("Update");
     }
-
-  }, [clientData])
+  }, [clientData]);
   return (
     <>
       <ToastContainer />
@@ -95,23 +97,25 @@ const ClientMasterForm = ({ clientData }) => {
                   <Formik
                     initialValues={intialValue}
                     validationSchema={clientFormValidations}
-                    onSubmit={handleSubmit} enableReinitialize={true}
+                    onSubmit={handleSubmit}
+                    enableReinitialize={true}
                   >
                     {({ errors, touched }) => (
                       <Form>
                         <div className="row">
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
+                            <label>
                               Client Name
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
                               name="clientName"
-                              className={`form-control ${errors.clientName && touched.clientName
-                                ? "is-invalid"
-                                : ""
-                                }`}
+                              className={`form-control ${
+                                errors.clientName && touched.clientName
+                                  ? "is-invalid"
+                                  : ""
+                              }`}
                               placeholder="Enter Client Name"
                             />
                             <ErrorMessage
@@ -122,16 +126,15 @@ const ClientMasterForm = ({ clientData }) => {
                           </div>
 
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
-                              Description
-                            </label>
+                            <label>Description</label>
                             <Field
                               type="text"
                               name="description"
-                              className={`form-control ${errors.description && touched.description
-                                ? "is-invalid"
-                                : ""
-                                }`}
+                              className={`form-control ${
+                                errors.description && touched.description
+                                  ? "is-invalid"
+                                  : ""
+                              }`}
                               placeholder="Enter Discription"
                             />
                             <ErrorMessage
@@ -141,15 +144,16 @@ const ClientMasterForm = ({ clientData }) => {
                             />
                           </div>
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
+                            <label>
                               URL
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
                               name="url"
-                              className={`form-control ${errors.url && touched.url ? "is-invalid" : ""
-                                }`}
+                              className={`form-control ${
+                                errors.url && touched.url ? "is-invalid" : ""
+                              }`}
                               placeholder="Enter URL"
                             />
                             <ErrorMessage
@@ -160,17 +164,18 @@ const ClientMasterForm = ({ clientData }) => {
                           </div>
 
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
+                            <label>
                               Client Code
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
                               name="clientCode"
-                              className={`form-control ${errors.clientCode && touched.clientCode
-                                ? "is-invalid"
-                                : ""
-                                }`}
+                              className={`form-control ${
+                                errors.clientCode && touched.clientCode
+                                  ? "is-invalid"
+                                  : ""
+                              }`}
                               placeholder="Enter Client Code"
                             />
                             <ErrorMessage
@@ -180,7 +185,7 @@ const ClientMasterForm = ({ clientData }) => {
                             />
                           </div>
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
+                            <label>
                               Status
                               <span className="text-danger">*</span>
                             </label>
@@ -189,14 +194,17 @@ const ClientMasterForm = ({ clientData }) => {
                               name="enabled"
                               component={Dropdown}
                               options={statusOptions}
-                              className={`form-select ${errors.enabled && touched.enabled ? "is-invalid" : ""
-                                }`} />
+                              className={`form-select ${
+                                errors.enabled && touched.enabled
+                                  ? "is-invalid"
+                                  : ""
+                              }`}
+                            />
                             <ErrorMessage
                               name="enabled"
                               component="div"
                               className="error-message"
                             />
-
                           </div>
                           <div className="col-sm-12 form-group mb-0 mt-2">
                             <Button
