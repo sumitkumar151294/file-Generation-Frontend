@@ -112,7 +112,7 @@ const TemplateTypeMasterForm = () => {
                                   ? "is-invalid"
                                   : ""
                                   }`}
-                                placeholder="Enter Discription"
+                                placeholder="Enter File Type Rule "
                               />
                               <ErrorMessage
                                 name="fileName_Rule"
