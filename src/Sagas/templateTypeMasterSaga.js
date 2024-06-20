@@ -6,8 +6,11 @@ import {
   onPosttemplateTypeMaster,
   onPosttemplateTypeMasterError,
   onPosttemplateTypeMasterSuccess,
+  onUpdatetemplateTypeMaster,
+  onUpdatetemplateTypeMasterError,
+  onUpdatetemplateTypeMasterSuccess,
 } from "../Store/Slices/templateTypeMasterSlice";
-import { gettemplateTypeMasterApi, posttemplateTypeMasterApi } from "../Context/templateTypeMasterApi";
+import { gettemplateTypeMasterApi, posttemplateTypeMasterApi, updatetemplateTypeMasterApi } from "../Context/templateTypeMasterApi";
 
 
 function* GettemplateTypeMaster() {
@@ -58,36 +61,36 @@ function* PosttemplateTypeMaster({ payload }) {
   }
 }
 
-// function* UpdatetemplateTypeMaster({ payload }) {
-//   try {
-//     const updatetemplateTypeMasterResponse = yield call(
-//       callCreatetemplateTypeMasterUpdateApi,
-//       payload
-//     );
-//     if (updatetemplateTypeMasterResponse.httpStatusCode === "201") {
-//       yield put(
-//         onUpdatetemplateTypeMasterSuccess({
-//           data: updatetemplateTypeMasterResponse.response,
-//           message: updatetemplateTypeMasterResponse.errorMessage,
-//           status_code: updatetemplateTypeMasterResponse.httpStatusCode,
-//         })
-//       );
-//     } else {
-//       yield put(
-//         onUpdatetemplateTypeMasterError({
-//           data: updatetemplateTypeMasterResponse.response,
-//           message: updatetemplateTypeMasterResponse.errorMessage,
-//         })
-//       );
-//     }
-//   } catch (error) {
-//     const message = error.response || "Something went wrong";
-//     yield put(onUpdatetemplateTypeMasterError({ data: [], message, status_code: 400 }));
-//   }
-// }
+function* UpdatetemplateTypeMaster({ payload }) {
+  try {
+    const updatetemplateTypeMasterResponse = yield call(
+      updatetemplateTypeMasterApi,
+      payload
+    );
+    if (updatetemplateTypeMasterResponse.httpStatusCode === "201") {
+      yield put(
+        onUpdatetemplateTypeMasterSuccess({
+          data: updatetemplateTypeMasterResponse.response,
+          message: updatetemplateTypeMasterResponse.errorMessage,
+          status_code: updatetemplateTypeMasterResponse.httpStatusCode,
+        })
+      );
+    } else {
+      yield put(
+        onUpdatetemplateTypeMasterError({
+          data: updatetemplateTypeMasterResponse.response,
+          message: updatetemplateTypeMasterResponse.errorMessage,
+        })
+      );
+    }
+  } catch (error) {
+    const message = error.response || "Something went wrong";
+    yield put(onUpdatetemplateTypeMasterError({ data: [], message, status_code: 400 }));
+  }
+}
 
 export default function* templateTypeMasterSaga() {
   yield takeLatest(onGettemplateTypeMaster.type, GettemplateTypeMaster);
   yield takeLatest(onPosttemplateTypeMaster.type, PosttemplateTypeMaster);
-  // yield takeLatest(onUpdatetemplateTypeMaster.type, UpdatetemplateTypeMaster);
+  yield takeLatest(onUpdatetemplateTypeMaster.type, UpdatetemplateTypeMaster);
 }

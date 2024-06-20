@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from "react";
 import VariableDictionaryForm from "./VariableDictionaryForm";
 import { useDispatch, useSelector } from "react-redux";
-import { onGetVariable } from "../../Store/Slices/variableSlice";
+import { onGetVariable, onUpdateVariable, onUpdateVariableReset } from "../../Store/Slices/variableSlice";
 import Loader from "../../Components/Loader/Loader";
 import Norecord from '../../Components/NoRecord/NoRecord';
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
+import Button from "../../Components/Button";
+import { toast } from "react-toastify";
 
 const VariableDictionaryList = () => {
   const variableData = useSelector((state) => state?.variableReducer);
@@ -41,7 +43,25 @@ const VariableDictionaryList = () => {
     );
     setFilteredData(filtered);
   };
-
+const handleData=(variableData)=>{
+  const variableDatatoDelete={
+    enabled: true,
+    deleted: true,
+    createdBy: 0,
+    updatedBy: 0,
+    variableName: variableData.variableName,
+    variable: variableData?.variable,
+    id: variableData?.id
+  }
+  dispatch(onUpdateVariable(variableDatatoDelete))
+}
+useEffect(()=>{
+if(variableData?.update_status_code==="201"){
+  toast.success(variableData?.updateMessage)
+  dispatch(onGetVariable())
+  dispatch(onUpdateVariableReset())
+}
+},[variableData])
   return (
     <div className="container-fluid">
 
@@ -91,19 +111,23 @@ const VariableDictionaryList = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {filteredData.slice(startIndex, endIndex).map((item, index) => (
+                          {filteredData.slice(startIndex, endIndex).map((variableData, index) => (
                             <tr key={index}>
-                              <td>{item.variableName}</td>
-                              <td>{item.variable}</td>
-                              <td>{item.date}</td>
+                              <td>{variableData.variableName}</td>
+                              <td>{variableData.variable}</td>
+                              <td>{variableData.date}</td>
                               <td>
                                 <div className="d-flex">
-                                  <a
-                                    href="/none"
-                                    className="btn btn-danger shadow btn-xs sharp"
-                                  >
-                                    <i className="fa fa-trash"></i>
-                                  </a>
+
+                                <div className="d-flex">
+                                <Button
+                                      className="btn btn-danger shadow btn-xs sharp"
+                                      icon={"fa fa-trash"}
+                                      onClick={() => handleData(variableData)}
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </Button>
+                                  </div>
                                 </div>
                               </td>
                             </tr>

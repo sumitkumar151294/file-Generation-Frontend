@@ -8,12 +8,11 @@ import fileTypeSaga from "./fileTypeSaga";
 import templateMasterSaga from "./templateMasterSaga";
 export default function* rootSaga() {
   yield all([
-   loginSaga(),
-   fileTypeSaga(),
-VariableSaga(),
-clientMasterSaga(),
-templateTypeMasterSaga(),
-templateMasterSaga()
-
-    ]);
+    loginSaga(),
+    fileTypeSaga(),
+    VariableSaga(),
+    clientMasterSaga(),
+    templateTypeMasterSaga(),
+    templateMasterSaga(),
+  ]);
 }

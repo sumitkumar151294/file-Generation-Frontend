@@ -4,11 +4,11 @@ import {
   onLoginSubmitError,
   onLoginSubmitSuccess
 } from "../Store/Slices/LoginSlice";
-import { callLoginApi } from "../Context/loginApi";
+import { postLoginApi } from "../Context/loginApi";
 
 function* Login({ payload }) {
   try {
-    const loginResponse = yield call(callLoginApi, payload);
+    const loginResponse = yield call(postLoginApi, payload);
     if (loginResponse) {
       yield put(
         onLoginSubmitSuccess({

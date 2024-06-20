@@ -143,7 +143,6 @@ export const variableSlice = createSlice({
     onUpdateVariableReset: (state) => {
       return {
         ...state,
-        isLoading: false,
         updatedVariable: [],
         updateMessage: "",
         error: [],

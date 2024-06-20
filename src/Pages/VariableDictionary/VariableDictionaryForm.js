@@ -13,7 +13,7 @@ const VariableDictionaryForm = () => {
   const dispatch = useDispatch();
   const variableValidations = Yup.object().shape({
     variable: Yup.string().required("Variable is required"),
-    variable_name: Yup.string().required("Variable Name is required"),
+    variableName: Yup.string().required("Variable Name is required"),
   });
   const handleSubmit = (values) => {
     dispatch(onPostVariable(values));
@@ -46,7 +46,8 @@ if(variableData?.post_status_code==="201"){
                     <Formik
                       initialValues={{
                         variable: "",
-                        variable_name: "",
+                        variableName: "",
+                        deleted:false
                       }}
                       validationSchema={variableValidations}
                       onSubmit={handleSubmit}
@@ -61,9 +62,9 @@ if(variableData?.post_status_code==="201"){
                               </label>
                               <Field
                                 type="text"
-                                name="variable_name"
+                                name="variableName"
                                 className={`form-control ${
-                                  errors.variable_name && touched.variable_name
+                                  errors.variableName && touched.variableName
                                     ? "is-invalid"
                                     : ""
                                 }`}

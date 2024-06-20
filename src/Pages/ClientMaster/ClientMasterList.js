@@ -12,6 +12,7 @@ import {
   onUpdateclientMasterReset,
 } from "../../Store/Slices/clientMasterSlice";
 import { toast } from "react-toastify";
+import Button from "../../Components/Button";
 const ClientMasterList = () => {
   const clientMasterData = useSelector((state) => state?.clientMasterReducer);
   const [page, setPage] = useState(1);
@@ -142,7 +143,7 @@ const ClientMasterList = () => {
                                 </td>
                                 <td>
                                   <div className="d-flex">
-                                    <button
+                                    <Button
                                       className="btn btn-primary shadow btn-xs sharp me-1"
                                       icon={"fas fa-pencil-alt"}
                                       onClick={() =>
@@ -150,14 +151,14 @@ const ClientMasterList = () => {
                                       }
                                     >
                                       <i className="fas fa-pencil-alt"></i>
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
                                       className="btn btn-danger shadow btn-xs sharp"
                                       icon={"fa fa-trash"}
                                       onClick={() => handleData(clientData)}
                                     >
                                       <i className="fa fa-trash"></i>
-                                    </button>
+                                    </Button>
                                   </div>
                                 </td>
                               </tr>

@@ -6,9 +6,12 @@ import {
   onPostVariable,
   onPostVariableError,
   onPostVariableSuccess,
+  onUpdateVariable,
+  onUpdateVariableError,
+  onUpdateVariableSuccess,
 } from "../Store/Slices/variableSlice";
 
-import { getVariable, postVariable } from "../Context/variableApi";
+import { getVariable, postVariable, updateVariable } from "../Context/variableApi";
 
 function* GetVariable() {
   try {
@@ -58,36 +61,36 @@ function* PostVariable({ payload }) {
   }
 }
 
-// function* UpdateVariable({ payload }) {
-//   try {
-//     const updateVariableResponse = yield call(
-//       callCreateVariableUpdateApi,
-//       payload
-//     );
-//     if (updateVariableResponse.httpStatusCode === "201") {
-//       yield put(
-//         onUpdateVariableSuccess({
-//           data: updateVariableResponse.response,
-//           message: updateVariableResponse.errorMessage,
-//           status_code: updateVariableResponse.httpStatusCode,
-//         })
-//       );
-//     } else {
-//       yield put(
-//         onUpdateVariableError({
-//           data: updateVariableResponse.response,
-//           message: updateVariableResponse.errorMessage,
-//         })
-//       );
-//     }
-//   } catch (error) {
-//     const message = error.response || "Something went wrong";
-//     yield put(onUpdateVariableError({ data: [], message, status_code: 400 }));
-//   }
-// }
+function* UpdateVariable({ payload }) {
+  try {
+    const updateVariableResponse = yield call(
+      updateVariable,
+      payload
+    );
+    if (updateVariableResponse.httpStatusCode === "201") {
+      yield put(
+        onUpdateVariableSuccess({
+          data: updateVariableResponse.response,
+          message: updateVariableResponse.errorMessage,
+          status_code: updateVariableResponse.httpStatusCode,
+        })
+      );
+    } else {
+      yield put(
+        onUpdateVariableError({
+          data: updateVariableResponse.response,
+          message: updateVariableResponse.errorMessage,
+        })
+      );
+    }
+  } catch (error) {
+    const message = error.response || "Something went wrong";
+    yield put(onUpdateVariableError({ data: [], message, status_code: 400 }));
+  }
+}
 
 export default function* VariableSaga() {
   yield takeLatest(onGetVariable.type, GetVariable);
   yield takeLatest(onPostVariable.type, PostVariable);
-  // yield takeLatest(onUpdateVariable.type, UpdateVariable);
+  yield takeLatest(onUpdateVariable.type, UpdateVariable);
 }

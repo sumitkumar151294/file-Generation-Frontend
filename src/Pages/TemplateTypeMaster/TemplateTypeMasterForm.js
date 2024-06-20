@@ -11,14 +11,22 @@ import { onPosttemplateTypeMaster, onPosttemplateTypeMasterReset } from "../../S
 
 const TemplateTypeMasterForm = () => {
   const templateTypemasterData = useSelector((state) => state.templateTypeMasterReducer);
+  const clientMasterData = useSelector((state) => state?.clientMasterReducer?.getclientMasterData);
+
   const dispatch = useDispatch();
   const validations = Yup.object().shape({
     templatetype: Yup.string().required("Template Name is required"),
     description: Yup.string().required("Description is required"),
-    status: Yup.string().required("Status is required"),
+    enabled: Yup.string().required("Status is required"),
+    fileName_Rule: Yup.string().required("File Type Rule is required"),
+    clientid: Yup.string().required("Client is required"),
   });
   const handleSubmit = (values) => {
-    dispatch(onPosttemplateTypeMaster(values))
+    const templateTypeData = {
+      ...values,
+      enabled: values.enabled === "true" ? true : false,
+    };
+    dispatch(onPosttemplateTypeMaster(templateTypeData))
   };
   useEffect(()=>{
     if(templateTypemasterData?.post_status_code==="201"){
@@ -30,9 +38,16 @@ const TemplateTypeMasterForm = () => {
     }
      },[templateTypemasterData]);
   const statusOptions = [
-    { value: "Active", label: "Active" },
-    { value: "Non-Active", label: "Non Active" }
+    { value: true, label: "Active" },
+    { value: false, label: "Non Active" }
   ];
+  console.log(clientMasterData)
+  const clientOptions = clientMasterData.map(clientData => ({
+    value: clientData.id,
+    label: clientData.clientName
+  }));
+
+
    return (
     <>
     <ToastContainer/>
@@ -53,7 +68,10 @@ const TemplateTypeMasterForm = () => {
                       initialValues={{
                         templatetype: "",
                         description: "",
-                        status: "",
+                        fileName_Rule: "",
+                        enabled: "",
+                        clientid:"",
+                        deleted:false,
                       }}
                       validationSchema={validations}
                       onSubmit={handleSubmit}
@@ -83,6 +101,26 @@ const TemplateTypeMasterForm = () => {
                             </div>
 
                             <div className="col-sm-4 form-group mb-2">
+                              <label >
+                                File Type Rule
+                                <span className="text-danger">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                name="fileName_Rule"
+                                className={`form-control ${errors.fileName_Rule && touched.fileName_Rule
+                                  ? "is-invalid"
+                                  : ""
+                                  }`}
+                                placeholder="Enter Discription"
+                              />
+                              <ErrorMessage
+                                name="fileName_Rule"
+                                component="div"
+                                className="error-message"
+                              />
+                            </div>
+                            <div className="col-sm-4 form-group mb-2">
                               <label htmlFor="availabelAmount">
                                 Description
                                 <span className="text-danger">*</span>
@@ -104,20 +142,41 @@ const TemplateTypeMasterForm = () => {
                             </div>
                             <div className="col-sm-4 form-group mb-2">
                               <label htmlFor="status">
+                                Client Name
+                              <span className="text-danger">*</span>
+                              </label>
+
+                              <Field
+                                name="clientid"
+                                component={Dropdown}
+                                options={clientOptions}
+                                className={`form-select ${errors.clientid && touched.clientid
+                                  ? "is-invalid"
+                                  : ""
+                                  }`}                              />
+                              <ErrorMessage
+                                name="clientid"
+                                component="div"
+                                className="error-message"
+                              />
+
+                            </div>
+                            <div className="col-sm-4 form-group mb-2">
+                              <label htmlFor="status">
                                 Status
                               <span className="text-danger">*</span>
                               </label>
 
                               <Field
-                                name="status"
+                                name="enabled"
                                 component={Dropdown}
                                 options={statusOptions}
-                                className={`form-select ${errors.status && touched.status
+                                className={`form-select ${errors.enabled && touched.enabled
                                   ? "is-invalid"
                                   : ""
                                   }`}                              />
                               <ErrorMessage
-                                name="status"
+                                name="enabled"
                                 component="div"
                                 className="error-message"
                               />

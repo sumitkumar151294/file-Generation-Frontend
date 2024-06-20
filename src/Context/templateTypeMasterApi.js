@@ -7,5 +7,9 @@ export const posttemplateTypeMasterApi = async (payload) => {
   const { data = {} } = await axiosInstance.get(API.gettemplatetypemaster, payload);
   return data;
 };
+;export const updatetemplateTypeMasterApi = async (payload) => {
+  const { data = {} } = await axiosInstance.put(API.updatetemplatetypemaster, payload);
+  return data;
+};
 
 

@@ -7,7 +7,7 @@ import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import Button from "../../Components/Button";
 import FileTypeForm from "./FileTypeForm";
-import { fileType, onGetfileType, onUpdatefileType, onUpdatefileTypeReset } from "../../Store/Slices/fileTypeSlice";
+import { onGetfileType, onUpdatefileType, onUpdatefileTypeReset } from "../../Store/Slices/fileTypeSlice";
 import { toast } from "react-toastify";
 const FileTypeList = () => {
   const fileTypeData = useSelector((state) => state?.fileTypeReducer);

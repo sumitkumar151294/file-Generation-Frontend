@@ -1,16 +1,20 @@
 const API={
-   login:"/postlogin",
+   postlogin:"/user",
+   getlogin:"/user",
+   updatelogin:"/user",
    postfileType:"/file-type",
    getfileType:"/file-type",
    updatefileType:"/file-type",
-   postVariable:"/postvariable",
-   getVariable:"/getvariable",
+   postVariable:"/Variable-Dictonary",
+   getVariable:"/Variable-Dictonary",
+   updateVariable:"/Variable-Dictonary",
    postClientMaster:"/client-master",
    getClientMaster:"/client-master",
    putClientMaster:"/client-master",
 
-   posttemplatetypemaster :"/posttemplatetypemaster",
-   gettemplatetypemaster:"/gettemplatetypemaster",
+   posttemplatetypemaster :"/template-type",
+   gettemplatetypemaster:"/template-type",
+   updatetemplatetypemaster:"/template-type",
    gettemplatemaster:"/gettemplatemaster",
    posttemplatemaster:"/posttemplatemaster"
 
