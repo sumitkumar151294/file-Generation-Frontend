@@ -59,7 +59,7 @@ const ClientMasterList = () => {
     };
     if (isEdit) {
       setClientData(
-   clientInfo
+        clientInfo
       );
     } else {
       dispatch(onUpdateclientMaster(clientInfo));
@@ -72,6 +72,24 @@ const ClientMasterList = () => {
       dispatch(onUpdateclientMasterReset());
     }
   }, [clientMasterData]);
+  const formatDate = (timestamp) => {
+
+    const date = new Date(timestamp);
+
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+
+
+    const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+
+    return formattedDate;
+  }
   return (
     <div className="container-fluid">
       <ClientMasterForm clientData={clientData} />
@@ -127,18 +145,20 @@ const ClientMasterList = () => {
                               <tr key={index}>
                                 <td>{clientData.clientName}</td>
                                 <td>{clientData.description}</td>
-                                <td>{clientData.date}</td>
+                                <td>{formatDate(clientData.createdOn)}</td>
+
                                 <td>
                                   <span
                                     className={
-                                      clientData.status === "Active"
+                                      clientData.enabled
                                         ? "badge badge-success"
                                         : "badge badge-danger"
                                     }
                                   >
-                                    {clientData.status === "Active"
-                                      ? "active"
-                                      : "nonActive"}
+                                    {clientData.enabled
+
+                                      ? "Active"
+                                      : "Non Active"}
                                   </span>
                                 </td>
                                 <td>
@@ -165,14 +185,14 @@ const ClientMasterList = () => {
                             ))}
                         </tbody>
                       </table>
-                      {filteredData.length > 5 && (
+                      {filteredData?.length > 5 && (
                         <div className="pagination-container">
                           <ReactPaginate
                             previousLabel={"<"}
                             nextLabel={" >"}
                             breakLabel={"..."}
                             pageCount={Math.ceil(
-                              filteredData.length / rowsPerPage
+                              filteredData?.length / rowsPerPage
                             )}
                             marginPagesDisplayed={2}
                             onPageChange={handlePageChange}
@@ -187,7 +207,7 @@ const ClientMasterList = () => {
                       )}
                     </div>
                   ) : (
-                    !filteredData.length && <Norecord />
+                    !filteredData?.length && <Norecord />
                   )}
                 </div>
               </div>

@@ -11,6 +11,7 @@ import { onGetfileType, onUpdatefileType, onUpdatefileTypeReset } from "../../St
 import { toast } from "react-toastify";
 const FileTypeList = () => {
   const fileTypeData = useSelector((state) => state?.fileTypeReducer);
+
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
@@ -27,7 +28,9 @@ const FileTypeList = () => {
     if (fileTypeData?.getfileTypeData) {
       setFilteredData(fileTypeData?.getfileTypeData);
     }
+
   }, [fileTypeData?.getfileTypeData]);
+  console.log(fileTypeData)
   const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState(
     fileTypeData?.getfileTypeData
@@ -64,6 +67,24 @@ setFileType(fileInfo)
   dispatch(onUpdatefileTypeReset())
   }
   },[fileTypeData])
+  const formatDate = (timestamp) => {
+
+    const date = new Date(timestamp);
+
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+
+
+    const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+
+    return formattedDate;
+  }
   return (
     <div className="container-fluid">
       <FileTypeForm  fileData={fileData}/>
@@ -119,18 +140,18 @@ setFileType(fileInfo)
                               <tr key={index}>
                                 <td>{fileData.fileType}</td>
                                 <td>{fileData.extension}</td>
-                                <td>{fileData.date}</td>
+                                <td>{formatDate(fileData.createdOn)}</td>
                                 <td>
                                   <span
                                     className={
-                                      fileData.status === "Active"
+                                      fileData.enabled
                                         ? "badge badge-success"
                                         : "badge badge-danger"
                                     }
                                   >
-                                    {fileData.status === "Active"
-                                      ? "active"
-                                      : "nonActive"}
+                                    {fileData.enabled
+                                      ? "Active"
+                                      : "Non Active"}
                                   </span>
                                 </td>
                                 <td>

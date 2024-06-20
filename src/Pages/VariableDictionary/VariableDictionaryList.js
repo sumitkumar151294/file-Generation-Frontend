@@ -30,7 +30,7 @@ const VariableDictionaryList = () => {
 
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  
+
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -43,25 +43,43 @@ const VariableDictionaryList = () => {
     );
     setFilteredData(filtered);
   };
-const handleData=(variableData)=>{
-  const variableDatatoDelete={
-    enabled: true,
-    deleted: true,
-    createdBy: 0,
-    updatedBy: 0,
-    variableName: variableData.variableName,
-    variable: variableData?.variable,
-    id: variableData?.id
+  const handleData = (variableData) => {
+    const variableDatatoDelete = {
+      enabled: true,
+      deleted: true,
+      createdBy: 0,
+      updatedBy: 0,
+      variableName: variableData.variableName,
+      variable: variableData?.variable,
+      id: variableData?.id
+    }
+    dispatch(onUpdateVariable(variableDatatoDelete))
   }
-  dispatch(onUpdateVariable(variableDatatoDelete))
-}
-useEffect(()=>{
-if(variableData?.update_status_code==="201"){
-  toast.success(variableData?.updateMessage)
-  dispatch(onGetVariable())
-  dispatch(onUpdateVariableReset())
-}
-},[variableData])
+  useEffect(() => {
+    if (variableData?.update_status_code === "201") {
+      toast.success(variableData?.updateMessage)
+      dispatch(onGetVariable())
+      dispatch(onUpdateVariableReset())
+    }
+  }, [variableData])
+  const formatDate = (timestamp) => {
+
+    const date = new Date(timestamp);
+
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+
+
+    const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+
+    return formattedDate;
+  }
   return (
     <div className="container-fluid">
 
@@ -115,12 +133,12 @@ if(variableData?.update_status_code==="201"){
                             <tr key={index}>
                               <td>{variableData.variableName}</td>
                               <td>{variableData.variable}</td>
-                              <td>{variableData.date}</td>
+                              <td>{formatDate(variableData.createdOn)}</td>
                               <td>
                                 <div className="d-flex">
 
-                                <div className="d-flex">
-                                <Button
+                                  <div className="d-flex">
+                                    <Button
                                       className="btn btn-danger shadow btn-xs sharp"
                                       icon={"fa fa-trash"}
                                       onClick={() => handleData(variableData)}
@@ -160,7 +178,7 @@ if(variableData?.update_status_code==="201"){
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 

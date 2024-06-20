@@ -43,7 +43,8 @@ const ClientMasterForm = ({ clientData }) => {
       const clientData = {
         ...values,
         deleted: false,
-        clientCode: String(values.clientCode),
+        enabled: values.enabled === "true" ? true : false
+
       };
       setInitialValue({
         clientName: "",

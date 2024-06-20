@@ -34,13 +34,16 @@ const FileTypeForm = ({fileData}) => {
       debugger
       const fileTypeData={
         ...values,
-        deleted:false
+        deleted:false,
+        enabled: values.enabled === "true" ? true : false
+
       }
       setInitialValue(
         {
           fileType: "",
           extension: "",
           enabled: "",
+
         }
       )
       setButton("Submit")
