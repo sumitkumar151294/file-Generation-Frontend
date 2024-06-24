@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {  useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import Loader from "../../Components/Loader/Loader";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -56,7 +56,7 @@ if(variableData?.post_status_code==="201"){
                         <Form>
                           <div className="row">
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="amount">
+                              <label >
                                 Variable Name
                                 <span className="text-danger">*</span>
                               </label>
@@ -78,7 +78,7 @@ if(variableData?.post_status_code==="201"){
                             </div>
 
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="availabelAmount">
+                              <label >
                                 Variable
                                 <span className="text-danger">*</span>
                               </label>

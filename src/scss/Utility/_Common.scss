@@ -187,7 +187,7 @@ label {
   border-color: var(--bs-success);
 }
 .btn-warning {
-  color: #000;
+  color:var(--title);
   background-color: var(--bs-warning);
   border-color: var(--bs-warning);
 }
@@ -521,4 +521,15 @@ cursor{
   background: var(--primary-alice-2);
   height: 44px;
   border-radius:   12px 12px 12px;
+}
+.inline{
+display: flex;
+flex-direction:row;
+gap: 1rem;
+}
+.m-h100{
+  min-height: 100vh;
+}
+.w-100{
+  width:100%
 }

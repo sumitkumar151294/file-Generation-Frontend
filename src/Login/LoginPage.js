@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Footer from "../Layout/Footer/Footer";
-import Button from "../Components/Button";
+import Button from "../Components/Button/Button";
 import InputField from "../Components/InputField/InputField";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -125,7 +125,7 @@ const LoginPage = () => {
                                       />
                                       <label
                                         className="form-check-label"
-                                        htmlFor="basic_checkbox_1"
+                                       
                                       >
                                         Remember my preference
                                       </label>

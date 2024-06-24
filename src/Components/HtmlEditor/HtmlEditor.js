@@ -12,7 +12,7 @@ const HtmlEditor = ({ field, form }) => {
     <div>
       <ReactQuill
         theme="snow"
-        value={field.value}
+        value={field?.value}
         onChange={handleChange}
         modules={HtmlEditor.modules}
         formats={HtmlEditor.formats}

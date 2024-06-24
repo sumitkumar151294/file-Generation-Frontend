@@ -6,7 +6,7 @@ import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import TemplateTypeMasterForm from "./TemplateTypeMasterForm";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 const TemplateTypeMasterList = () => {
   const templateTypeMasterData = useSelector((state) => state?.templateTypeMasterReducer);
@@ -45,17 +45,17 @@ const TemplateTypeMasterList = () => {
     <div className="container-fluid">
 
       <TemplateTypeMasterForm />
-      <div class="container-fluid pt-0">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="container-fluid mt-2 mb-2">
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-                  <div class="card-header">
-                    <h4 class="card-title">Template Type List</h4>
+      <div className="container-fluid pt-0">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="card">
+              <div className="container-fluid mt-2 mb-2">
+                <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                  <div className="card-header">
+                    <h4 className="card-title">Template Type List</h4>
                   </div>
-                  <div class="customer-search mb-sm-0 mb-3">
-                    <div class="input-group search-area">
+                  <div className="customer-search mb-sm-0 mb-3">
+                    <div className="input-group search-area">
                       <InputField
                         type="text"
                         className="form-control only-high"
@@ -69,17 +69,17 @@ const TemplateTypeMasterList = () => {
                     </div>
                   </div>
 
-                  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
+                  <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
                 </div>
               </div>
-              <div class="container-fluid">
-                <div class="card-body">
+              <div className="container-fluid">
+                <div className="card-body">
                   {templateTypeMasterData?.isLoading ? (
                     <div style={{ height: "150px" }}>
                       <Loader classType={"absoluteLoader"} />
                     </div>
                   ) : filteredData?.length ? (
-                    <div class="table-responsive">
+                    <div className="table-responsive">
                       <table className="table header-border table-responsive-sm">
                         <thead>
                           <tr>

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import Loader from "../../Components/Loader/Loader";
 import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -94,7 +94,7 @@ const ClientMasterForm = ({ clientData }) => {
                 </div>
               ) : (
                 <div className="container-fluid">
-                  {console.log(intialValue)}
+
                   <Formik
                     initialValues={intialValue}
                     validationSchema={clientFormValidations}

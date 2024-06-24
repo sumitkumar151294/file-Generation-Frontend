@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import Loader from "../../Components/Loader/Loader";
 import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -41,7 +41,7 @@ const TemplateTypeMasterForm = () => {
     { value: true, label: "Active" },
     { value: false, label: "Non Active" }
   ];
-  console.log(clientMasterData)
+
   const clientOptions = clientMasterData.map(clientData => ({
     value: clientData.id,
     label: clientData.clientName
@@ -80,7 +80,7 @@ const TemplateTypeMasterForm = () => {
                         <Form>
                           <div className="row">
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="amount">
+                              <label>
                                 Template Name
                                 <span className="text-danger">*</span>
                               </label>
@@ -121,7 +121,7 @@ const TemplateTypeMasterForm = () => {
                               />
                             </div>
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="availabelAmount">
+                              <label >
                                 Description
                                 <span className="text-danger">*</span>
                               </label>
@@ -141,7 +141,7 @@ const TemplateTypeMasterForm = () => {
                               />
                             </div>
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="status">
+                              <label >
                                 Client Name
                               <span className="text-danger">*</span>
                               </label>
@@ -162,7 +162,7 @@ const TemplateTypeMasterForm = () => {
 
                             </div>
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="status">
+                              <label >
                                 Status
                               <span className="text-danger">*</span>
                               </label>

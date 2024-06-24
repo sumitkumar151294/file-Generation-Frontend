@@ -1,57 +1,28 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
-  return (
- <>
-   <div className="">
-            <div className="">
+    const clientMasterData = useSelector((state) => state?.clientMasterReducer?.getclientMasterData?.length
+    );
+    const variableData = useSelector((state) => state?.variableReducer?.getVariableData?.length);
 
+    return (
+        <><div className='m-h100'>
+            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-xl-6">
-                        <div className="row">
-                            <div className="col-xl-6 col-sm-6">
-                                <div className="card">
-                                    <div className="card-body d-flex align-items-center justify-content-between">
-                                        <div className="menu">
-                                            <span className="font-w500 fs-16 d-block mb-2">Categories</span>
-                                            <h2>45</h2>
-                                        </div>
-                                        <div className="d-inline-block position-relative donut-chart-sale">
-                                            <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/8</span>
-                                            <small className="text-black">
-                                                <img className="w-35px" src="img/category.png"/>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xl-6 col-sm-6">
-                                <div className="card">
-                                    <div className="card-body d-flex align-items-center justify-content-between">
-                                        <div className="menu">
-                                            <span className="font-w500 fs-16 d-block mb-2">Brands</span>
-                                            <h2>85</h2>
-                                        </div>
-                                        <div className="d-inline-block position-relative donut-chart-sale">
-                                            <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/6</span>
-                                            <small className="text-black">
-                                                <img className="w-35px" src="img/product1.png"/>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="col-xl-6 ">
+                        <div className="inline">
                             <div className="col-xl-6 col-sm-6">
                                 <div className="card">
                                     <div className="card-body d-flex align-items-center justify-content-between">
                                         <div className="menu">
                                             <span className="font-w500 fs-16 d-block mb-2">Clients</span>
-                                            <h2>247</h2>
+                                            <h2>{clientMasterData}</h2>
                                         </div>
                                         <div className="d-inline-block position-relative donut-chart-sale">
                                             <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/8</span>
                                             <small className="text-black">
-                                                <img className="w-35px" src="img/customer1.png"/>
+                                                <img className="w-35px" src="img/category.png" alt=''/>
                                             </small>
                                         </div>
                                     </div>
@@ -61,13 +32,45 @@ const Dashboard = () => {
                                 <div className="card">
                                     <div className="card-body d-flex align-items-center justify-content-between">
                                         <div className="menu">
-                                            <span className="font-w500 fs-16 d-block mb-2">Orders</span>
+                                            <span className="font-w500 fs-16 d-block mb-2">Templates</span>
+                                            <h2>85</h2>
+                                        </div>
+                                        <div className="d-inline-block position-relative donut-chart-sale">
+                                            <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/6</span>
+                                            <small className="text-black">
+                                                <img className="w-35px" src="img/product1.png" alt='' />
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-6 col-sm-6">
+                                <div className="card">
+                                    <div className="card-body d-flex align-items-center justify-content-between">
+                                        <div className="menu">
+                                            <span className="font-w500 fs-16 d-block mb-2">Variable</span>
+                                            <h2>{variableData}</h2>
+                                        </div>
+                                        <div className="d-inline-block position-relative donut-chart-sale">
+                                            <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/8</span>
+                                            <small className="text-black">
+                                                <img className="w-35px" src="img/customer1.png" alt=''/>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-6 col-sm-6">
+                                <div className="card">
+                                    <div className="card-body d-flex align-items-center justify-content-between">
+                                        <div className="menu">
+                                            <span className="font-w500 fs-16 d-block mb-2">Template Type</span>
                                             <h2>872</h2>
                                         </div>
                                         <div className="d-inline-block position-relative donut-chart-sale">
                                             <span className="donut1" data-peity='{ "fill": ["rgb(0, 114, 253)", "rgba(247, 245, 255)"],   "innerRadius": 35, "radius": 10}'>5/7</span>
                                             <small className="text-black">
-                                                <img className="w-35px" src="img/category.png"/>
+                                                <img className="w-35px" src="img/category.png" alt=''/>
                                             </small>
                                         </div>
                                     </div>
@@ -75,7 +78,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-xl-6">
+                    {/* <div className="col-xl-6">
                         <div className="card">
                             <div className="card-header border-0 flex-wrap pb-0">
                                 <div className="mb-sm-0 mb-2">
@@ -91,7 +94,7 @@ const Dashboard = () => {
                                 <div id="revenueChart" className="revenueChart"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="col-xl-12 col-xxl-12">
                         <div className="row">
@@ -99,7 +102,7 @@ const Dashboard = () => {
                                 <div className="card">
                                     <div className="card-header border-0  flex-wrap">
                                         <div>
-                                            <h4 className="fs-20 mb-1">Orders</h4>
+                                            <h4 className="fs-20 mb-1">Total Pdf Data</h4>
                                             <span>Graph data is based on full system manners</span>
                                         </div>
                                         <div className="d-flex">
@@ -140,10 +143,11 @@ const Dashboard = () => {
                 </div>
 
             </div>
-            </div>
-            
-            </>
-  )
+        </div>
+
+
+        </>
+    )
 }
 
 export default Dashboard

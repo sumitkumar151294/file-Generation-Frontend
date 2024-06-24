@@ -12,7 +12,8 @@ import {
   onUpdateclientMasterReset,
 } from "../../Store/Slices/clientMasterSlice";
 import { toast } from "react-toastify";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
+import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
 const ClientMasterList = () => {
   const clientMasterData = useSelector((state) => state?.clientMasterReducer);
   const [page, setPage] = useState(1);
@@ -21,6 +22,8 @@ const ClientMasterList = () => {
   const endIndex = startIndex + rowsPerPage;
   const [clientData, setClientData] = useState();
   const dispatch = useDispatch();
+  const [isDelete, setisDelete] = useState(false);
+
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -45,7 +48,6 @@ const ClientMasterList = () => {
     setFilteredData(filtered);
   };
   const handleData = (clientData, isEdit) => {
-    debugger;
     const clientInfo = {
       enabled: true,
       deleted: true,
@@ -58,164 +60,169 @@ const ClientMasterList = () => {
       id: clientData.id,
     };
     if (isEdit) {
-      setClientData(
-        clientInfo
-      );
+      setClientData(clientInfo);
     } else {
+      setisDelete(true);
       dispatch(onUpdateclientMaster(clientInfo));
     }
   };
   useEffect(() => {
+    debugger
     if (clientMasterData?.update_status_code === "201") {
-      toast.success(clientMasterData.updateMessage);
+      if (isDelete) {
+        toast.success("Deleted Successfully");
+        setisDelete(false);
+      } else {
+        toast.success(clientMasterData.updateMessage);
+      }
       dispatch(onGetclientMaster());
       dispatch(onUpdateclientMasterReset());
+    }else if(clientMasterData?.update_status_code){
+      toast.error(clientMasterData.updateMessage);
+      dispatch(onUpdateclientMasterReset());
+
     }
   }, [clientMasterData]);
   const formatDate = (timestamp) => {
-
     const date = new Date(timestamp);
-
-
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-
-
     const formattedDay = day < 10 ? `0${day}` : day;
     const formattedMonth = month < 10 ? `0${month}` : month;
-
-
     const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
-
     return formattedDate;
-  }
+  };
   return (
-    <div className="container-fluid">
-      <ClientMasterForm clientData={clientData} />
-      <div class="container-fluid pt-0">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="container-fluid mt-2 mb-2">
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-                  <div class="card-header">
-                    <h4 class="card-title">Client List</h4>
-                  </div>
-                  <div class="customer-search mb-sm-0 mb-3">
-                    <div class="input-group search-area">
-                      <InputField
-                        type="text"
-                        className="form-control only-high"
-                        placeholder="Search here...."
-                        value={filterValue}
-                        onChange={handleInputChange}
-                      />
-                      <span className="input-group-text">
-                        <i className="fa fa-search"></i>
-                      </span>
+    <>
+      <ScrollToTop />
+      <div className="container-fluid">
+        <ClientMasterForm clientData={clientData} />
+        <div className="container-fluid pt-0">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="card">
+                <div className="container-fluid mt-2 mb-2">
+                  <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                    <div className="card-header">
+                      <h4 className="card-title">Client List</h4>
                     </div>
-                  </div>
+                    <div className="customer-search mb-sm-0 mb-3">
+                      <div className="input-group search-area">
+                        <InputField
+                          type="text"
+                          className="form-control only-high"
+                          placeholder="Search here...."
+                          value={filterValue}
+                          onChange={handleInputChange}
+                        />
+                        <span className="input-group-text">
+                          <i className="fa fa-search"></i>
+                        </span>
+                      </div>
+                    </div>
 
-                  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
+                    <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap"></div>
+                  </div>
                 </div>
-              </div>
-              <div class="container-fluid">
-                <div class="card-body">
-                  {clientMasterData?.isLoading ? (
-                    <div style={{ height: "150px" }}>
-                      <Loader classType={"absoluteLoader"} />
-                    </div>
-                  ) : filteredData?.length ? (
-                    <div class="table-responsive">
-                      <table className="table header-border table-responsive-sm">
-                        <thead>
-                          <tr>
-                            <th>Client Name</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {filteredData
-                            .slice(startIndex, endIndex)
-                            .map((clientData, index) => (
-                              <tr key={index}>
-                                <td>{clientData.clientName}</td>
-                                <td>{clientData.description}</td>
-                                <td>{formatDate(clientData.createdOn)}</td>
+                <div className="container-fluid">
+                  <div className="card-body">
+                    {clientMasterData?.isLoading ? (
+                      <div style={{ height: "150px" }}>
+                        <Loader classType={"absoluteLoader"} />
+                      </div>
+                    ) : filteredData?.length ? (
+                      <div className="table-responsive">
+                        <table className="table header-border table-responsive-sm">
+                          <thead>
+                            <tr>
+                              <th>Client Name</th>
+                              <th>Description</th>
+                              <th>Date</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filteredData
+                              .slice(startIndex, endIndex)
+                              .map((clientData, index) => (
+                                <tr key={index}>
+                                  <td>{clientData.clientName}</td>
+                                  <td>{clientData.description}</td>
+                                  <td>{formatDate(clientData.createdOn)}</td>
 
-                                <td>
-                                  <span
-                                    className={
-                                      clientData.enabled
-                                        ? "badge badge-success"
-                                        : "badge badge-danger"
-                                    }
-                                  >
-                                    {clientData.enabled
-
-                                      ? "Active"
-                                      : "Non Active"}
-                                  </span>
-                                </td>
-                                <td>
-                                  <div className="d-flex">
-                                    <Button
-                                      className="btn btn-primary shadow btn-xs sharp me-1"
-                                      icon={"fas fa-pencil-alt"}
-                                      onClick={() =>
-                                        handleData(clientData, { isEdit: true })
+                                  <td>
+                                    <span
+                                      className={
+                                        clientData.enabled
+                                          ? "badge badge-success"
+                                          : "badge badge-danger"
                                       }
                                     >
-                                      <i className="fas fa-pencil-alt"></i>
-                                    </Button>
-                                    <Button
-                                      className="btn btn-danger shadow btn-xs sharp"
-                                      icon={"fa fa-trash"}
-                                      onClick={() => handleData(clientData)}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </Button>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
-                      {filteredData?.length > 5 && (
-                        <div className="pagination-container">
-                          <ReactPaginate
-                            previousLabel={"<"}
-                            nextLabel={" >"}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(
-                              filteredData?.length / rowsPerPage
-                            )}
-                            marginPagesDisplayed={2}
-                            onPageChange={handlePageChange}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            initialPage={page - 1}
-                            previousClassName={
-                              page === 0 ? "disabled_Text" : ""
-                            }
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    !filteredData?.length && <Norecord />
-                  )}
+                                      {clientData.enabled
+                                        ? "Active"
+                                        : "Non Active"}
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <div className="d-flex">
+                                      <Button
+                                        className="btn btn-primary shadow btn-xs sharp me-1"
+                                        icon={"fas fa-pencil-alt"}
+                                        onClick={() =>
+                                          handleData(clientData, {
+                                            isEdit: true,
+                                          })
+                                        }
+                                      >
+                                        <i className="fas fa-pencil-alt"></i>
+                                      </Button>
+                                      <Button
+                                        className="btn btn-danger shadow btn-xs sharp"
+                                        icon={"fa fa-trash"}
+                                        onClick={() => handleData(clientData)}
+                                      >
+                                        <i className="fa fa-trash"></i>
+                                      </Button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                        {filteredData?.length > 5 && (
+                          <div className="pagination-container">
+                            <ReactPaginate
+                              previousLabel={"<"}
+                              nextLabel={" >"}
+                              breakLabel={"..."}
+                              pageCount={Math.ceil(
+                                filteredData?.length / rowsPerPage
+                              )}
+                              marginPagesDisplayed={2}
+                              onPageChange={handlePageChange}
+                              containerClassName={"pagination"}
+                              activeClassName={"active"}
+                              initialPage={page - 1}
+                              previousClassName={
+                                page === 0 ? "disabled_Text" : ""
+                              }
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <Norecord />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

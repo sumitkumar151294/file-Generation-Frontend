@@ -5,19 +5,21 @@ import Loader from "../../Components/Loader/Loader";
 import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import FileTypeForm from "./FileTypeForm";
 import { onGetfileType, onUpdatefileType, onUpdatefileTypeReset } from "../../Store/Slices/fileTypeSlice";
 import { toast } from "react-toastify";
+import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
 const FileTypeList = () => {
   const fileTypeData = useSelector((state) => state?.fileTypeReducer);
-
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const [fileData, setFileType] = useState();
   const dispatch = useDispatch();
+  const [isDelete,setisDelete]=useState(false)
+
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -43,51 +45,52 @@ const FileTypeList = () => {
     );
     setFilteredData(filtered);
   };
-  const handleData = (fileData,isEdit) => {
-  const fileInfo={
-    enabled: true,
-    deleted: true,
-    createdBy: 0,
-    updatedBy: 0,
-    fileType: fileData.fileType,
-    extension: fileData.extension,
-    id: fileData.id
-  }
-  if(isEdit){
-setFileType(fileInfo)
-  }else{
-
-    dispatch(onUpdatefileType(fileInfo))
-  }
+  const handleData = (fileData, isEdit) => {
+    const fileInfo = {
+      enabled: true,
+      deleted: true,
+      createdBy: 0,
+      updatedBy: 0,
+      fileType: fileData.fileType,
+      extension: fileData.extension,
+      id: fileData.id
+    }
+    if (isEdit) {
+      setFileType(fileInfo)
+    } else {
+      setisDelete(true)
+      dispatch(onUpdatefileType(fileInfo))
+    }
   };
-  useEffect(()=>{
-  if(fileTypeData.update_status_code==="201"){
-  toast.success(fileTypeData.updateMessage)
-  dispatch(onGetfileType());
-  dispatch(onUpdatefileTypeReset())
-  }
-  },[fileTypeData])
+  useEffect(() => {
+    if (fileTypeData.update_status_code === "201") {
+      if(isDelete){
+        toast.success("Deleted Successfully")
+        setisDelete(false)
+      }else{
+        toast.success(fileTypeData.updateMessage)
+      }
+      dispatch(onGetfileType());
+      dispatch(onUpdatefileTypeReset())
+    }else if(fileTypeData.update_status_code){
+      toast.error(fileTypeData?.updateMessage);
+      dispatch(onUpdatefileTypeReset())
+    }
+  }, [fileTypeData])
   const formatDate = (timestamp) => {
-
     const date = new Date(timestamp);
-
-
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-
-
     const formattedDay = day < 10 ? `0${day}` : day;
     const formattedMonth = month < 10 ? `0${month}` : month;
-
-
     const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
-
     return formattedDate;
   }
   return (
     <div className="container-fluid">
-      <FileTypeForm  fileData={fileData}/>
+      <ScrollToTop />
+      <FileTypeForm fileData={fileData} />
       <div class="container-fluid pt-0">
         <div class="row">
           <div class="col-lg-12">
@@ -155,7 +158,7 @@ setFileType(fileInfo)
                                   </span>
                                 </td>
                                 <td>
-                                <div className="d-flex">
+                                  <div className="d-flex">
                                     <Button
                                       className="btn btn-primary shadow btn-xs sharp me-1"
                                       icon={"fas fa-pencil-alt"}

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import Loader from "../../Components/Loader/Loader";
 import Dropdown from "../../Components/Dropdown/Dropdown";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -31,7 +31,6 @@ const FileTypeForm = ({fileData}) => {
       }
       dispatch(onPostfileType(fileTypeData))
     }else{
-      debugger
       const fileTypeData={
         ...values,
         deleted:false,
@@ -99,7 +98,7 @@ const FileTypeForm = ({fileData}) => {
                         <Form>
                           <div className="row">
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="amount">
+                              <label >
                               File Type
                                 <span className="text-danger">*</span>
                               </label>
@@ -120,7 +119,7 @@ const FileTypeForm = ({fileData}) => {
                             </div>
 
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="availabelAmount">
+                              <label >
                               File extension
                                 <span className="text-danger">*</span>
                               </label>
@@ -141,7 +140,7 @@ const FileTypeForm = ({fileData}) => {
                             </div>
 
                             <div className="col-sm-4 form-group mb-2">
-                              <label htmlFor="status">
+                              <label >
                                 Status
                               <span className="text-danger">*</span>
                               </label>
