@@ -143,7 +143,7 @@ export const templateTypeMaster = createSlice({
     onUpdatetemplateTypeMasterReset: (state) => {
       return {
         ...state,
-        isLoading: false,
+     
         updatedtemplateTypeMaster: [],
         updateMessage: "",
         error: [],

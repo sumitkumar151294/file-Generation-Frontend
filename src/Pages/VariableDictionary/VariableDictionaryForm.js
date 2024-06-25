@@ -52,7 +52,7 @@ if(variableData?.post_status_code==="201"){
                       validationSchema={variableValidations}
                       onSubmit={handleSubmit}
                     >
-                      {({ errors, touched }) => (
+                      {({ errors, touched ,setFieldValue}) => (
                         <Form>
                           <div className="row">
                             <div className="col-sm-4 form-group mb-2">
@@ -68,6 +68,9 @@ if(variableData?.post_status_code==="201"){
                                     ? "is-invalid"
                                     : ""
                                 }`}
+                                onChange={(e) => {
+                                  setFieldValue('variableName', e.target.value.startsWith('@') ? e.target.value : '@' + e.target.value);
+                                }}
                                 placeholder="Enter Variable Name"
                               />
                               <ErrorMessage

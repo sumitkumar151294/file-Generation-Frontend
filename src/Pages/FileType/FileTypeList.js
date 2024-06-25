@@ -32,7 +32,6 @@ const FileTypeList = () => {
     }
 
   }, [fileTypeData?.getfileTypeData]);
-  console.log(fileTypeData)
   const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState(
     fileTypeData?.getfileTypeData
@@ -47,7 +46,7 @@ const FileTypeList = () => {
   };
   const handleData = (fileData, isEdit) => {
     const fileInfo = {
-      enabled: true,
+      enabled: fileData?.enabled,
       deleted: true,
       createdBy: 0,
       updatedBy: 0,

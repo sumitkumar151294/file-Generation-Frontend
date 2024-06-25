@@ -7,7 +7,8 @@ import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import TemplateTypeMasterForm from "./TemplateTypeMasterForm";
 import Button from "../../Components/Button/Button";
-import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
+import { onGettemplateTypeMaster, onUpdatetemplateTypeMaster, onUpdatetemplateTypeMasterReset } from "../../Store/Slices/templateTypeMasterSlice";
+import { toast } from "react-toastify";
 const TemplateTypeMasterList = () => {
   const templateTypeMasterData = useSelector((state) => state?.templateTypeMasterReducer);
   const [page, setPage] = useState(1);
@@ -15,6 +16,8 @@ const TemplateTypeMasterList = () => {
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const dispatch = useDispatch();
+  const [templateTypeData, setTemplateTypeData] = useState()
+  const [isDelete, setIsdelete] = useState(false)
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -38,13 +41,54 @@ const TemplateTypeMasterList = () => {
     );
     setFilteredData(filtered);
   };
-  const handledelete = (data) => {
-    console.log(data);
+  const handleData = (templateTypedata, isEdit) => {
+    debugger
+    const filieTypeInfo = {
+      enabled: templateTypedata?.enabled,
+      deleted: true,
+      createdBy: 0,
+      updatedBy: 0,
+      clientId: templateTypedata?.clientId,
+      templateType: templateTypedata?.templateType,
+      fileName_Rule: templateTypedata?.fileName_Rule,
+      description: templateTypedata?.description,
+      id: templateTypedata?.id
+    }
+    if (isEdit) {
+      setTemplateTypeData(filieTypeInfo)
+    } else {
+      setIsdelete(true)
+      dispatch(onUpdatetemplateTypeMaster(filieTypeInfo))
+    }
   };
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+    return formattedDate;
+  }
+  useEffect(() => {
+    if (templateTypeMasterData.update_status_code === "201") {
+      if (isDelete) {
+        toast.success("Deleted Successfully")
+        setIsdelete(false)
+      } else {
+        toast.success(templateTypeMasterData.updateMessage)
+      }
+      dispatch(onGettemplateTypeMaster())
+      dispatch(onUpdatetemplateTypeMasterReset())
+    } else if (templateTypeMasterData.update_status_code) {
+      toast.error(templateTypeMasterData.updateMessage)
+      dispatch(onUpdatetemplateTypeMasterReset())
+    }
+  }, [templateTypeMasterData])
   return (
     <div className="container-fluid">
-
-      <TemplateTypeMasterForm />
+      <TemplateTypeMasterForm templateTypeData={templateTypeData} />
       <div className="container-fluid pt-0">
         <div className="row">
           <div className="col-lg-12">
@@ -84,7 +128,7 @@ const TemplateTypeMasterList = () => {
                         <thead>
                           <tr>
                             <th>Template Type</th>
-                            <th>Template Type Description</th>
+                            <th>Description</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -93,40 +137,44 @@ const TemplateTypeMasterList = () => {
                         <tbody>
                           {filteredData
                             .slice(startIndex, endIndex)
-                            .map((item, index) => (
+                            ?.map((templateType, index) => (
                               <tr key={index}>
-                                <td>{item.type}</td>
-                                <td>{item.description}</td>
-                                <td>{item.date}</td>
+                                <td>{templateType?.templateType}</td>
+                                <td>{templateType?.templateType}</td>
+                                <td>{formatDate(templateType?.createdOn)}</td>
                                 <td>
                                   <span
                                     className={
-                                      item.status === "Active"
+                                      templateType.enabled
                                         ? "badge badge-success"
                                         : "badge badge-danger"
                                     }
                                   >
-                                    {item.status === "Active"
-                                      ? "active"
-                                      : "nonActive"}
+                                    {templateType.enabled
+                                      ? "Active"
+                                      : "Non Active"}
                                   </span>
                                 </td>
                                 <td>
                                   <div className="d-flex">
-                                  <Button
-                                      className="btn btn-danger shadow btn-xs sharp"
-                                      onClick={() => handledelete(item)}
-                                      icon={"fa fa-trash"}
-                                    >
-                                      <i className="fa fa-trash"></i>
-                                    </Button> <Button
+                                    <Button
                                       className="btn btn-primary shadow btn-xs sharp me-1"
-                                      onClick={() => handledelete(item)}
-                                      icon="fas fa-pencil-alt"
+                                      icon={"fas fa-pencil-alt"}
+                                      onClick={() =>
+                                        handleData(templateType, {
+                                          isEdit: true,
+                                        })
+                                      }
+                                    >
+                                      <i className="fas fa-pencil-alt"></i>
+                                    </Button>
+                                    <Button
+                                      className="btn btn-danger shadow btn-xs sharp"
+                                      icon={"fa fa-trash"}
+                                      onClick={() => handleData(templateType)}
                                     >
                                       <i className="fa fa-trash"></i>
                                     </Button>
-
                                   </div>
                                 </td>
                               </tr>
@@ -163,7 +211,7 @@ const TemplateTypeMasterList = () => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 

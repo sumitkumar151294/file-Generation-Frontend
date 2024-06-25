@@ -49,7 +49,7 @@ const ClientMasterList = () => {
   };
   const handleData = (clientData, isEdit) => {
     const clientInfo = {
-      enabled: true,
+      enabled: clientData?.enabled,
       deleted: true,
       createdBy: 0,
       updatedBy: 0,
@@ -67,7 +67,6 @@ const ClientMasterList = () => {
     }
   };
   useEffect(() => {
-    debugger
     if (clientMasterData?.update_status_code === "201") {
       if (isDelete) {
         toast.success("Deleted Successfully");

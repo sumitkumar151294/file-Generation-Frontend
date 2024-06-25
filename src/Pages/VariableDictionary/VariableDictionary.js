@@ -16,7 +16,7 @@ const VariableDictionary = () => {
           </tr>
         </thead>
         <tbody>
-          {variableData.length ? (
+          {variableData?.length ? (
             variableData.map((variable, index) => (
               <tr key={index}>
                 <td data-label="Variable Name">{variable?.variableName}</td>

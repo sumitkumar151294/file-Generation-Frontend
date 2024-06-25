@@ -46,7 +46,6 @@ const VariableDictionaryList = () => {
   };
   const handleData = (variableData) => {
     const variableDatatoDelete = {
-      enabled: true,
       deleted: true,
       createdBy: 0,
       updatedBy: 0,

@@ -24,3 +24,6 @@
     box-shadow: 0 0 0 0.25rem var(--bs-dark-brown);
   }
 }
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+min-height: 35vh;
+}

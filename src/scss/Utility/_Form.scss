@@ -95,6 +95,13 @@ $rgba-primary-17: var(--rgba-primary-17);
 }
 .loafer {
   width: 100%;
-  height: 320px;
-  overflow-y: auto;
+  height: 600px;
+  overflow-y: scroll;
+}
+.loafer::-webkit-scrollbar-thumb {
+  background:var(--deznav-menu);
+}.loafer::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: var(--header-bg); /* or add it to the track */
 }

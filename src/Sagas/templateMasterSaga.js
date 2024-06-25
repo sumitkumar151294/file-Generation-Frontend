@@ -7,7 +7,7 @@ import {
   onPosttemplateMasterError,
   onPosttemplateMasterSuccess,
 } from "../Store/Slices/templateMasterSlice";
-import { getTemplateMasterApi, postTemplateMasterApi } from "../Context/templateMaster";
+import { getTemplateMasterApi, postTemplateMasterApi } from "../Context/templateMasterApi";
 
 
 function* GettemplateMaster() {
