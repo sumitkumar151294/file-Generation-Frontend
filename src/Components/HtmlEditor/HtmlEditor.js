@@ -22,15 +22,16 @@ const HtmlEditor = ({ data, setData, setVariableUsed, variableUsed }) => {
     setData(content);
     const variableData = extractVariables(content)
     const mySet = [];
-    variableData.map(item => {
+    variableData.forEach(item => {
       const data = findVariableByName(item);
       if (data) {
         const res = mySet.includes(data.id);
         if (!res) {
-          mySet.push(data.id)
+          mySet.push(data.id);
         }
       }
-    })
+    });
+
     setVariableUsed(mySet);
   };
   return (
