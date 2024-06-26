@@ -42,7 +42,6 @@ const TemplateTypeMasterList = () => {
     setFilteredData(filtered);
   };
   const handleData = (templateTypedata, isEdit) => {
-    debugger
     const filieTypeInfo = {
       enabled: templateTypedata?.enabled,
       deleted: true,

@@ -30,6 +30,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
     enabled: "",
     isChild: "",
   })
+  const [tempContent, setTempContent] = useState("")
+  const [variableUsed, setVariableUsed] = useState([])
   const [button, setButton] = useState("Submit");
   const dispatch = useDispatch();
   const clientMasterData = useSelector(
@@ -59,7 +61,6 @@ const TemplateMasterForm = ({ templateMaster }) => {
   const validations = Yup.object().shape({
     clientId: Yup.string().required("Client is required"),
     templateName: Yup.string().required("Template Name is required"),
-    templateContent: Yup.string().required("Template Content is required"),
     templateTypeId: Yup.string().required("Template Type is required"),
     fileTypeId: Yup.string().required("File Type is required"),
     enabled: Yup.string().required("Status is required"),
@@ -67,6 +68,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
   const handleSumbit = (values) => {
     const templateMasterData = {
       ...values,
+      templateContent: tempContent,
       enabled: values.enabled === "true" ? true : false,
       deleted: false,
       isChild: values.isChild ? true : false
@@ -84,6 +86,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
         enabled: "",
         isChild: "",
       })
+      setTempContent("");
       setButton("Submit")
     }
   };
@@ -176,15 +179,15 @@ const TemplateMasterForm = ({ templateMaster }) => {
                           </div>
                           <div className="form-group mb-2">
                             <label>Template Content </label>
-                            <Field
-                              name="templateContent"
-                              component={HtmlEditor}
-                            />
-                            <ErrorMessage
-                              name="templateContent"
-                              component="div"
-                              className="error-message"
-                            />
+
+                                <HtmlEditor
+                                  data={tempContent}
+                                  setData={setTempContent}
+                                  setVariableUsed={setVariableUsed}
+                                  variableUsed={variableUsed}
+                                />
+
+
                           </div>
 
                           <div className="col-sm-4 form-group mb-2">
@@ -199,7 +202,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                                 }`}
                             />
                             <ErrorMessage
-                              name="templateTypeId  "
+                              name="templateTypeId"
                               component="div"
                               className="error-message"
                             />
@@ -259,7 +262,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
           </div>
         </div>
 
-        <VariableDictionary />
+        <VariableDictionary variableUsed = {variableUsed}/>
       </div>
     </>
   );

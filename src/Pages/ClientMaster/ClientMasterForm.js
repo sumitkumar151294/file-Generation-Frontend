@@ -27,7 +27,6 @@ const ClientMasterForm = ({ clientData }) => {
   const dispatch = useDispatch();
   const clientFormValidations = Yup.object().shape({
     clientName: Yup.string().required("Client Name is required"),
-    url: Yup.string().required("Url is required"),
     enabled: Yup.boolean().required("Status is required"),
     clientCode: Yup.string().required("Client Code is required"),
   });
@@ -138,16 +137,12 @@ const ClientMasterForm = ({ clientData }) => {
                               }`}
                               placeholder="Enter Discription"
                             />
-                            <ErrorMessage
-                              name="description"
-                              component="div"
-                              className="error-message"
-                            />
+
                           </div>
                           <div className="col-sm-4 form-group mb-2">
                             <label>
                               URL
-                              <span className="text-danger">*</span>
+                             
                             </label>
                             <Field
                               type="text"
@@ -157,11 +152,7 @@ const ClientMasterForm = ({ clientData }) => {
                               }`}
                               placeholder="Enter URL"
                             />
-                            <ErrorMessage
-                              name="url"
-                              component="div"
-                              className="error-message"
-                            />
+
                           </div>
 
                           <div className="col-sm-4 form-group mb-2">

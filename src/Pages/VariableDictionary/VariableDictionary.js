@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 
-const VariableDictionary = () => {
+const VariableDictionary = ({variableUsed}) => {
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
 
   return (
@@ -19,7 +19,7 @@ const VariableDictionary = () => {
           {variableData?.length ? (
             variableData.map((variable, index) => (
               <tr key={index}>
-                <td data-label="Variable Name">{variable?.variableName}</td>
+                <td data-label="Variable Name">{variable?.variableName} {variableUsed.includes(variable.id) && <i class="fa-solid fa-check"></i> } </td>
                 <td data-label="Variable">{variable?.variable}</td>
               </tr>
             ))

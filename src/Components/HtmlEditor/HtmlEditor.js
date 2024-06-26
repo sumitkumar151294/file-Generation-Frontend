@@ -1,21 +1,46 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useSelector } from 'react-redux';
 
-const HtmlEditor = ({ field, form }) => {
+const HtmlEditor = ({ data, setData, setVariableUsed, variableUsed }) => {
+  const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
+  const extractVariables = (str) => {
+    const regex = /{{@(.*?)}}/g;
+    const matches = str.match(regex);
+    if (!matches) {
+      return [];
+    }
+    return matches.map(match => {
+      return match.substring(2, match.length - 2).trim();
+    });
+  }
+  const findVariableByName = (variableName) => {
+    return variableData.find(item => item.variableName === variableName);
+  }
   const handleChange = (content) => {
-    form.setFieldValue(field.name, content);
-    form.setFieldTouched(field.name, true);
+    setData(content);
+    const variableData = extractVariables(content)
+    const mySet = [];
+    variableData.map(item => {
+      const data = findVariableByName(item);
+      if (data) {
+        const res = mySet.includes(data.id);
+        if (!res) {
+          mySet.push(data.id)
+        }
+      }
+    })
+    setVariableUsed(mySet);
   };
-
   return (
     <div>
       <ReactQuill
         theme="snow"
-        value={field?.value}
+        value={data}
         onChange={handleChange}
-        modules={HtmlEditor.modules}
-        formats={HtmlEditor.formats}
+        modules={HtmlEditor?.modules}
+        formats={HtmlEditor?.formats}
         placeholder="Write something..."
       />
     </div>

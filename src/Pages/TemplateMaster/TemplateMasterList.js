@@ -79,7 +79,6 @@ const ClientMasterList = () => {
       dispatch(onUpdatetemplateMaster(templateMasterInfo));
     }
   };
-  console.log(templateMasterData);
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const day = date.getDate();
@@ -92,7 +91,6 @@ const ClientMasterList = () => {
   };
   useEffect(() => {
     if (templateMasterData?.update_status_code === "201") {
-      debugger;
       if (isDelete) {
         toast.success("Deleted Successfully");
         setisDelete(false);

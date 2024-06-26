@@ -137,6 +137,7 @@ const ClientMasterList = () => {
                             <tr>
                               <th>Client Name</th>
                               <th>Description</th>
+                              <th>Client Code</th>
                               <th>Date</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -149,8 +150,8 @@ const ClientMasterList = () => {
                                 <tr key={index}>
                                   <td>{clientData.clientName}</td>
                                   <td>{clientData.description}</td>
+                                  <td>{clientData.clientCode}</td>
                                   <td>{formatDate(clientData.createdOn)}</td>
-
                                   <td>
                                     <span
                                       className={
