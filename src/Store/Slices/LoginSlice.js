@@ -4,9 +4,7 @@ export const loginSlice = createSlice({
   name: "login",
   initialState: {
     isLoading: false,
-    isError: false,
     data: {},
-    error: {},
     message: "",
     isUserLogin:null
   },
@@ -15,8 +13,7 @@ export const loginSlice = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
-        error: {},
+
         isUserLogin:null,
         status_code: null,
       };
@@ -28,11 +25,9 @@ export const loginSlice = createSlice({
         ...state,
         data,
         isLoading: false,
-        isError: false,
         isUserLogin:true,
         status_code,
         message,
-        error: {},
       };
     },
 
@@ -42,19 +37,15 @@ export const loginSlice = createSlice({
         ...state,
         status_code,
         isLoading: false,
-        isError: true,
         message,
         isUserLogin:null,
-        error: {},
       };
     },
     onLogout: (state) => {
       return {
         ...state,
         data: {},
-        isError: false,
         isLoading: false,
-        error: {},
         isUserLogin:null,
         message: "",
       };

@@ -4,8 +4,6 @@ export const templateMaster = createSlice({
   name: "client-master",
   initialState: {
     isLoading: false,
-    isError: false,
-    error: [],
     message: "",
   },
   reducers: {
@@ -13,9 +11,7 @@ export const templateMaster = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
        gettemplateMasterData: [],
-        error: [],
         message: "",
       };
     },
@@ -25,11 +21,9 @@ export const templateMaster = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         gettemplateMasterData:data,
         message,
         status_code,
-        error: [],
       };
     },
 
@@ -41,8 +35,6 @@ export const templateMaster = createSlice({
         message,
         status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onGettemplateMasterReset: (state) => {
@@ -51,18 +43,14 @@ export const templateMaster = createSlice({
         isLoading: false,
         gettemplateMasterData: [],
         message: "",
-        error: [],
         status_code: null,
-        isError: false,
       };
     },
       onPosttemplateMaster: (state) => {
         return {
           ...state,
           postLoading: true,
-          isError: false,
           posttemplateMasterData: [],
-          error: [],
           postMessage: "",
         };
       },
@@ -72,11 +60,9 @@ export const templateMaster = createSlice({
       return {
         ...state,
         postLoading: false,
-        isError: false,
         posttemplateMasterData:data,
         postMessage:message,
         post_status_code:status_code,
-        error: [],
       };
     },
 
@@ -88,8 +74,6 @@ export const templateMaster = createSlice({
         postMessage:message,
         post_status_code:status_code,
         postLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onPosttemplateMasterReset: (state) => {
@@ -98,9 +82,7 @@ export const templateMaster = createSlice({
         postLoading: false,
         posttemplateMasterData: null,
         postMessage: "",
-        error: [],
         post_status_code: null,
-        isError: false,
       };
     },
 
@@ -108,9 +90,7 @@ export const templateMaster = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
         updatedtemplateMaster: [],
-        error: [],
         updateMessage: "",
       };
     },
@@ -120,11 +100,9 @@ export const templateMaster = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         updatedtemplateMaster: data,
         updateMessage:message,
         update_status_code:status_code,
-        error: [],
       };
     },
 
@@ -136,19 +114,14 @@ export const templateMaster = createSlice({
         updateMessage:message,
         update_status_code:status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onUpdatetemplateMasterReset: (state) => {
       return {
         ...state,
-        isLoading: false,
         updatedtemplateMaster: [],
         updateMessage: "",
-        error: [],
         update_status_code: null,
-        isError: false,
       };
     },
   },

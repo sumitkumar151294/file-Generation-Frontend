@@ -4,8 +4,6 @@ export const templateTypeMaster = createSlice({
   name: "template-type-master",
   initialState: {
     isLoading: false,
-    isError: false,
-    error: [],
     message: "",
   },
   reducers: {
@@ -13,9 +11,7 @@ export const templateTypeMaster = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
        gettemplateTypeMasterData: [],
-        error: [],
         message: "",
       };
     },
@@ -25,11 +21,9 @@ export const templateTypeMaster = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         gettemplateTypeMasterData:data,
         message,
         status_code,
-        error: [],
       };
     },
 
@@ -41,8 +35,6 @@ export const templateTypeMaster = createSlice({
         message,
         status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onGettemplateTypeMasterReset: (state) => {
@@ -51,18 +43,14 @@ export const templateTypeMaster = createSlice({
         isLoading: false,
         gettemplateTypeMasterData: [],
         message: "",
-        error: [],
         status_code: null,
-        isError: false,
       };
     },
       onPosttemplateTypeMaster: (state) => {
         return {
           ...state,
           postLoading: true,
-          isError: false,
           posttemplateTypeMasterData: [],
-          error: [],
           postMessage: "",
         };
       },
@@ -72,11 +60,9 @@ export const templateTypeMaster = createSlice({
       return {
         ...state,
         postLoading: false,
-        isError: false,
         posttemplateTypeMasterData:data,
         postMessage:message,
         post_status_code:status_code,
-        error: [],
       };
     },
 
@@ -88,8 +74,6 @@ export const templateTypeMaster = createSlice({
         postMessage:message,
         post_status_code:status_code,
         postLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onPosttemplateTypeMasterReset: (state) => {
@@ -98,9 +82,7 @@ export const templateTypeMaster = createSlice({
         postLoading: false,
         posttemplateTypeMasterData: null,
         postMessage: "",
-        error: [],
         post_status_code: null,
-        isError: false,
       };
     },
 
@@ -108,9 +90,7 @@ export const templateTypeMaster = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
         updatedtemplateTypeMaster: [],
-        error: [],
         updateMessage: "",
       };
     },
@@ -120,11 +100,9 @@ export const templateTypeMaster = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         updatedtemplateTypeMaster: data,
         updateMessage:message,
         update_status_code:status_code,
-        error: [],
       };
     },
 
@@ -136,19 +114,14 @@ export const templateTypeMaster = createSlice({
         updateMessage:message,
         update_status_code:status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onUpdatetemplateTypeMasterReset: (state) => {
       return {
         ...state,
-     
         updatedtemplateTypeMaster: [],
         updateMessage: "",
-        error: [],
         update_status_code: null,
-        isError: false,
       };
     },
   },

@@ -13,9 +13,7 @@ export const fileType = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
        getfileTypeData: [],
-        error: [],
         message: "",
       };
     },
@@ -25,11 +23,9 @@ export const fileType = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         getfileTypeData:data,
         message,
         status_code,
-        error: [],
       };
     },
 
@@ -41,8 +37,6 @@ export const fileType = createSlice({
         message,
         status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onGetfileTypeReset: (state) => {
@@ -51,18 +45,14 @@ export const fileType = createSlice({
         isLoading: false,
         getfileTypeData: [],
         message: "",
-        error: [],
         status_code: null,
-        isError: false,
       };
     },
       onPostfileType: (state) => {
         return {
           ...state,
           postLoading: true,
-          isError: false,
           postfileTypeData: [],
-          error: [],
           postMessage: "",
         };
       },
@@ -72,11 +62,9 @@ export const fileType = createSlice({
       return {
         ...state,
         postLoading: false,
-        isError: false,
         postfileTypeData:data,
         postMessage:message,
         post_status_code:status_code,
-        error: [],
       };
     },
 
@@ -88,8 +76,6 @@ export const fileType = createSlice({
         postMessage:message,
         post_status_code:status_code,
         postLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onPostfileTypeReset: (state) => {
@@ -98,9 +84,7 @@ export const fileType = createSlice({
         postLoading: false,
         postfileTypeData: null,
         postMessage: "",
-        error: [],
         post_status_code: null,
-        isError: false,
       };
     },
 
@@ -108,9 +92,7 @@ export const fileType = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
         updatedfileType: [],
-        error: [],
         updateMessage: "",
       };
     },
@@ -120,11 +102,9 @@ export const fileType = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         updatedfileType: data,
         updateMessage:message,
         update_status_code:status_code,
-        error: [],
       };
     },
 
@@ -136,8 +116,6 @@ export const fileType = createSlice({
         updateMessage:message,
         update_status_code:status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onUpdatefileTypeReset: (state) => {
@@ -145,9 +123,7 @@ export const fileType = createSlice({
         ...state,
         updatedfileType: [],
         updateMessage: "",
-        error: [],
         update_status_code: null,
-        isError: false,
       };
     },
   },

@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../Layout/Footer/Footer";
 import Button from "../Components/Button/Button";
-import InputField from "../Components/InputField/InputField";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,15 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { onLoginSubmit } from "../Store/Slices/LoginSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
+import ScrollToTop from "../Components/ScrollToTop/ScrollToTop";
 const LoginPage = () => {
   const dispatch = useDispatch();
-  //login data from redux using state
-  const loginData = useSelector((state) => state.loginReducer);
-  //navigate to route on other pages
-  const navigate = useNavigate();
-  //state to show toast one time
-  const [Sumbit, setSumbit] = useState(false);
-  //functions for validations in login form for formik
+  const loginData = useSelector((state) => state.loginReducer);   //login data from redux using state
+  const navigate = useNavigate();                                 //navigate to route on other pages
+  const [Sumbit, setSumbit] = useState(false);                    //state to show toast one time
+    //functions for validations in login form for formik
   const loginValidations = Yup.object().shape({
     email: Yup.string()
       .matches(
@@ -36,7 +33,6 @@ const LoginPage = () => {
       setSumbit(true);
     }
   };
-  //componentdidmopount to handle success and error
   useEffect(() => {
     if (Sumbit && loginData.status_code === "201") {
       toast.success(loginData?.message);
@@ -48,6 +44,7 @@ const LoginPage = () => {
   }, [loginData]);
   return (
     <>
+    <ScrollToTop/>
       {loginData?.isLoading ? (
         <Loader />
       ) : (
@@ -115,24 +112,8 @@ const LoginPage = () => {
                                     className="error-message"
                                   />
                                 </div>
-                                <div className="row d-flex justify-content-between mt-4 mb-2 d-nonemo">
-                                  <div className="mb-3">
-                                    <div className="form-check custom-checkbox ms-1">
-                                      <InputField
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        id="basic_checkbox_1"
-                                      />
-                                      <label
-                                        className="form-check-label"
-                                       
-                                      >
-                                        Remember my preference
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="text-center">
+
+                                <div className="text-center pt-1" >
                                   <Button
                                     type="sumbit"
                                     text="Sign me in"

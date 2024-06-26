@@ -9,8 +9,8 @@ const Dropdown = ({ field, form, options, ...props }) => {
     <select {...field} {...props} onChange={handleChange}>
       <option value="">Select</option>
       {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
+        <option key={option?.value} value={option?.value}>
+          {option?.label}
         </option>
       ))}
     </select>

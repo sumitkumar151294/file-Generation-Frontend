@@ -1,8 +1,8 @@
 const API={
-   //login api's
-   postlogin:"/user",
-   getlogin:"/user",
-   updatelogin:"/user",
+   //authconfig api
+   authConfig:"",
+   //login api
+   postlogin:"/login",
    //file type api's
    postfileType:"/file-type",
    getfileType:"/file-type",

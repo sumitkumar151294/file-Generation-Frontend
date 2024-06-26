@@ -4,8 +4,6 @@ export const variableSlice = createSlice({
   name: "variable",
   initialState: {
     isLoading: false,
-    isError: false,
-    error: [],
     message: "",
   },
   reducers: {
@@ -13,9 +11,7 @@ export const variableSlice = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
-       getVariableData: [],
-        error: [],
+        getVariableData: [],
         message: "",
       };
     },
@@ -25,11 +21,9 @@ export const variableSlice = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         getVariableData:data,
         message,
         status_code,
-        error: [],
       };
     },
 
@@ -41,8 +35,6 @@ export const variableSlice = createSlice({
         message,
         status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onGetVariableReset: (state) => {
@@ -51,18 +43,14 @@ export const variableSlice = createSlice({
         isLoading: false,
         getVariableData: [],
         message: "",
-        error: [],
         status_code: null,
-        isError: false,
       };
     },
       onPostVariable: (state) => {
         return {
           ...state,
           postLoading: true,
-          isError: false,
           postVariableData: [],
-          error: [],
           postMessage: "",
         };
       },
@@ -72,11 +60,9 @@ export const variableSlice = createSlice({
       return {
         ...state,
         postLoading: false,
-        isError: false,
         postVariableData:data,
         postMessage:message,
         post_status_code:status_code,
-        error: [],
       };
     },
 
@@ -88,8 +74,6 @@ export const variableSlice = createSlice({
         postMessage:message,
         post_status_code:status_code,
         postLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onPostVariableReset: (state) => {
@@ -98,9 +82,7 @@ export const variableSlice = createSlice({
         postLoading: false,
         postVariableData: null,
         postMessage: "",
-        error: [],
         post_status_code: null,
-        isError: false,
       };
     },
 
@@ -108,9 +90,7 @@ export const variableSlice = createSlice({
       return {
         ...state,
         isLoading: true,
-        isError: false,
         updatedVariable: [],
-        error: [],
         updateMessage: "",
       };
     },
@@ -120,11 +100,9 @@ export const variableSlice = createSlice({
       return {
         ...state,
         isLoading: false,
-        isError: false,
         updatedVariable: data,
         updateMessage:message,
         update_status_code:status_code,
-        error: [],
       };
     },
 
@@ -136,8 +114,6 @@ export const variableSlice = createSlice({
         updateMessage:message,
         update_status_code:status_code,
         isLoading: false,
-        isError: true,
-        error: [],
       };
     },
     onUpdateVariableReset: (state) => {
@@ -145,9 +121,7 @@ export const variableSlice = createSlice({
         ...state,
         updatedVariable: [],
         updateMessage: "",
-        error: [],
         update_status_code: null,
-        isError: false,
       };
     },
   },
