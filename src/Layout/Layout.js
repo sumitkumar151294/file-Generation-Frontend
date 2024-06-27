@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import Footer from './Footer/Footer'
-import Header from './Header/Header'
-import Sidebar from '../Layout/Sidebar/Sidebar'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
+import Sidebar from "../Layout/Sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
 const Layout = (props) => {
   const { Component } = props;
   const [showSideBar, setShowSideBar] = useState(false);
-  const userLoginAccess=sessionStorage.getItem("userLogin")
-  const navigate=useNavigate();
-// useEffect(()=>{
-//   if(!userLoginAccess){
-// navigate("/")
-//   }
-// })
+  const userLoginAccess = sessionStorage.getItem("userLogin");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userLoginAccess) {
+      navigate("/");
+    }
+  });
   return (
     <>
       <div
@@ -27,7 +27,7 @@ const Layout = (props) => {
         <Footer />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

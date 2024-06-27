@@ -20,7 +20,7 @@ export default function* rootSaga() {
     templateTypeMasterSaga(),
     templateMasterSaga(),
 
-    loginAuthSaga()
+    loginAuthSaga(),
 
     templateVariableMasterSaga()
 

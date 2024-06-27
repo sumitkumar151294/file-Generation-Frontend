@@ -18,7 +18,7 @@ const reducers = combineReducers({
     templateTypeMasterReducer:templateTypeMasterReducer,
     templateMasterReducer:templateMasterReducer,
 
-    loginAuthReducer:loginAuthReducer
+    loginAuthReducer:loginAuthReducer,
 
     templateVariableMasterReducer:templateVariableMasterReducer
 
