@@ -35,6 +35,7 @@ const LoginPage = () => {
   };
   useEffect(() => {
     if (Sumbit && loginData.status_code === "201") {
+      debugger
       toast.success(loginData?.message);
       sessionStorage.setItem("userLogin",loginData?.isUserLogin)
       navigate("/dashboard");
@@ -135,7 +136,7 @@ const LoginPage = () => {
       )}
       <ToastContainer />
 
-      <Footer />
+      <Footer isLogin={true} />
     </>
   );
 };

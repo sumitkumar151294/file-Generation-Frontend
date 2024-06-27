@@ -5,7 +5,10 @@ import variableReducer from './Slices/variableSlice';
 import  clientMasterReducer  from './Slices/clientMasterSlice';
 import templateTypeMasterReducer from './Slices/templateTypeMasterSlice';
 import templateMasterReducer from './Slices/templateMasterSlice';
+
 import loginAuthReducer from "../Store/Slices/authSlice"
+
+import templateVariableMasterReducer from './Slices/templateVariableMasterSlice';
 
 const reducers = combineReducers({
     loginReducer:loginReducer,
@@ -14,7 +17,11 @@ const reducers = combineReducers({
     clientMasterReducer:clientMasterReducer,
     templateTypeMasterReducer:templateTypeMasterReducer,
     templateMasterReducer:templateMasterReducer,
+
     loginAuthReducer:loginAuthReducer
+
+    templateVariableMasterReducer:templateVariableMasterReducer
+
 
 });
 
