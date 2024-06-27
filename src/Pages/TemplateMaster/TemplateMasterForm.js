@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "../../Components/Dropdown/Dropdown";
 import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import Select from 'react-select';
 import * as Yup from "yup";
 import Button from "../../Components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,7 @@ const statusOptions = [
   { value: false, label: "Non Active" },
 ];
 const TemplateMasterForm = ({ templateMaster }) => {
+  const [error, setError] = useState("")
   const [intialValue, setInitialValue] = useState({
     clientId: "",
     templateName: "",
@@ -29,6 +31,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
     fileTypeId: "",
     enabled: "",
     isChild: "",
+    childTemplateId: []
+
   })
   const [tempContent, setTempContent] = useState("")
   const [variableUsed, setVariableUsed] = useState([])
@@ -46,17 +50,21 @@ const TemplateMasterForm = ({ templateMaster }) => {
   const templateMasterData = useSelector(
     (state) => state.templateMasterReducer
   );
-  const clientOptions = clientMasterData.filter(clientData => clientData?.enabled).map((clientData) => ({
+  const clientOptions = clientMasterData?.filter(clientData => clientData?.enabled).map((clientData) => ({
     value: clientData?.id,
     label: clientData?.clientName,
   }));
-  const templateTypeOptions = templateTypeMasterData.filter(templateType => templateType?.enabled).map((templateType) => ({
+  const templateTypeOptions = templateTypeMasterData?.filter(templateType => templateType?.enabled).map((templateType) => ({
     value: templateType?.id,
     label: templateType?.templateType,
   }));
-  const fileTypeOptions = fileTypeData.filter(fileTypeData => fileTypeData?.enabled).map((fileTypeData) => ({
+  const fileTypeOptions = fileTypeData?.filter(fileTypeData => fileTypeData?.enabled).map((fileTypeData) => ({
     value: fileTypeData?.id,
     label: fileTypeData?.fileType,
+  }));
+  const templateMasterOptions = templateMasterData?.gettemplateMasterData?.filter(templateMaster => templateMaster?.enabled).map((templateMaster) => ({
+    value: templateMaster?.id,
+    label: templateMaster?.templateName,
   }));
   const validations = Yup.object().shape({
     clientId: Yup.string().required("Client is required"),
@@ -66,29 +74,35 @@ const TemplateMasterForm = ({ templateMaster }) => {
     enabled: Yup.string().required("Status is required"),
   });
   const handleSumbit = (values) => {
-    const templateMasterData = {
-      ...values,
-      templateContent: tempContent,
-      enabled: values.enabled === "true" ? true : false,
-      deleted: false,
-      isChild: values.isChild ? true : false
-    };
-    if (button === "Submit") {
-      dispatch(onPosttemplateMaster(templateMasterData));
+    debugger
+    if (!tempContent) {
+      setError("Templent Content is required")
     } else {
-      dispatch(onUpdatetemplateMaster(templateMasterData))
-      setInitialValue({
-        clientId: "",
-        templateName: "",
-        templateContent: "",
-        templateTypeId: "",
-        fileTypeId: "",
-        enabled: "",
-        isChild: "",
-      })
-      setTempContent("");
-      setButton("Submit")
+      const templateMasterData = {
+        ...values,
+        templateContent: tempContent,
+        enabled: values.enabled === "true" ? true : false,
+        deleted: false,
+        isChild: values.isChild ? true : false,
+        childTemplateId: values.childTemplateId ? values.childTemplateId.join(',') : ""
+      };
+      if (button === "Submit") {
+        dispatch(onPosttemplateMaster(templateMasterData));
+      } else {
+        dispatch(onUpdatetemplateMaster(templateMasterData))
+        setInitialValue({
+          clientId: "",
+          templateName: "",
+          templateTypeId: "",
+          fileTypeId: "",
+          enabled: "",
+          isChild: "",
+        })
+        setTempContent("");
+        setButton("Submit")
+      }
     }
+
   };
   useEffect(() => {
     if (templateMasterData?.post_status_code === "201") {
@@ -104,6 +118,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
     if (templateMaster) {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       setInitialValue(templateMaster);
+      setTempContent(templateMaster?.templateContent)
       setButton("Update");
     }
   }, [templateMaster])
@@ -129,35 +144,19 @@ const TemplateMasterForm = ({ templateMaster }) => {
                     validationSchema={validations}
                     onSubmit={handleSumbit}
                   >
-                    {({ errors, touched }) => (
+                    {({ errors, touched, values, setFieldValue, handleChange }) => (
                       <Form>
                         <div className="row">
-                          <div className="col-sm-4 form-group mb-2">
-                            <label> Client Name</label>
-                            <Field
-                              name="clientId"
-                              component={Dropdown}
-                              options={clientOptions}
-                              className={`form-select ${errors.clientId && touched.clientId
-                                  ? "is-invalid"
-                                  : ""
-                                }`}
-                            />
-                            <ErrorMessage
-                              name="clientId"
-                              component="div"
-                              className="error-message"
-                            />
-                          </div>
 
-                          <div className="col-sm-4 form-group mb-2">
+
+                          <div className="col-sm-8 form-group mb-2">
                             <label>Template Name</label>
                             <Field
                               type="text"
                               name="templateName"
                               className={`form-control ${errors.templateName && touched.templateName
-                                  ? "is-invalid"
-                                  : ""
+                                ? "is-invalid"
+                                : ""
                                 }`}
                               placeholder="Enter Template Name"
                             />
@@ -167,29 +166,74 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               className="error-message"
                             />
                           </div>
+
+                          <div className="form-group mb-2">
+                            <label>Template Content </label>
+                            <HtmlEditor
+                              data={tempContent}
+                              setData={setTempContent}
+                              setVariableUsed={setVariableUsed}
+                              variableUsed={variableUsed}
+                            />
+                            <p className="error-message">{error}</p>
+                          </div>
                           <div className="col-lg-4 py-4">
                             <div className="form-check  mb-2 padd">
                               <Field
                                 type="checkbox"
                                 className="form-check-input"
                                 name="isChild"
+                                onChange={(e) => {
+                                  setFieldValue("isChild", e.target.checked);
+                                  if (e.target.checked) {
+                                    setFieldValue("childTemplateId", []); // Reset dropdown value
+                                  }
+                                }}
                               />
                               <label className="px-1">Child Template</label>
                             </div>
                           </div>
-                          <div className="form-group mb-2">
-                            <label>Template Content </label>
-
-                                <HtmlEditor
-                                  data={tempContent}
-                                  setData={setTempContent}
-                                  setVariableUsed={setVariableUsed}
-                                  variableUsed={variableUsed}
+                          <div className="col-sm-4 form-group mb-2">
+                            <label htmlFor="pass">Template Master</label>
+                            <Field name="childTemplateId">
+                              {({ field }) => (
+                                <Select
+                                  {...field}
+                                  options={templateMasterOptions}
+                                  isMulti
+                                  className={`form-select ${errors.childTemplateId && touched.childTemplateId ? "is-invalid" : ""}`}
+                                  onChange={(selectedOption) => {
+                                    handleChange({
+                                      target: {
+                                        name: "childTemplateId",
+                                        value: selectedOption.map(option => option.value)
+                                      }
+                                    });
+                                  }}
+                                  value={templateMasterOptions?.filter(option => field.value?.includes(option.value))}
+                                  isDisabled={values?.isChild}
                                 />
-
-
+                              )}
+                            </Field>
                           </div>
 
+                          <div className="col-sm-4 form-group mb-2">
+                            <label> Client Name</label>
+                            <Field
+                              name="clientId"
+                              component={Dropdown}
+                              options={clientOptions}
+                              className={`form-select ${errors.clientId && touched.clientId
+                                ? "is-invalid"
+                                : ""
+                                }`}
+                            />
+                            <ErrorMessage
+                              name="clientId"
+                              component="div"
+                              className="error-message"
+                            />
+                          </div>
                           <div className="col-sm-4 form-group mb-2">
                             <label for="pass"> Template Type </label>
                             <Field
@@ -197,8 +241,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               component={Dropdown}
                               options={templateTypeOptions}
                               className={`form-select ${errors.templateTypeId && touched.templateTypeId
-                                  ? "is-invalid"
-                                  : ""
+                                ? "is-invalid"
+                                : ""
                                 }`}
                             />
                             <ErrorMessage
@@ -215,8 +259,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               component={Dropdown}
                               options={fileTypeOptions}
                               className={`form-select ${errors.fileTypeId && touched.fileTypeId
-                                  ? "is-invalid"
-                                  : ""
+                                ? "is-invalid"
+                                : ""
                                 }`}
                             />
                             <ErrorMessage
@@ -232,8 +276,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               component={Dropdown}
                               options={statusOptions}
                               className={`form-select ${errors.enabled && touched.enabled
-                                  ? "is-invalid"
-                                  : ""
+                                ? "is-invalid"
+                                : ""
                                 }`}
                             />
                             <ErrorMessage
@@ -242,6 +286,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               className="error-message"
                             />
                           </div>
+
+
 
                           <div className="row">
                             <div className="col-sm-12 form-group mb-0 mt-2">
@@ -261,8 +307,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
             </div>
           </div>
         </div>
-
-        <VariableDictionary variableUsed = {variableUsed}/>
+        <VariableDictionary variableUsed={variableUsed} />
       </div>
     </>
   );

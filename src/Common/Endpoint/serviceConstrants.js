@@ -22,7 +22,9 @@ const API={
    //template master api's
    gettemplatemaster:"/template-master",
    posttemplatemaster:"/template-master",
-   updatetemplatemaster:"/template-master"
+   updatetemplatemaster:"/template-master",
+   //variableMasterApi
+   postTemplateVariableMaster:"/template-variable"
 
 }
 export default API;

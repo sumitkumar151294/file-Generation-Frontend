@@ -27,7 +27,6 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
   const dispatch = useDispatch();
   const validations = Yup.object().shape({
     templateType: Yup.string().required("Template Name is required"),
-    description: Yup.string().required("Description is required"),
     enabled: Yup.string().required("Status is required"),
     fileName_Rule: Yup.string().required("File Type Rule is required"),
     clientId: Yup.string().required("Client is required"),
@@ -146,7 +145,6 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
                           <div className="col-sm-4 form-group mb-2">
                             <label >
                               Description
-                              <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
@@ -156,11 +154,6 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
                                 : ""
                                 }`}
                               placeholder="Enter Discription"
-                            />
-                            <ErrorMessage
-                              name="description"
-                              component="div"
-                              className="error-message"
                             />
                           </div>
                           <div className="col-sm-4 form-group mb-2">
