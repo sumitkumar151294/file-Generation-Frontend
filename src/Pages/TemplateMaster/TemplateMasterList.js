@@ -58,12 +58,13 @@ const ClientMasterList = () => {
     setFilteredData(filtered);
   };
   const handleData = (templateMaster, isEdit) => {
+    debugger
     const templateMasterInfo = {
       enabled: templateMaster?.enabled,
       deleted: true,
       createdBy: 0,
       updatedBy: 0,
-      templateName: "sdfer4f",
+      templateName: templateMaster?.templateName,
       templateContent: templateMaster?.templateContent,
       clientId: templateMaster?.clientId,
       templateTypeId: templateMaster?.templateTypeId,
