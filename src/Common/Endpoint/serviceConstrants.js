@@ -1,6 +1,6 @@
 const API={
    //authconfig api
-   authConfig:"",
+   authConfig:"/generate-auth-token",
    //login api
    postlogin:"/login",
    //file type api's
