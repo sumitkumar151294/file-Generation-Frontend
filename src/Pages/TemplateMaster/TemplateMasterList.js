@@ -58,7 +58,6 @@ const ClientMasterList = () => {
     setFilteredData(filtered);
   };
   const handleData = (templateMaster, isEdit) => {
-    debugger
     const templateMasterInfo = {
       enabled: templateMaster?.enabled,
       deleted: true,
@@ -159,35 +158,35 @@ const ClientMasterList = () => {
                         <tbody>
                           {filteredData
                             .slice(startIndex, endIndex)
-                            .map((templateMaster, index) => (
+                            ?.map((templateMaster, index) => (
                               <tr key={index}>
                                 <td>
                                   {clientMasterData
-                                    .filter(
+                                    ?.filter(
                                       (client) =>
-                                        client.id === templateMaster.clientId
+                                        client.id === templateMaster?.clientId
                                     )
-                                    .map((client) => client.clientCode)}
+                                    ?.map((client) => client?.clientCode)}
                                 </td>
                                 <td>
                                   {fileTypeData
-                                    .filter(
+                                    ?.filter(
                                       (fileType) =>
                                         fileType.id ===
                                         templateMaster.fileTypeId
                                     )
-                                    .map((fileType) => fileType.fileType)}
+                                    .map((fileType) => fileType?.fileType)}
                                 </td>
 
-                                <td>{templateMaster.templateName}</td>
+                                <td>{templateMaster?.templateName}</td>
                                 <td>
                                   {templateTypeMasterData
-                                    .filter(
+                                    ?.filter(
                                       (templateType) =>
                                         templateType.id ===
                                         templateMaster.templateTypeId
                                     )
-                                    .map(
+                                    ?.map(
                                       (templateType) =>
                                         templateType.templateType
                                     )}

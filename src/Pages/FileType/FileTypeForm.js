@@ -19,41 +19,40 @@ const FileTypeForm = ({ fileData }) => {
       .required("File Extension is required")
       .test(
         'is-pdf',
-        'Only .pdf files are accepted',
-        value => value.toLowerCase().endsWith('.pdf')
+        'Only pdf File Extension are is accepted',
+        value => value.toLowerCase().endsWith('pdf')
       ),
     enabled: Yup.string().required("Status is required"),
   });
-
   const [intialValue, setInitialValue] = useState({
     fileType: "",
     extension: "",
     enabled: "",
   })
   const handleSubmit = (values) => {
-    if (button === "Submit") {
-      const fileTypeData = {
-        ...values,
-        enabled: values.enabled === "true" ? true : false
-      }
-      dispatch(onPostfileType(fileTypeData))
-    } else {
-      const fileTypeData = {
-        ...values,
-        deleted: false,
-        enabled: values.enabled === "true" ? true : false
-
-      }
-      setInitialValue(
-        {
-          fileType: "",
-          extension: "",
-          enabled: "",
-        }
-      )
-      setButton("Submit")
-      dispatch(onUpdatefileType(fileTypeData))
+    const fileTypeDatas = {
+      ...values,
+      deleted: false,
+      enabled: values.enabled ? true : false,
     }
+      if (button === "Submit") {
+        if(fileTypeData?.getfileTypeData?.filter(fileType=>fileType?.extension==="pdf")?.length){
+        toast.error("File Extension with same name already exists")
+        }else{
+          dispatch(onPostfileType(fileTypeDatas))
+        }
+      } else {
+        setInitialValue(
+          {
+            fileType: "",
+            extension: "",
+            enabled: "",
+          }
+        )
+        setButton("Submit")
+        dispatch(onUpdatefileType(fileTypeDatas))
+      }
+
 
   };
   useEffect(() => {

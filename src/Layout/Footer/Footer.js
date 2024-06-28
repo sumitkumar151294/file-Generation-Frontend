@@ -1,8 +1,6 @@
 import React from "react";
-// import { GetTranslationData } from "../../Components/GetTranslationData/GetTranslationData ";
 import { Link } from "react-router-dom";
 const Footer = ({isLogin}) => {
-  console.log(isLogin)
   return (
     <div className={`footer ${!isLogin ? 'mg-16'  : ""}`}>
       <div className="copyright">

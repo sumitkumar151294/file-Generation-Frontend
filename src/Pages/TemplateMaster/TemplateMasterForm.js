@@ -74,14 +74,13 @@ const TemplateMasterForm = ({ templateMaster }) => {
     enabled: Yup.string().required("Status is required"),
   });
   const handleSumbit = (values) => {
-    debugger
     if (!tempContent) {
       setError("Templent Content is required")
     } else {
       const templateMasterData = {
         ...values,
         templateContent: tempContent,
-        enabled: values.enabled === "true" ? true : false,
+        enabled: values.enabled ? true : false,
         deleted: false,
         isChild: values.isChild ? true : false,
         childTemplateId: values.childTemplateId ? values.childTemplateId.join(',') : ""
@@ -194,7 +193,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                             </div>
                           </div>
                           <div className="col-sm-4 form-group mb-2">
-                            <label htmlFor="pass">Template Master</label>
+                            <label htmlFor="pass">Select Child Template</label>
                             <Field name="childTemplateId">
                               {({ field }) => (
                                 <Select
@@ -211,7 +210,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                                     });
                                   }}
                                   value={templateMasterOptions?.filter(option => field.value?.includes(option.value))}
-                                  isDisabled={values?.isChild}
+                                  isDisabled={values?.isChild || !templateMasterOptions.length}
                                 />
                               )}
                             </Field>

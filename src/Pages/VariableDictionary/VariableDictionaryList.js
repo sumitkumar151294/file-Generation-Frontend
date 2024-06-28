@@ -18,11 +18,24 @@ const VariableDictionaryList = () => {
   const [filterValue, setFilterValue] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
-
+  const templateMasterData = useSelector(
+    (state) => state.templateMasterReducer?.gettemplateMasterData
+  );
+  const templates=templateMasterData.map(template=>template.templateContent)
+  const variables=variableData?.getVariableData.map(variable=>variable.variableName)
   useEffect(() => {
     dispatch(onGetVariable());
   }, []);
-
+  const findMatches=(a, b)=> {
+    var matches = [];
+    b.forEach(function(element) {
+        if (a.some(function(str) { return str.includes(element); })) {
+            matches.push(element);
+        }
+    });
+    return matches;
+}
+const result =findMatches(templateMasterData?.map(template=>template?.templateContent),variableData?.getVariableData.map(variable=>variable.variableName))
   useEffect(() => {
     if (variableData?.getVariableData) {
       setFilteredData(variableData.getVariableData);
@@ -45,15 +58,20 @@ const VariableDictionaryList = () => {
     setFilteredData(filtered);
   };
   const handleData = (variableData) => {
-    const variableDatatoDelete = {
-      deleted: true,
-      createdBy: 0,
-      updatedBy: 0,
-      variableName: variableData.variableName,
-      variable: variableData?.variable,
-      id: variableData?.id
+    if(result.filter(varname=>varname===variableData.variableName).length){
+      toast.error("Unable to Delete Variable: Variable is in Use, To Proceed first remove from the template")
+    }else{
+      const variableDatatoDelete = {
+        deleted: true,
+        createdBy: 0,
+        updatedBy: 0,
+        variableName: variableData.variableName,
+        variable: variableData?.variable,
+        id: variableData?.id
+      }
+      dispatch(onUpdateVariable(variableDatatoDelete))
     }
-    dispatch(onUpdateVariable(variableDatatoDelete))
+
   }
   useEffect(() => {
     if (variableData?.update_status_code === "201") {

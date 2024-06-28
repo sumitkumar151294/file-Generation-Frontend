@@ -30,11 +30,11 @@ const ClientMasterForm = ({ clientData }) => {
     enabled: Yup.boolean().required("Status is required"),
     clientCode: Yup.string().required("Client Code is required"),
   });
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values) => {
     if (button === "Submit") {
       const clientData = {
         ...values,
-        enabled: values.enabled === "true" ? true : false,
+        enabled: values.enabled ? true : false,
         clientCode: String(values.clientCode),
       };
       dispatch(onPostclientMaster(clientData));
@@ -42,7 +42,8 @@ const ClientMasterForm = ({ clientData }) => {
       const clientData = {
         ...values,
         deleted: false,
-        enabled: values.enabled === "true" ? true : false
+        enabled: values.enabled ? true : false,
+        clientCode: String(values.clientCode),
 
       };
       setInitialValue({
