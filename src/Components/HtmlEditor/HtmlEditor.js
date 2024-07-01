@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useMemo } from 'react';
 
 import { useSelector } from 'react-redux';
 import JoditEditor from 'jodit-react'
  
-const HtmlEditor1 = ({ data, setData, setVariableUsed,seterror }) => {
+const HtmlEditor = ({ data, setData, setVariableUsed,seterror }) => {
   const options = [ 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', '|', 'outdent', 'indent', 'align', '|', 'hr', '|', 'fullsize', 'brush', '|', 'table', 'link', '|', 'undo', 'redo','source'];
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
   const extractVariables = (str) => {
@@ -70,4 +72,5 @@ const HtmlEditor1 = ({ data, setData, setVariableUsed,seterror }) => {
     </div>
   );
 };
-export default HtmlEditor1;
+export default HtmlEditor;
+/* eslint-enable react-hooks/exhaustive-deps */
