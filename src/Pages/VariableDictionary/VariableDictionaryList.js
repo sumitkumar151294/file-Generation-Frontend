@@ -34,7 +34,7 @@ const VariableDictionaryList = () => {
     });
     return matches;
 }
-const result =findMatches(templateMasterData?.map(template=>template?.templateContent),variableData?.getVariableData.map(variable=>variable.variableName))
+const result =findMatches(templateMasterData?.map(template=>template?.templateContent),variableData?.getVariableData?.map(variable=>variable.variableName))
   useEffect(() => {
     if (variableData?.getVariableData) {
       setFilteredData(variableData.getVariableData);

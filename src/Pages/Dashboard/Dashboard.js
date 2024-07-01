@@ -19,13 +19,13 @@ const Dashboard = () => {
     (state) => state.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
   useEffect(() => {
-    if (!clientMasterData?.length) {
-      dispatch(onGetclientMaster());
-    } else if (!templateTypemasterData?.length) {
-      dispatch(onGettemplateTypeMaster());
-    } else if (!templateMasterData?.length) {
-      dispatch(onGettemplateMaster());
-    }
+    // if (!clientMasterData?.length) {
+    //   dispatch(onGetclientMaster());
+    // } else if (!templateTypemasterData?.length) {
+    //   dispatch(onGettemplateTypeMaster());
+    // } else if (!templateMasterData?.length) {
+    //   dispatch(onGettemplateMaster());
+    // }
   }, [clientMasterData, templateTypemasterData]);
   return (
     <>
