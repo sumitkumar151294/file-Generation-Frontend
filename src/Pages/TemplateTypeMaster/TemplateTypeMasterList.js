@@ -27,6 +27,11 @@ const TemplateTypeMasterList = () => {
   useEffect(() => {
     if (templateTypeMasterData?.gettemplateTypeMasterData) {
       setFilteredData(templateTypeMasterData?.gettemplateTypeMasterData);
+      const totalItems = templateTypeMasterData?.gettemplateTypeMasterData?.length;
+      const totalPages = Math.ceil(totalItems / rowsPerPage);
+      if (page > totalPages && page > 1) {
+        setPage(page - 1);
+      }
     }
   }, [templateTypeMasterData?.gettemplateTypeMasterData]);
   const [filterValue, setFilterValue] = useState("");
@@ -85,6 +90,7 @@ const TemplateTypeMasterList = () => {
       dispatch(onUpdatetemplateTypeMasterReset())
     }
   }, [templateTypeMasterData])
+
   return (
     <div className="container-fluid">
       <TemplateTypeMasterForm templateTypeData={templateTypeData} />

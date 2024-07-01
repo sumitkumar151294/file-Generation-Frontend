@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useSelector } from 'react-redux';
 
-const HtmlEditor = ({ data, setData, setVariableUsed,seterror }) => {
+const HtmlEditor = ({ data, setData, setVariableUsed }) => {
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
   const extractVariables = (str) => {
     const regex = /{{@(.*?)}}/g;

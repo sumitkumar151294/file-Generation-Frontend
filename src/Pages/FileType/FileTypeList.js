@@ -76,6 +76,7 @@ const FileTypeList = () => {
       dispatch(onUpdatefileTypeReset())
     }
   }, [fileTypeData])
+  
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const day = date.getDate();

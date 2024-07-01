@@ -43,6 +43,11 @@ const ClientMasterList = () => {
   useEffect(() => {
     if (templateMasterData?.gettemplateMasterData) {
       setFilteredData(templateMasterData?.gettemplateMasterData);
+      const totalItems = templateMasterData?.gettemplateMasterData?.length;
+      const totalPages = Math.ceil(totalItems / rowsPerPage);
+      if (page > totalPages && page > 1) {
+        setPage(page - 1);
+      }
     }
   }, [templateMasterData?.gettemplateMasterData]);
   const [filterValue, setFilterValue] = useState("");
@@ -104,6 +109,15 @@ const ClientMasterList = () => {
       dispatch(onUpdatetemplateMasterReset());
     }
   }, [templateMasterData]);
+  useEffect(() => {
+    if (templateTypeMasterData?.gettemplateTypeMasterData) {
+      const totalItems = templateTypeMasterData?.gettemplateTypeMasterData?.length;
+      const totalPages = Math.ceil(totalItems / rowsPerPage);
+      if (page > totalPages && page > 1) {
+        setPage(page - 1);
+      }
+    }
+  }, [templateTypeMasterData?.gettemplateTypeMasterData]);
   return (
     <div className="container-fluid">
       <ScrollToTop />
