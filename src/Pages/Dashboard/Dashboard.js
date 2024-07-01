@@ -19,6 +19,7 @@ const Dashboard = () => {
     (state) => state.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
   useEffect(() => {
+
     if (!clientMasterData?.length) {
       dispatch(onGetclientMaster());
     } else if (!templateTypemasterData?.length) {
@@ -27,6 +28,7 @@ const Dashboard = () => {
       dispatch(onGettemplateMaster());
     }
   }, []);
+
   return (
     <>
       <ScrollToTop />

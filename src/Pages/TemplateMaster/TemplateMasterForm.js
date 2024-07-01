@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Components/Dropdown/Dropdown";
-import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Select from "react-select";
 import * as Yup from "yup";
@@ -17,13 +16,12 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../Components/Loader/Loader";
 import VariableDictionary from "../VariableDictionary/VariableDictionary";
-
 import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 import { onGetfileType } from "../../Store/Slices/fileTypeSlice";
 import { onPosttemplateVariableMaster } from "../../Store/Slices/templateVariableMasterSlice";
 
-import HtmlEditor1 from "../../Components/HtmlEditor/HtmlEditor1";
+import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 
 const statusOptions = [
   { value: true, label: "Active" },
@@ -219,7 +217,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
 
                           <div className="form-group mb-2">
                             <label>Template Content </label>
-                            <HtmlEditor1
+                            <HtmlEditor
                               data={tempContent}
                               setData={setTempContent}
                               setVariableUsed={setVariableUsed}

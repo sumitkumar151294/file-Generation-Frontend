@@ -1,9 +1,12 @@
-import React from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { useSelector } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
 
-const HtmlEditor = ({ data, setData, setVariableUsed }) => {
+import React, { useMemo } from 'react';
+
+import { useSelector } from 'react-redux';
+import JoditEditor from 'jodit-react'
+ 
+const HtmlEditor = ({ data, setData, setVariableUsed,seterror }) => {
+  const options = [ 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', '|', 'outdent', 'indent', 'align', '|', 'hr', '|', 'fullsize', 'brush', '|', 'table', 'link', '|', 'undo', 'redo','source'];
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
   const extractVariables = (str) => {
     const regex = /{{@(.*?)}}/g;
@@ -15,11 +18,33 @@ const HtmlEditor = ({ data, setData, setVariableUsed }) => {
       return match.substring(2, match.length - 2).trim();
     });
   }
+
+  const config = useMemo(
+    () => ({
+    readonly: false,
+    placeholder: '',
+    defaultActionOnPaste: 'insert_as_html',
+    defaultLineHeight: 1.5,
+    enter: 'div',
+   // options that we defined in above step.
+    buttons: options,
+    buttonsMD: options,
+    buttonsSM: options,
+    buttonsXS: options,
+    statusbar: false,
+    sizeLG: 900,
+    sizeMD: 700,
+    sizeSM: 400,
+    toolbarAdaptive: false,
+    }),
+    [],
+   );
+
+
   const findVariableByName = (variableName) => {
     return variableData.find(item => item.variableName === variableName);
   }
   const handleChange = (content) => {
-
     setData(content);
     const variableData = extractVariables(content)
     const mySet = [];
@@ -35,53 +60,17 @@ const HtmlEditor = ({ data, setData, setVariableUsed }) => {
 
     setVariableUsed(mySet);
   };
+
+
   return (
     <div>
-      <ReactQuill
-        theme="snow"
-        value={data}
+      <JoditEditor        
+        config={config}
         onChange={handleChange}
-        modules={HtmlEditor?.modules}
-        formats={HtmlEditor?.formats}
         placeholder="Write something..."
-      />
+/>
     </div>
   );
 };
-
-// Quill modules to attach to editor
-HtmlEditor.modules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image", "video"],
-    ["clean"],
-  ],
-};
-
-// Quill formats
-HtmlEditor.formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-];
-
 export default HtmlEditor;
+/* eslint-enable react-hooks/exhaustive-deps */
