@@ -21,15 +21,14 @@ const VariableDictionaryList = () => {
   const templateMasterData = useSelector(
     (state) => state.templateMasterReducer?.gettemplateMasterData
   );
-  const templates=templateMasterData.map(template=>template.templateContent)
-  const variables=variableData?.getVariableData.map(variable=>variable.variableName)
+
   useEffect(() => {
     dispatch(onGetVariable());
   }, []);
   const findMatches=(a, b)=> {
     var matches = [];
-    b.forEach(function(element) {
-        if (a.some(function(str) { return str.includes(element); })) {
+    b?.forEach(function(element) {
+        if (a?.some(function(str) { return str.includes(element); })) {
             matches.push(element);
         }
     });
@@ -39,6 +38,11 @@ const result =findMatches(templateMasterData?.map(template=>template?.templateCo
   useEffect(() => {
     if (variableData?.getVariableData) {
       setFilteredData(variableData.getVariableData);
+      const totalItems = variableData?.getVariableData?.length;
+      const totalPages = Math.ceil(totalItems / rowsPerPage);
+      if (page > totalPages && page > 1) {
+        setPage(page - 1);
+      }
     }
   }, [variableData.getVariableData]);
 
