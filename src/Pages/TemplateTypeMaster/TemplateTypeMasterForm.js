@@ -35,7 +35,7 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
     const templateTypeData = {
       ...values,
       deleted: false,
-      enabled: values.enabled ? true : false,
+      enabled: JSON.parse(values.enabled) ,
     };
     if (button === "Submit") {
       dispatch(onPosttemplateTypeMaster(templateTypeData))

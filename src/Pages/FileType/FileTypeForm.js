@@ -30,10 +30,11 @@ const FileTypeForm = ({ fileData }) => {
     enabled: "",
   })
   const handleSubmit = (values) => {
+    debugger
     const fileTypeDatas = {
       ...values,
       deleted: false,
-      enabled: values.enabled ? true : false,
+      enabled: JSON.parse(values.enabled),
     }
       if (button === "Submit") {
         if(fileTypeData?.getfileTypeData?.filter(fileType=>fileType?.extension==="pdf")?.length){

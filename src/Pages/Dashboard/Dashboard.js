@@ -26,7 +26,7 @@ const Dashboard = () => {
     } else if (!templateMasterData?.length) {
       dispatch(onGettemplateMaster());
     }
-  }, [clientMasterData, templateTypemasterData]);
+  }, []);
   return (
     <>
       <ScrollToTop />
