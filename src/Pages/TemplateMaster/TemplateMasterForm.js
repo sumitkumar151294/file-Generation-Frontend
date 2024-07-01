@@ -17,6 +17,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../Components/Loader/Loader";
 import VariableDictionary from "../VariableDictionary/VariableDictionary";
+import HtmlEditor1 from "../../Components/HtmlEditor/HtmlEditor1";
 const statusOptions = [
   { value: true, label: "Active" },
   { value: false, label: "Non Active" },
@@ -168,7 +169,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
 
                           <div className="form-group mb-2">
                             <label>Template Content </label>
-                            <HtmlEditor
+                            <HtmlEditor1
                               data={tempContent}
                               setData={setTempContent}
                               setVariableUsed={setVariableUsed}
