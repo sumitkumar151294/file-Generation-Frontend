@@ -25,16 +25,18 @@ const VariableDictionaryList = () => {
   useEffect(() => {
     dispatch(onGetVariable());
   }, []);
-  const findMatches=(a, b)=> {
+  const findMatches = (a, b) => {
     var matches = [];
-    b?.forEach(function(element) {
-        if (a?.some(function(str) { return str.includes(element); })) {
-            matches.push(element);
-        }
+    b?.forEach(function (element) {
+      if (a?.some(function (str) { return str.includes(element); })) {
+        matches.push(element);
+      }
     });
     return matches;
-}
-const result =findMatches(templateMasterData?.map(template=>template?.templateContent),variableData?.getVariableData?.map(variable=>variable.variableName))
+
+  }
+  const result = findMatches(templateMasterData?.map(template => template?.templateContent), variableData?.getVariableData?.map(variable => variable.variableName))
+
   useEffect(() => {
     if (variableData?.getVariableData) {
       setFilteredData(variableData.getVariableData);
@@ -62,9 +64,9 @@ const result =findMatches(templateMasterData?.map(template=>template?.templateCo
     setFilteredData(filtered);
   };
   const handleData = (variableData) => {
-    if(result.filter(varname=>varname===variableData.variableName).length){
+    if (result.filter(varname => varname === variableData.variableName).length) {
       toast.error("Unable to Delete Variable: Variable is in Use, To Proceed first remove from the template")
-    }else{
+    } else {
       const variableDatatoDelete = {
         deleted: true,
         createdBy: 0,
@@ -79,10 +81,10 @@ const result =findMatches(templateMasterData?.map(template=>template?.templateCo
   }
   useEffect(() => {
     if (variableData?.update_status_code === "201") {
-    toast.success("Deleted Successfully")
+      toast.success("Deleted Successfully")
       dispatch(onGetVariable())
       dispatch(onUpdateVariableReset())
-    }else if(variableData?.update_status_code) {
+    } else if (variableData?.update_status_code) {
       toast.error(variableData?.updateMessage)
       dispatch(onUpdateVariableReset())
     }

@@ -164,7 +164,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
     } else if (!fileTypeData?.length) {
       dispatch(onGetfileType());
     }
-  }, [clientMasterData, templateTypeMasterData ,fileTypeData]);
+  }, []);
   return (
     <>
       <ToastContainer />

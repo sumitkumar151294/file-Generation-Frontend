@@ -31,21 +31,16 @@ const ClientMasterForm = ({ clientData }) => {
     clientCode: Yup.string().required("Client Code is required"),
   });
   const handleSubmit = (values) => {
+    debugger
+    const clientData = {
+      ...values,
+      deleted: false,
+      enabled:JSON.parse(values.enabled),
+      clientCode: String(values.clientCode),
+    };
     if (button === "Submit") {
-      const clientData = {
-        ...values,
-        enabled: values.enabled ? true : false,
-        clientCode: String(values.clientCode),
-      };
       dispatch(onPostclientMaster(clientData));
     } else {
-      const clientData = {
-        ...values,
-        deleted: false,
-        enabled: values.enabled ? true : false,
-        clientCode: String(values.clientCode),
-
-      };
       setInitialValue({
         clientName: "",
         description: "",
