@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Components/Dropdown/Dropdown";
-import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Select from "react-select";
 import * as Yup from "yup";

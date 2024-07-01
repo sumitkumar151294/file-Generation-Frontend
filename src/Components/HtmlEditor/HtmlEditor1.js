@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+
 import { useSelector } from 'react-redux';
-import JoditEditor, { Jodit } from 'jodit-react'
+import JoditEditor from 'jodit-react'
  
 const HtmlEditor1 = ({ data, setData, setVariableUsed,seterror }) => {
   const options = [ 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', '|', 'outdent', 'indent', 'align', '|', 'hr', '|', 'fullsize', 'brush', '|', 'table', 'link', '|', 'undo', 'redo','source'];
