@@ -149,13 +149,18 @@ const TemplateMasterForm = ({ templateMaster }) => {
     }
   }, [templateMaster]);
   useEffect(() => {
-    if (!clientMasterData?.length) {
-      dispatch(onGetclientMaster());
-    } else if (!templateTypeMasterData?.length) {
-      dispatch(onGettemplateTypeMaster());
-    } else if (!fileTypeData?.length) {
-      dispatch(onGetfileType());
-    }
+    const fetchData = async () => {
+      if (!clientMasterData?.length) {
+        dispatch(onGetclientMaster());
+      }
+      if (!templateTypeMasterData?.length) {
+        dispatch(onGettemplateTypeMaster());
+      }
+      if (!fileTypeData?.lengt) {
+        dispatch(onGetfileType());
+      }
+    };
+    fetchData();
   }, []);
 
   return (

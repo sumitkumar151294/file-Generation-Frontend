@@ -19,14 +19,19 @@ const Dashboard = () => {
     (state) => state.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
   useEffect(() => {
+    const fetchData = async () => {
+      if (!clientMasterData?.length) {
+        dispatch(onGetclientMaster());
+      }
+      if (!templateTypemasterData?.length) {
+        dispatch(onGettemplateTypeMaster());
+      }
+      if (!templateMasterData?.length) {
+        dispatch(onGettemplateMaster());
+      }
+    };
 
-    if (!clientMasterData?.length) {
-      dispatch(onGetclientMaster());
-    } else if (!templateTypemasterData?.length) {
-      dispatch(onGettemplateTypeMaster());
-    } else if (!templateMasterData?.length) {
-      dispatch(onGettemplateMaster());
-    }
+    fetchData();
   }, []);
 
   return (

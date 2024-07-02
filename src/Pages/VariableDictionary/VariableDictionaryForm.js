@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button/Button";
 import Loader from "../../Components/Loader/Loader";
@@ -16,110 +16,113 @@ const VariableDictionaryForm = () => {
     variableName: Yup.string().required("Variable Name is required"),
   });
   const handleSubmit = (values) => {
-    dispatch(onPostVariable(values));
+    if (variableData?.getVariableData?.filter(variable => variable?.variableName === values?.variableName).length) {
+      toast.error("Variable with same name already exists")
+    } else {
+
+      dispatch(onPostVariable(values));
+    }
   };
- useEffect(()=>{
-if(variableData?.post_status_code==="201"){
-  toast.success(variableData.postMessage)
-  dispatch(onPostVariableReset())
-  dispatch(onGetVariable())
-}else if(variableData?.post_status_code){
-  toast.error(variableData.postMessage)
-  dispatch(onPostVariableReset())
-}
- },[variableData])
+  useEffect(() => {
+    if (variableData?.post_status_code === "201") {
+      toast.success(variableData.postMessage)
+      dispatch(onPostVariableReset())
+      dispatch(onGetVariable())
+    } else if (variableData?.post_status_code) {
+      toast.error(variableData.postMessage)
+      dispatch(onPostVariableReset())
+    }
+  }, [variableData])
   return (
     <>
-        <div className="row">
-          <div className="col-xl-12 col-xxl-12">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title">Variable Dictionary</h4>
-              </div>
-              <div className="card-body">
-                {variableData?.postLoading ? (
-                  <div style={{ height: "150px" }}>
-                    <Loader classType={"absoluteLoader"} />
-                  </div>
-                ) : (
-                  <div className="container-fluid">
-                    <Formik
-                      initialValues={{
-                        variable: "",
-                        variableName: "",
-                        deleted:false
-                      }}
-                      validationSchema={variableValidations}
-                      onSubmit={handleSubmit}
-                    >
-                      {({ errors, touched ,setFieldValue}) => (
-                        <Form>
-                          <div className="row">
-                            <div className="col-sm-4 form-group mb-2">
-                              <label >
-                                Variable Name
-                                <span className="text-danger">*</span>
-                              </label>
-                              <Field
-                                type="text"
-                                name="variableName"
-                                className={`form-control ${
-                                  errors.variableName && touched.variableName
-                                    ? "is-invalid"
-                                    : ""
+      <div className="row">
+        <div className="col-xl-12 col-xxl-12">
+          <div className="card">
+            <div className="card-header">
+              <h4 className="card-title">Variable Dictionary</h4>
+            </div>
+            <div className="card-body">
+              {variableData?.postLoading ? (
+                <div style={{ height: "150px" }}>
+                  <Loader classType={"absoluteLoader"} />
+                </div>
+              ) : (
+                <div className="container-fluid">
+                  <Formik
+                    initialValues={{
+                      variable: "",
+                      variableName: "",
+                      deleted: false
+                    }}
+                    validationSchema={variableValidations}
+                    onSubmit={handleSubmit}
+                  >
+                    {({ errors, touched, setFieldValue }) => (
+                      <Form>
+                        <div className="row">
+                          <div className="col-sm-4 form-group mb-2">
+                            <label >
+                              Variable Name
+                              <span className="text-danger">*</span>
+                            </label>
+                            <Field
+                              type="text"
+                              name="variableName"
+                              className={`form-control ${errors.variableName && touched.variableName
+                                  ? "is-invalid"
+                                  : ""
                                 }`}
-                                onChange={(e) => {
-                                  setFieldValue('variableName', e.target.value.startsWith('@') ? e.target.value : '@' + e.target.value);
-                                }}
-                                placeholder="Enter Variable Name"
-                              />
-                              <ErrorMessage
-                                name="variable_name"
-                                component="div"
-                                className="error-message"
-                              />
-                            </div>
-
-                            <div className="col-sm-4 form-group mb-2">
-                              <label >
-                                Variable
-                                <span className="text-danger">*</span>
-                              </label>
-                              <Field
-                                type="text"
-                                name="variable"
-                                className={`form-control ${
-                                  errors.variable && touched.variable
-                                    ? "is-invalid"
-                                    : ""
-                                }`}
-                                placeholder="Enter Variable"
-
-                              />
-                              <ErrorMessage
-                                name="variable"
-                                component="div"
-                                className="error-message"
-                              />
-                            </div>
-                            <div className="col-sm-12 form-group mb-0 mt-2">
-                              <Button
-                                text="Submit"
-                                icon="fa fa-arrow-right"
-                                className="btn btn-primary float-right pad-aa mt-2"
-                              />
-                              <ToastContainer />
-                            </div>
+                              onChange={(e) => {
+                                setFieldValue('variableName', e.target.value.startsWith('@') ? e.target.value : '@' + e.target.value);
+                              }}
+                              placeholder="Enter Variable Name"
+                            />
+                            <ErrorMessage
+                              name="variable_name"
+                              component="div"
+                              className="error-message"
+                            />
                           </div>
-                        </Form>
-                      )}
-                    </Formik>
-                  </div>
-                )}
-              </div>
+
+                          <div className="col-sm-4 form-group mb-2">
+                            <label >
+                              Variable
+                              <span className="text-danger">*</span>
+                            </label>
+                            <Field
+                              type="text"
+                              name="variable"
+                              className={`form-control ${errors.variable && touched.variable
+                                  ? "is-invalid"
+                                  : ""
+                                }`}
+                              placeholder="Enter Variable"
+
+                            />
+                            <ErrorMessage
+                              name="variable"
+                              component="div"
+                              className="error-message"
+                            />
+                          </div>
+                          <div className="col-sm-12 form-group mb-0 mt-2">
+                            <Button
+                              text="Submit"
+                              icon="fa fa-arrow-right"
+                              className="btn btn-primary float-right pad-aa mt-2"
+                            />
+                            <ToastContainer />
+                          </div>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              )}
             </div>
           </div>
         </div>
+      </div>
     </>
   );
 };

@@ -39,33 +39,42 @@ if(!variableData){
           </span>
         </div>
       </div>
- <div className={`loafer ${variableIsloading ? 'loading' : ''}`}>
-         <table className="w-100">
-          <thead>
-            <tr>
-              <th scope="col">Variable Name</th>
-              <th scope="col">Variable</th>
+      <div className="loafer">
+  {variableIsloading ? (
+    <div className="loader-container">
+      <div className="loader"></div>
+    </div>
+  ) : (
+    <table className="w-100">
+      <thead>
+        <tr>
+          <th scope="col">Variable Name</th>
+          <th scope="col">Variable</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredData?.length ? (
+          filteredData.map((variable, index) => (
+            <tr key={index}>
+              <td data-label="Variable Name">
+                {variable?.variableName}{' '}
+                {variableUsed.includes(variable.id) && (
+                  <i className="fa-solid fa-check"></i>
+                )}
+              </td>
+              <td data-label="Variable">{variable?.variable}</td>
             </tr>
-          </thead>
-          <tbody>
-            {filteredData?.length ? (
-              filteredData.map((variable, index) => (
-                <tr key={index}>
-                  <td data-label="Variable Name">
-                    {variable?.variableName} {variableUsed.includes(variable.id) && <i className="fa-solid fa-check"></i>}
-                  </td>
-                  <td data-label="Variable">{variable?.variable}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="2">No records found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="2">No records found</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  )}
+</div>
 
-      </div>
     </div>
     </>
   )
