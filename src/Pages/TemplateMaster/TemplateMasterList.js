@@ -160,9 +160,10 @@ const ClientMasterList = () => {
                       <table className="table header-border table-responsive-sm">
                         <thead>
                           <tr>
+                            <th>Id</th>
+                            <th>Template Name</th>
                             <th>Client Code</th>
                             <th>File Type</th>
-                            <th>Template Name</th>
                             <th>Template type</th>
                             <th>Date</th>
                             <th>Status</th>
@@ -174,6 +175,8 @@ const ClientMasterList = () => {
                             .slice(startIndex, endIndex)
                             ?.map((templateMaster, index) => (
                               <tr key={index}>
+                                <td>{templateMaster?.id}</td>
+                                <td>{templateMaster?.templateName}</td>
                                 <td>
                                   {clientMasterData
                                     ?.filter(
@@ -192,7 +195,6 @@ const ClientMasterList = () => {
                                     .map((fileType) => fileType?.fileType)}
                                 </td>
 
-                                <td>{templateMaster?.templateName}</td>
                                 <td>
                                   {templateTypeMasterData
                                     ?.filter(

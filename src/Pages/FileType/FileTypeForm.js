@@ -30,7 +30,6 @@ const FileTypeForm = ({ fileData }) => {
     enabled: "",
   })
   const handleSubmit = (values) => {
-    debugger
     const fileTypeDatas = {
       ...values,
       deleted: false,

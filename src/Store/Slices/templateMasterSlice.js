@@ -55,14 +55,14 @@ export const templateMaster = createSlice({
         };
       },
     onPosttemplateMasterSuccess: (state, { payload }) => {
-
-      const { data = [], message = "", status_code = 200 } = payload;
+      const { data = [], message = "",postData="", status_code = 200 } = payload;
       return {
         ...state,
         postLoading: false,
         posttemplateMasterData:data,
         postMessage:message,
         post_status_code:status_code,
+        postData:postData
       };
     },
 

@@ -118,24 +118,16 @@ const TemplateMasterForm = ({ templateMaster }) => {
       }
     }
   };
-  const templateVariableData=
-    [
-      {
-        enabled: true,
-        deleted: false,
-        createdBy: 0,
-        updatedBy: 0,
-        templateId: 63,
-      variableId: 23
-      },{
-        enabled: true,
-        deleted: false,
-        createdBy: 0,
-        updatedBy: 0,
-        templateId: 63,
-      variableId: 24
-      }
-    ]
+
+
+  const templateVariableData = variableUsed.map(variable => ({
+    enabled: true,
+    deleted: false,
+    createdBy: 0,
+    updatedBy: 0,
+    templateId: templateMasterData?.postData[0]?.id,
+    variableId: variable
+  }));
 
   useEffect(() => {
     if (templateMasterData?.post_status_code === "201") {
@@ -165,6 +157,17 @@ const TemplateMasterForm = ({ templateMaster }) => {
       dispatch(onGetfileType());
     }
   }, []);
+  // const findMatches = (a, b) => {
+  //   var matches = [];
+  //   b?.forEach(function (element) {
+  //     if (a?.some(function (str) { return str.includes(element); })) {
+  //       matches.push(element);
+  //     }
+  //   });
+  //   return matches;
+
+  // }
+  // const result = findMatches(templateMasterData?.map(template => template?.templateContent), variableData?.getVariableData?.map(variable => variable.variableName))
   return (
     <>
       <ToastContainer />
@@ -249,7 +252,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                                   {...field}
                                   options={templateMasterOptions}
                                   isMulti
-                                  className={`form-select ${
+                                  className={`multi-select form-select ${
                                     errors.childTemplateId &&
                                     touched.childTemplateId
                                       ? "is-invalid"

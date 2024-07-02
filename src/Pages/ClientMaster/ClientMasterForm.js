@@ -31,7 +31,6 @@ const ClientMasterForm = ({ clientData }) => {
     clientCode: Yup.string().required("Client Code is required"),
   });
   const handleSubmit = (values) => {
-    debugger
     const clientData = {
       ...values,
       deleted: false,

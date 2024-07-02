@@ -42,9 +42,11 @@ function* PosttemplateMaster({ payload }) {
     if (posttemplateMasterResponse.httpStatusCode === "201") {
       yield put(
     onPosttemplateMasterSuccess({
+
           postData: posttemplateMasterResponse.response,
           message: posttemplateMasterResponse.errorMessage,
           status_code: posttemplateMasterResponse.httpStatusCode,
+          postId:posttemplateMasterResponse.httpStatusCode
         })
       );
     } else {

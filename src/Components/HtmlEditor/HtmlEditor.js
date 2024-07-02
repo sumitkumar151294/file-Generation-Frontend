@@ -64,7 +64,8 @@ const HtmlEditor = ({ data, setData, setVariableUsed,seterror }) => {
 
   return (
     <div>
-      <JoditEditor        
+      <JoditEditor
+      value={data}       
         config={config}
         onChange={handleChange}
         placeholder="Write something..."
