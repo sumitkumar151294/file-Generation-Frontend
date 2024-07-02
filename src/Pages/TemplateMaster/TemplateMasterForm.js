@@ -113,7 +113,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
           enabled: "",
           isChild: "",
         });
-        setTempContent(null);
+        setTempContent("");
         setButton("Submit");
       }
     }
