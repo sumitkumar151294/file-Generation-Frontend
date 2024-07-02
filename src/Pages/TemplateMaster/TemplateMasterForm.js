@@ -157,17 +157,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
       dispatch(onGetfileType());
     }
   }, []);
-  // const findMatches = (a, b) => {
-  //   var matches = [];
-  //   b?.forEach(function (element) {
-  //     if (a?.some(function (str) { return str.includes(element); })) {
-  //       matches.push(element);
-  //     }
-  //   });
-  //   return matches;
 
-  // }
-  // const result = findMatches(templateMasterData?.map(template => template?.templateContent), variableData?.getVariableData?.map(variable => variable.variableName))
   return (
     <>
       <ToastContainer />

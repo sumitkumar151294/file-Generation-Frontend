@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../Components/InputField/InputField';
+import { onGetVariable } from '../../Store/Slices/variableSlice';
 
 const VariableDictionary = ({ variableUsed }) => {
+  const dispatch=useDispatch()
   const [filterValue, setFilterValue] = useState('');
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
 
@@ -13,7 +15,11 @@ const VariableDictionary = ({ variableUsed }) => {
   const filteredData = variableData?.filter(variable =>
     variable?.variableName?.toLowerCase().includes(filterValue.toLowerCase())
   );
-
+useEffect(()=>{
+if(!variableData){
+  dispatch(onGetVariable())
+}
+},[])
   return (
     <div className="col-lg-4">
       <h2>Variable Dictionary</h2>
