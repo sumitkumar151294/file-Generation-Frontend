@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../Components/InputField/InputField';
 import { onGetVariable } from '../../Store/Slices/variableSlice';
 
+
 const VariableDictionary = ({ variableUsed }) => {
   const dispatch=useDispatch()
   const [filterValue, setFilterValue] = useState('');
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
-
   const handleInputChange = (e) => {
     setFilterValue(e.target.value);
   };
-
+const variableIsloading=useSelector((state) => state?.variableReducer?.isLoading)
   const filteredData = variableData?.filter(variable =>
     variable?.variableName?.toLowerCase().includes(filterValue.toLowerCase())
   );
@@ -21,6 +21,8 @@ if(!variableData){
 }
 },[])
   return (
+    <>
+
     <div className="col-lg-4">
       <h2>Variable Dictionary</h2>
       <div className="customer-search mb-sm-0 mb-3">
@@ -37,8 +39,8 @@ if(!variableData){
           </span>
         </div>
       </div>
-      <div className="loafer">
-        <table className="w-100">
+ <div className={`loafer ${variableIsloading ? 'loading' : ''}`}>
+         <table className="w-100">
           <thead>
             <tr>
               <th scope="col">Variable Name</th>
@@ -62,8 +64,10 @@ if(!variableData){
             )}
           </tbody>
         </table>
+
       </div>
     </div>
+    </>
   )
 }
 
