@@ -25,9 +25,9 @@ const Auth = () => {
   const loginAuthData = useSelector((state) => state.loginAuthReducer);
   useEffect(()=>{
    if( !loginAuthData?.data?.[0]?.clientId){
-    dispatch(onLoginAuthSubmit({accessKey: "demo1",
-    partnerCode : "UIAdmin",
-    secretKey: "demo1"}))   
+    dispatch(onLoginAuthSubmit({accessKey: "demo",
+    partnerCode : "UIMasterAdmin",
+    secretKey: "demo"}))
    }
   },[])
 
