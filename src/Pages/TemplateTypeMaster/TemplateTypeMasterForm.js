@@ -64,7 +64,7 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
   }, [templateTypemasterData]);
 
 
-  const clientOptions = clientMasterData.map(clientData => ({
+  const clientOptions = clientMasterData.filter(client=>client.enabled).map(clientData => ({
     value: clientData.id,
     label: clientData.clientName
   }));

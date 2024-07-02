@@ -20,7 +20,6 @@ import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 import { onGetfileType } from "../../Store/Slices/fileTypeSlice";
 import { onPosttemplateVariableMaster } from "../../Store/Slices/templateVariableMasterSlice";
-
 import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 
 const statusOptions = [
@@ -28,6 +27,7 @@ const statusOptions = [
   { value: false, label: "Non Active" },
 ];
 const TemplateMasterForm = ({ templateMaster }) => {
+
   const [error, setError] = useState("");
   const [intialValue, setInitialValue] = useState({
     clientId: "",
@@ -162,13 +162,17 @@ const TemplateMasterForm = ({ templateMaster }) => {
     <>
       <ToastContainer />
       <div className="row">
+
         <div className="col-xl-8">
           <div className="card mb-4">
+
             <div className="card-header">
+
+
               <h4 className="card-title">Template Master</h4>
             </div>
             <div className="card-body ">
-              {templateMasterData?.postLoading ? (
+              {templateMasterData?.postLoading  ? (
                 <div style={{ height: "200px" }}>
                   <Loader classType={"absoluteLoader"} />
                 </div>
@@ -242,7 +246,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                                   {...field}
                                   options={templateMasterOptions}
                                   isMulti
-                                  className={`multi-select form-select ${
+                                  className={`form-select ${
                                     errors.childTemplateId &&
                                     touched.childTemplateId
                                       ? "is-invalid"
@@ -266,6 +270,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                                     values?.isChild ||
                                     !templateMasterOptions?.length
                                   }
+                                  maxMenuHeight={150}
                                 />
                               )}
                             </Field>
