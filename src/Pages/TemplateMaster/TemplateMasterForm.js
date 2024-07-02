@@ -125,7 +125,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
     deleted: false,
     createdBy: 0,
     updatedBy: 0,
-    templateId: templateMasterData?.postData[0]?.id,
+    templateId: templateMasterData?.postData?.[0]?.id,
     variableId: variable
   }));
 
