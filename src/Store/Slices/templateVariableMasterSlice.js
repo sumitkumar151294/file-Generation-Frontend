@@ -47,7 +47,46 @@ export const templateVariableMaster = createSlice({
         postMessage: "",
         post_status_code: null,
       };
-    }
+    }  , onUpdatetemplateVariableMaster: (state) => {
+
+      return {
+        ...state,
+        isLoading: true,
+        updatedtemplateVariableMaster: [],
+        updateMessage: "",
+      };
+    },
+
+    onUpdatetemplateVariableMasterSuccess: (state, { payload }) => {
+
+      const { data = [], message = "", status_code = 200 } = payload;
+      return {
+        ...state,
+        isLoading: false,
+        updatedtemplateVariableMaster: data,
+        updateMessage:message,
+        update_status_code:status_code,
+      };
+    },
+
+    onUpdatetemplateVariableMasterError: (state, { payload }) => {
+      const { data = [], message = "", status_code = 400 } = payload;
+      return {
+        ...state,
+        updatedtemplateVariableMaster: data,
+        updateMessage:message,
+        update_status_code:status_code,
+        isLoading: false,
+      };
+    },
+    onUpdatetemplateVariableMasterReset: (state) => {
+      return {
+        ...state,
+        updatedtemplateVariableMaster: [],
+        updateMessage: "",
+        update_status_code: null,
+      };
+    },
   },
 });
 export const {
@@ -55,6 +94,7 @@ export const {
   onPosttemplateVariableMasterSuccess,
   onPosttemplateVariableMasterError,
   onPosttemplateVariableMasterReset,
+  onUpdatetemplateVariableMaster,onUpdatetemplateVariableMasterSuccess,onUpdatetemplateVariableMasterReset,onUpdatetemplateVariableMasterError
 
 } = templateVariableMaster.actions;
 

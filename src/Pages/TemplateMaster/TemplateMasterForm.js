@@ -19,7 +19,7 @@ import VariableDictionary from "../VariableDictionary/VariableDictionary";
 import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 import { onGetfileType } from "../../Store/Slices/fileTypeSlice";
-import { onPosttemplateVariableMaster } from "../../Store/Slices/templateVariableMasterSlice";
+import { onPosttemplateVariableMaster, onUpdatetemplateVariableMaster } from "../../Store/Slices/templateVariableMasterSlice";
 import HtmlEditor from "../../Components/HtmlEditor/HtmlEditor";
 
 const statusOptions = [
@@ -86,6 +86,15 @@ const TemplateMasterForm = ({ templateMaster }) => {
     fileTypeId: Yup.string().required("File Type is required"),
     enabled: Yup.string().required("Status is required"),
   });
+  const templateVariableData = variableUsed.map(variable => ({
+    enabled: true,
+    deleted: false,
+    createdBy: 0,
+    updatedBy: 0,
+    templateId: templateMasterData?.postData?.[0]?.id,
+    variableId: variable,
+    id:templateMasterData?.postData?.[0]?.id
+  }));
   const handleSumbit = (values) => {
     if (!tempContent) {
       setError("Templent Content is required");
@@ -105,6 +114,8 @@ const TemplateMasterForm = ({ templateMaster }) => {
         setTempContent(null)
       } else {
         dispatch(onUpdatetemplateMaster(templateMasterData));
+      dispatch(onUpdatetemplateVariableMaster(templateVariableData))
+
         setInitialValue({
           clientId: "",
           templateName: "",
@@ -120,14 +131,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
   };
 
 
-  const templateVariableData = variableUsed.map(variable => ({
-    enabled: true,
-    deleted: false,
-    createdBy: 0,
-    updatedBy: 0,
-    templateId: templateMasterData?.postData?.[0]?.id,
-    variableId: variable
-  }));
+
 
   useEffect(() => {
     if (templateMasterData?.post_status_code === "201") {

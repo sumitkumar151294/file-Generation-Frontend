@@ -79,7 +79,6 @@ export const templateTypeMaster = createSlice({
     onPosttemplateTypeMasterReset: (state) => {
       return {
         ...state,
-        postLoading: false,
         posttemplateTypeMasterData: null,
         postMessage: "",
         post_status_code: null,

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
-  onLoginAuthReset,
   onLoginAuthSubmit,
 } from "../../Store/Slices/authSlice";
 import RouteConfiq from "../../Routing/routes";
@@ -24,20 +23,22 @@ const Auth = () => {
   });
   const loginAuthData = useSelector((state) => state.loginAuthReducer);
   useEffect(()=>{
-   if( !loginAuthData?.data?.[0]?.clientId){
-    dispatch(onLoginAuthSubmit({accessKey: "demo",
-    partnerCode : "UIMasterAdmin",
-    secretKey: "demo"}))
-   }
+    if(!loginAuthData?.data?.[0]?.token){
+      dispatch(onLoginAuthSubmit({accessKey: "demo1",
+        partnerCode : "UIMasterAdmin",
+        secretKey: "demo1"}))
+    }
+
+
   },[])
-
-
+  if(loginAuthData?.data?.[0]?.token){
+    api.defaults.headers.Authorization = `Bearer ${loginAuthData?.data?.[0]?.token}`;
+  }
   useEffect(() => {
     if (loginAuthData?.status_code === 200) {
       sessionStorage.setItem("clientCode", loginAuthData?.data?.[0]?.clientId);
       api.defaults.headers.Authorization = `Bearer ${loginAuthData?.data?.[0]?.token}`;
-      dispatch(onLoginAuthReset());
-    } else if (loginAuthData?.status_code) {
+    } else if (loginAuthData?.status_code ===401) {
       setShowError(true);
       setShowLoader(false);
       setPageError({

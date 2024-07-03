@@ -10,6 +10,7 @@ import templateMasterSaga from "./templateMasterSaga";
 import loginAuthSaga from "./authSaga";
 
 import templateVariableMasterSaga from "./templateVariableMasterSaga";
+import documentVaultSaga from "./documentVaultSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -19,10 +20,8 @@ export default function* rootSaga() {
     clientMasterSaga(),
     templateTypeMasterSaga(),
     templateMasterSaga(),
-
     loginAuthSaga(),
-
-    templateVariableMasterSaga()
-
+    templateVariableMasterSaga(),
+    documentVaultSaga()
   ]);
 }

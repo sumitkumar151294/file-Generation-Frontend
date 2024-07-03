@@ -19,7 +19,7 @@ const FileTypeForm = ({ fileData }) => {
       .required("File Extension is required")
       .test(
         'is-pdf',
-        'Only pdf File Extension are is accepted',
+        'Only pdf File Extension is accepted',
         value => value.toLowerCase().endsWith('pdf')
       ),
     enabled: Yup.string().required("Status is required"),

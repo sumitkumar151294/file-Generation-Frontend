@@ -4,4 +4,7 @@ export const postTemplateVaribleApi = async (payload) => {
   const { data = {} } = await axiosInstance.post(API.postTemplateVariableMaster, payload);
   return data;
 };
-
+export const updateTemplateVaribleApi = async (payload) => {
+  const { data = {} } = await axiosInstance.put(API.updateTemplateVariableMaster, payload);
+  return data;
+};

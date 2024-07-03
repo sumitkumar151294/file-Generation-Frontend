@@ -7,10 +7,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { onLoginSubmit } from "../Store/Slices/LoginSlice";
+import { onLoginSubmit, onLogout } from "../Store/Slices/LoginSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader/Loader";
 import ScrollToTop from "../Components/ScrollToTop/ScrollToTop";
+import { onLoginAuthSubmit } from "../Store/Slices/authSlice";
 const LoginPage = () => {
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.loginReducer);   //login data from redux using state
@@ -33,13 +34,27 @@ const LoginPage = () => {
       setSumbit(true);
     }
   };
+  const Unauthorized = sessionStorage.getItem("Unauthorized");
+
+  useEffect(()=>{
+    if(Unauthorized){
+      debugger
+      dispatch(onLoginAuthSubmit({accessKey: "demo1",
+        partnerCode : "UIMasterAdmin",
+        secretKey: "demo1"}))
+      dispatch(onLogout());
+      sessionStorage.clear();}
+  },[])
   useEffect(() => {
     if (Sumbit && loginData.status_code === "201") {
       toast.success(loginData?.message);
       sessionStorage.setItem("userLogin",loginData?.isUserLogin)
       navigate("/dashboard");
     } else if (Sumbit && loginData.status_code) {
-      toast.error(loginData?.message);
+      const Unauthorized = sessionStorage.getItem("Unauthorized");
+      if(!Unauthorized){
+        toast.error(loginData?.message);
+      }
     }
   }, [loginData]);
   return (

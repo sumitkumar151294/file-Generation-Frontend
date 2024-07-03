@@ -5,6 +5,7 @@ import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
 import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 import { onGettemplateMaster } from "../../Store/Slices/templateMasterSlice";
+import { onGetdocumentVault } from "../../Store/Slices/documentVaultSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,9 @@ const Dashboard = () => {
   const templateMasterData = useSelector(
     (state) => state?.templateMasterReducer?.gettemplateMasterData
   );
-
+const documentVaultData=useSelector(
+  (state) => state.documentVaultReducer?.getdocumentVaultData
+);
   const templateTypemasterData = useSelector(
     (state) => state.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
@@ -29,8 +32,11 @@ const Dashboard = () => {
       if (!templateMasterData?.length) {
         dispatch(onGettemplateMaster());
       }
-    };
+      if(!documentVaultData?.length){
+        dispatch(onGetdocumentVault())
+      }
 
+    };
     fetchData();
   }, []);
 
@@ -73,7 +79,7 @@ const Dashboard = () => {
                         <span className="font-w500 fs-16 d-block mb-2">
                           Generated Pdfs
                         </span>
-                        <h2>100</h2>
+                        <h2>{documentVaultData?.length}</h2>
                       </div>
                     </div>
                   </div>
@@ -100,7 +106,6 @@ const Dashboard = () => {
                     <div className="card-header border-0  flex-wrap">
                       <div>
                         <h4 className="fs-20 mb-1">Total Pdf Data</h4>
-                        <span>Graph data is based on full system manners</span>
                       </div>
                       <div className="d-flex">
                         <div className="card-action coin-tabs mt-3 mt-sm-0">

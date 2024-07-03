@@ -24,7 +24,11 @@ const API={
    posttemplatemaster:"/template-master",
    updatetemplatemaster:"/template-master",
    //variableMasterApi
-   postTemplateVariableMaster:"/template-variable"
+   postTemplateVariableMaster:"/template-variable",
+   updateTemplateVariableMaster:"/template-variable",
+   //documentVaultApi
+   getDocumentVault:"/document-vault"
+
 
 }
 export default API;
