@@ -1,11 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
 import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 import { onGettemplateMaster } from "../../Store/Slices/templateMasterSlice";
 import { onGetdocumentVault } from "../../Store/Slices/documentVaultSlice";
+import ChartYearly from "../../Components/apexChart/ChartYearly";
+import ChartMonthly from "../../Components/apexChart/ChartMonthly";
+import ChartWeekly from "../../Components/apexChart/ChartWeekly";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -15,12 +17,15 @@ const Dashboard = () => {
   const templateMasterData = useSelector(
     (state) => state?.templateMasterReducer?.gettemplateMasterData
   );
-const documentVaultData=useSelector(
-  (state) => state.documentVaultReducer?.getdocumentVaultData
-);
+  const documentVaultData = useSelector(
+    (state) => state.documentVaultReducer?.getdocumentVaultData
+  );
   const templateTypemasterData = useSelector(
     (state) => state.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
+
+  const [activeTab, setActiveTab] = useState('Yearly'); // State to track active tab
+
   useEffect(() => {
     const fetchData = async () => {
       if (!clientMasterData?.length) {
@@ -32,13 +37,16 @@ const documentVaultData=useSelector(
       if (!templateMasterData?.length) {
         dispatch(onGettemplateMaster());
       }
-      if(!documentVaultData?.length){
-        dispatch(onGetdocumentVault())
+      if (!documentVaultData?.length) {
+        dispatch(onGetdocumentVault());
       }
-
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
+
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+  };
 
   return (
     <>
@@ -46,7 +54,7 @@ const documentVaultData=useSelector(
       <div className="m-h100">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-xl-6 ">
+            <div className="col-xl-6">
               <div className="inline">
                 <div className="col-xl-6 col-sm-6">
                   <div className="card">
@@ -103,7 +111,7 @@ const documentVaultData=useSelector(
               <div className="row">
                 <div className="col-xl-12">
                   <div className="card">
-                    <div className="card-header border-0  flex-wrap">
+                    <div className="card-header border-0 flex-wrap">
                       <div>
                         <h4 className="fs-20 mb-1">Total Pdf Data</h4>
                       </div>
@@ -112,57 +120,51 @@ const documentVaultData=useSelector(
                           <ul className="nav nav-tabs" role="tablist">
                             <li className="nav-item">
                               <a
-                                className="nav-link active"
+                                className={`nav-link ${activeTab === 'Yearly' ? 'active' : ''}`}
+                                data-bs-toggle="tab"
+                                href="#Yearly"
+                                role="tab"
+                                onClick={() => handleTabClick('Yearly')}
+                              >
+                                Yearly
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                className={`nav-link ${activeTab === 'Monthly' ? 'active' : ''}`}
                                 data-bs-toggle="tab"
                                 href="#Monthly"
                                 role="tab"
+                                onClick={() => handleTabClick('Monthly')}
                               >
                                 Monthly
                               </a>
                             </li>
                             <li className="nav-item">
                               <a
-                                className="nav-link "
+                                className={`nav-link ${activeTab === 'Weekly' ? 'active' : ''}`}
                                 data-bs-toggle="tab"
-                                href="#Daily"
+                                href="#Weekly"
                                 role="tab"
+                                onClick={() => handleTabClick('Weekly')}
                               >
-                                Daily
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                className="nav-link"
-                                data-bs-toggle="tab"
-                                href="#Today"
-                                role="tab"
-                              >
-                                Today
+                                Weekly
                               </a>
                             </li>
                           </ul>
                         </div>
                       </div>
                     </div>
-                    <div className="card-body pb-2">
+                    <div className="card-body">
                       <div className="tab-content">
-                        <div className="tab-pane fade show active" id="Monthly">
-                          <div
-                            id="chartTimeline1"
-                            className="chart-timeline"
-                          ></div>
+                        <div className={`tab-pane fade ${activeTab === 'Yearly' ? 'show active' : ''}`} id="Yearly">
+                          <ChartYearly data={documentVaultData} />
                         </div>
-                        <div className="tab-pane fade " id="Daily">
-                          <div
-                            id="chartTimeline2"
-                            className="chart-timeline"
-                          ></div>
+                        <div className={`tab-pane fade ${activeTab === 'Monthly' ? 'show active' : ''}`} id="Monthly">
+                          <ChartMonthly data={documentVaultData} />
                         </div>
-                        <div className="tab-pane fade " id="Today">
-                          <div
-                            id="chartTimeline3"
-                            className="chart-timeline"
-                          ></div>
+                        <div className={`tab-pane fade ${activeTab === 'Weekly' ? 'show active' : ''}`} id="Weekly">
+                          <ChartWeekly data={documentVaultData} />
                         </div>
                       </div>
                     </div>
@@ -170,6 +172,7 @@ const documentVaultData=useSelector(
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
@@ -178,4 +181,3 @@ const documentVaultData=useSelector(
 };
 
 export default Dashboard;
-/* eslint-enable react-hooks/exhaustive-deps */

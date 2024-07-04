@@ -162,6 +162,7 @@ const ClientMasterList = () => {
                           <tr>
                             <th>Id</th>
                             <th>Template Name</th>
+                            <th>Category</th>
                             <th>Client Code</th>
                             <th>File Type</th>
                             <th>Template type</th>
@@ -177,6 +178,7 @@ const ClientMasterList = () => {
                               <tr key={index}>
                                 <td>{templateMaster?.id}</td>
                                 <td>{templateMaster?.templateName}</td>
+                                <td>{templateMaster?.isChild ? "Child" : "Parent"}</td>
                                 <td>
                                   {clientMasterData
                                     ?.filter(

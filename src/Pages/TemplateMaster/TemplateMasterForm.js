@@ -248,7 +248,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
                             </div>
                           </div>
                           <div className="col-sm-4 form-group mb-2">
-                            <label htmlFor="pass">Select Child Template</label>
+                            <label >Select Child Template</label>
                             <Field name="childTemplateId">
                               {({ field }) => (
                                 <Select
