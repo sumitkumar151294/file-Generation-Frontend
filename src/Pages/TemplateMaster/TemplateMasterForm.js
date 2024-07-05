@@ -74,7 +74,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
       label: fileTypeData?.fileType,
     }));
   const templateMasterOptions = templateMasterData?.gettemplateMasterData
-    ?.filter((templateMaster) => templateMaster?.enabled)
+    ?.filter((templateMaster) => templateMaster?.enabled && templateMaster?.isChild)
     .map((templateMaster) => ({
       value: templateMaster?.id,
       label: templateMaster?.templateName,
