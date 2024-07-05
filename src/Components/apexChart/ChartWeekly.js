@@ -80,7 +80,7 @@ const processDataForWeekly = (data, startDate) => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  data.forEach(document => {
+  data?.forEach(document => {
     const timestamp = new Date(document.createdOn);
     const monthName = timestamp.toLocaleString('default', { month: 'short' });
     const dayOfMonth = timestamp.getDate();
