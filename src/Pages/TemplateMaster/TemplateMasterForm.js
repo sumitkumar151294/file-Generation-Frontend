@@ -105,9 +105,9 @@ const TemplateMasterForm = ({ templateMaster }) => {
         enabled: values.enabled ? true : false,
         deleted: false,
         isChild: values.isChild ? true : false,
-        childTemplateId: values.childTemplateId
+        childTemplateId: Array.isArray(values.childTemplateId)
           ? values.childTemplateId.join(",")
-          : "",
+          : values.childTemplateId.length ? values.childTemplateId : "",
       };
       if (button === "Submit") {
         dispatch(onPosttemplateMaster(templateMasterData));
