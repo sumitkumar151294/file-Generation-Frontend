@@ -38,7 +38,6 @@ const LoginPage = () => {
 
   useEffect(()=>{
     if(Unauthorized){
-      debugger
       dispatch(onLoginAuthSubmit({accessKey: "demo1",
         partnerCode : "UIMasterAdmin",
         secretKey: "demo1"}))

@@ -36,7 +36,6 @@ function* PosttemplateVariableMaster({ payload }) {
   }
 }
 function* UpdatetemplateVariableMaster({ payload }) {
-  debugger
   try {
     const updatetemplateVariableMasterResponse = yield call(
       updateTemplateVaribleApi,

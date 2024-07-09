@@ -91,9 +91,9 @@ const TemplateMasterForm = ({ templateMaster }) => {
     deleted: false,
     createdBy: 0,
     updatedBy: 0,
-    templateId: templateMasterData?.postData?.[0]?.id,
+    templateId: button==="Update" ? templateMaster?.id : templateMasterData?.postData?.[0]?.id,
     variableId: variable,
-    id:templateMasterData?.postData?.[0]?.id
+    id:button==="Update" ? templateMaster?.id : templateMasterData?.postData?.[0]?.id
   }));
   const handleSumbit = (values) => {
     if (!tempContent) {
@@ -115,7 +115,6 @@ const TemplateMasterForm = ({ templateMaster }) => {
       } else {
         dispatch(onUpdatetemplateMaster(templateMasterData));
       dispatch(onUpdatetemplateVariableMaster(templateVariableData))
-
         setInitialValue({
           clientId: "",
           templateName: "",
