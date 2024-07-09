@@ -74,7 +74,7 @@ const processDataForYearly = (data) => {
   data?.forEach(document => {
     const timestamp = new Date(document.createdOn);
     const month = timestamp.getMonth(); // 0 for January, 11 for December
-    groupedData[month].push(document);
+    groupedData[month]?.push(document);
   });
 
   return groupedData;

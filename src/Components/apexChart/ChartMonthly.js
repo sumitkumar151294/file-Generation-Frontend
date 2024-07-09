@@ -81,7 +81,7 @@ const processDataForMonthly = (data) => {
     if (!groupedData[day]) {
       groupedData[day] = [];
     }
-    groupedData[day].push(document);
+    groupedData[day]?.push(document);
   });
 
   return groupedData;
