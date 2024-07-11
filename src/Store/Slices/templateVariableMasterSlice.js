@@ -9,6 +9,45 @@ export const templateVariableMaster = createSlice({
     message: "",
   },
   reducers: {
+    onGettemplateVariableMaster: (state) => {
+      return {
+        ...state,
+        isLoading: true,
+        posttemplateVariableMasterData: [],
+        message: "",
+      };
+    },
+
+    onGettemplateVariableMasterSuccess: (state, { payload }) => {
+      const { data = [], message = "", status_code = 200 } = payload;
+      return {
+        ...state,
+        isLoading: false,
+        posttemplateVariableMasterData:data,
+        message,
+        status_code,
+      };
+    },
+
+    onGettemplateVariableMasterError: (state, { payload }) => {
+      const { data = [], message = "", status_code = 400 } = payload;
+      return {
+        ...state,
+        posttemplateVariableMasterData:data,
+        message,
+        status_code,
+        isLoading: false,
+      };
+    },
+    onGettemplateVariableMasterReset: (state) => {
+      return {
+        ...state,
+        isLoading: false,
+        posttemplateVariableMasterData: [],
+        message: "",
+        status_code: null,
+      };
+    },
       onPosttemplateVariableMaster: (state) => {
         return {
           ...state,
@@ -94,7 +133,10 @@ export const {
   onPosttemplateVariableMasterSuccess,
   onPosttemplateVariableMasterError,
   onPosttemplateVariableMasterReset,
-  onUpdatetemplateVariableMaster,onUpdatetemplateVariableMasterSuccess,onUpdatetemplateVariableMasterReset,onUpdatetemplateVariableMasterError
+  onUpdatetemplateVariableMaster,onUpdatetemplateVariableMasterSuccess,onUpdatetemplateVariableMasterReset,onUpdatetemplateVariableMasterError,
+  onGettemplateVariableMaster,onGettemplateVariableMasterSuccess,onGettemplateVariableMasterError,onGettemplateVariableMasterReset
+
+
 
 } = templateVariableMaster.actions;
 

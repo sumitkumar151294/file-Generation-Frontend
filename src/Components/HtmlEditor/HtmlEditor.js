@@ -80,6 +80,7 @@ const HtmlEditor = ({ data, setData, setVariableUsed, seterror }) => {
         value={data}
         config={config}
         onChange={handleChange}
+        className='editor'
       />
     </div>
   );

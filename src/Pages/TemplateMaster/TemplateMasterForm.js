@@ -26,8 +26,7 @@ const statusOptions = [
   { value: true, label: "Active" },
   { value: false, label: "Non Active" },
 ];
-const TemplateMasterForm = ({ templateMaster }) => {
-
+const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
   const [error, setError] = useState("");
   const [intialValue, setInitialValue] = useState({
     clientId: "",
@@ -46,15 +45,22 @@ const TemplateMasterForm = ({ templateMaster }) => {
   const clientMasterData = useSelector(
     (state) => state?.clientMasterReducer?.getclientMasterData
   );
+
+  var updatedVariables = variableMaster?.map(item => {
+    return variableUsed?.includes(item.variableId) ? { id: item.id, variableId: item.variableId, templateId: item.templateId } : { id: item.id, isremoved: true, variableId: item.variableId, templateId: item.templateId };
+  });
+
   const templateTypeMasterData = useSelector(
     (state) => state?.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
+
   const fileTypeData = useSelector(
     (state) => state?.fileTypeReducer?.getfileTypeData
   );
   const templateMasterData = useSelector(
     (state) => state.templateMasterReducer
   );
+
   const clientOptions = clientMasterData
     ?.filter((clientData) => clientData?.enabled)
     .map((clientData) => ({
@@ -91,9 +97,17 @@ const TemplateMasterForm = ({ templateMaster }) => {
     deleted: false,
     createdBy: 0,
     updatedBy: 0,
-    templateId: button==="Update" ? templateMaster?.id : templateMasterData?.postData?.[0]?.id,
-    variableId: variable,
-    id:button==="Update" ? templateMaster?.id : templateMasterData?.postData?.[0]?.id
+    templateId: templateMasterData?.postData?.[0]?.id,
+    variableId: variable
+  }));
+  const updatevariables = updatedVariables?.map(variable => ({
+    enabled: variable.isremoved ? false : true,
+    deleted: false,
+    createdBy: 0,
+    updatedBy: 0,
+    templateId: variable?.templateId,
+    variableId: variable.variableId,
+    id: variable.id
   }));
   const handleSumbit = (values) => {
     if (!tempContent) {
@@ -114,7 +128,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
         setTempContent(null)
       } else {
         dispatch(onUpdatetemplateMaster(templateMasterData));
-      dispatch(onUpdatetemplateVariableMaster(templateVariableData))
+        dispatch(onUpdatetemplateVariableMaster(updatevariables))
         setInitialValue({
           clientId: "",
           templateName: "",
@@ -180,7 +194,7 @@ const TemplateMasterForm = ({ templateMaster }) => {
               <h4 className="card-title">Template Master</h4>
             </div>
             <div className="card-body ">
-              {templateMasterData?.postLoading  ? (
+              {templateMasterData?.postLoading ? (
                 <div style={{ height: "200px" }}>
                   <Loader classType={"absoluteLoader"} />
                 </div>
@@ -206,11 +220,10 @@ const TemplateMasterForm = ({ templateMaster }) => {
                             <Field
                               type="text"
                               name="templateName"
-                              className={`form-control ${
-                                errors.templateName && touched.templateName
+                              className={`form-control ${errors.templateName && touched.templateName
                                   ? "is-invalid"
                                   : ""
-                              }`}
+                                }`}
                               placeholder="Enter Template Name"
                             />
                             <ErrorMessage
@@ -254,12 +267,11 @@ const TemplateMasterForm = ({ templateMaster }) => {
                                   {...field}
                                   options={templateMasterOptions}
                                   isMulti
-                                  className={`form-select ${
-                                    errors.childTemplateId &&
-                                    touched.childTemplateId
+                                  className={`form-select ${errors.childTemplateId &&
+                                      touched.childTemplateId
                                       ? "is-invalid"
                                       : ""
-                                  }`}
+                                    }`}
                                   onChange={(selectedOption) => {
                                     handleChange({
                                       target: {
@@ -290,11 +302,10 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               name="clientId"
                               component={Dropdown}
                               options={clientOptions}
-                              className={`form-select ${
-                                errors.clientId && touched.clientId
+                              className={`form-select ${errors.clientId && touched.clientId
                                   ? "is-invalid"
                                   : ""
-                              }`}
+                                }`}
                             />
                             <ErrorMessage
                               name="clientId"
@@ -308,11 +319,10 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               name="templateTypeId"
                               component={Dropdown}
                               options={templateTypeOptions}
-                              className={`form-select ${
-                                errors.templateTypeId && touched.templateTypeId
+                              className={`form-select ${errors.templateTypeId && touched.templateTypeId
                                   ? "is-invalid"
                                   : ""
-                              }`}
+                                }`}
                             />
                             <ErrorMessage
                               name="templateTypeId"
@@ -327,11 +337,10 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               name="fileTypeId"
                               component={Dropdown}
                               options={fileTypeOptions}
-                              className={`form-select ${
-                                errors.fileTypeId && touched.fileTypeId
+                              className={`form-select ${errors.fileTypeId && touched.fileTypeId
                                   ? "is-invalid"
                                   : ""
-                              }`}
+                                }`}
                             />
                             <ErrorMessage
                               name="fileTypeId"
@@ -345,11 +354,10 @@ const TemplateMasterForm = ({ templateMaster }) => {
                               name="enabled"
                               component={Dropdown}
                               options={statusOptions}
-                              className={`form-select ${
-                                errors.enabled && touched.enabled
+                              className={`form-select ${errors.enabled && touched.enabled
                                   ? "is-invalid"
                                   : ""
-                              }`}
+                                }`}
                             />
                             <ErrorMessage
                               name="enabled"

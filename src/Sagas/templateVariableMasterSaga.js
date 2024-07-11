@@ -1,5 +1,8 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
+  onGettemplateVariableMaster,
+  onGettemplateVariableMasterError,
+  onGettemplateVariableMasterSuccess,
   onPosttemplateVariableMaster,
   onPosttemplateVariableMasterError,
   onPosttemplateVariableMasterSuccess,
@@ -7,9 +10,31 @@ import {
   onUpdatetemplateVariableMasterError,
   onUpdatetemplateVariableMasterSuccess,
 } from "../Store/Slices/templateVariableMasterSlice";
-import {  postTemplateVaribleApi, updateTemplateVaribleApi } from "../Context/templateVariableMasterApi";
+import {  getTemplateVaribleApi, postTemplateVaribleApi, updateTemplateVaribleApi } from "../Context/templateVariableMasterApi";
 
-
+function* gettemplateVariable() {
+  try {
+    const getVariableResponse = yield call(getTemplateVaribleApi);
+    if (getVariableResponse.httpStatusCode === "200") {
+      yield put(
+        onGettemplateVariableMasterSuccess({
+          data: getVariableResponse.response,
+          message: getVariableResponse.errorMessage,
+        })
+      );
+    } else {
+      yield put(
+        onGettemplateVariableMasterError({
+          data: getVariableResponse.response,
+          message: getVariableResponse.errorMessage,
+        })
+      );
+    }
+  } catch (error) {
+    const message = error.response || "Something went wrong";
+    yield put(onGettemplateVariableMasterError({ data: [], message, status_code: 400 }));
+  }
+}
 
 function* PosttemplateVariableMaster({ payload }) {
   try {
@@ -63,9 +88,12 @@ function* UpdatetemplateVariableMaster({ payload }) {
   }
 }
 
+
 export default function* templateVariableMasterSaga() {
 
   yield takeLatest(onPosttemplateVariableMaster.type, PosttemplateVariableMaster);
   yield takeLatest(onUpdatetemplateVariableMaster.type, UpdatetemplateVariableMaster);
+  yield takeLatest(onGettemplateVariableMaster.type, gettemplateVariable);
+
 
 }

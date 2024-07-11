@@ -14,6 +14,7 @@ import {
 } from "../../Store/Slices/templateMasterSlice";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
 import { toast } from "react-toastify";
+import { onGettemplateVariableMaster } from "../../Store/Slices/templateVariableMasterSlice";
 const ClientMasterList = () => {
   const templateMasterData = useSelector(
     (state) => state?.templateMasterReducer
@@ -27,7 +28,9 @@ const ClientMasterList = () => {
   const fileTypeData = useSelector(
     (state) => state?.fileTypeReducer?.getfileTypeData
   );
+  const templateVariableData=useSelector(state=>state.templateVariableMasterReducer?.posttemplateVariableMasterData)
   const [templateMaster, setemplateMaster] = useState();
+  const [variableMaster,setVariableMaster]=useState();
   const [isDelete, setisDelete] = useState(false);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
@@ -39,6 +42,7 @@ const ClientMasterList = () => {
   };
   useEffect(() => {
     dispatch(onGettemplateMaster());
+    dispatch(onGettemplateVariableMaster())
   }, []);
   useEffect(() => {
     if (templateMasterData?.gettemplateMasterData) {
@@ -63,6 +67,7 @@ const ClientMasterList = () => {
     setFilteredData(filtered);
   };
   const handleData = (templateMaster, isEdit) => {
+    const templateVariableId=templateVariableData?.filter(template=>template?.templateId===templateMaster?.id)
     const templateMasterInfo = {
       enabled: templateMaster?.enabled,
       deleted: true,
@@ -79,6 +84,7 @@ const ClientMasterList = () => {
     };
     if (isEdit) {
       setemplateMaster(templateMasterInfo);
+      setVariableMaster(templateVariableId)
     } else {
       setisDelete(true);
       dispatch(onUpdatetemplateMaster(templateMasterInfo));
@@ -103,6 +109,7 @@ const ClientMasterList = () => {
         toast.success(templateMasterData?.updateMessage);
       }
       dispatch(onGettemplateMaster());
+      dispatch(onGettemplateVariableMaster())
       dispatch(onUpdatetemplateMasterReset());
     } else if (templateMasterData?.update_status_code) {
       toast.error(templateMaster?.updateMessage);
@@ -121,7 +128,7 @@ const ClientMasterList = () => {
   return (
     <div className="container-fluid">
       <ScrollToTop />
-      <TemplateMasterForm templateMaster={templateMaster} />
+      <TemplateMasterForm templateMaster={templateMaster} variableMaster={variableMaster}/>
       <div className="container-fluid pt-0">
         <div className="row">
           <div className="col-lg-12">
