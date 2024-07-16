@@ -7,14 +7,25 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { onGetVariable, onPostVariable, onPostVariableReset } from "../../Store/Slices/variableSlice";
+import Dropdown from "../../Components/Dropdown/Dropdown";
 
 const VariableDictionaryForm = () => {
   const variableData = useSelector((state) => state.variableReducer);
+  const templateTypeMasterData = useSelector(
+    (state) => state?.templateTypeMasterReducer?.gettemplateTypeMasterData
+  );
   const dispatch = useDispatch();
   const variableValidations = Yup.object().shape({
     variable: Yup.string().required("Variable is required"),
     variableName: Yup.string().required("Variable Name is required"),
+    templateTypeId: Yup.string().required("Template Type is required"),
   });
+  const templateTypeOptions = templateTypeMasterData
+  ?.filter((templateType) => templateType?.enabled)
+  .map((templateType) => ({
+    value: templateType?.id,
+    label: templateType?.templateType,
+  }));
   const handleSubmit = (values) => {
     if (variableData?.getVariableData?.filter(variable => variable?.variableName === values?.variableName).length) {
       toast.error("Variable with same name already exists")
@@ -52,6 +63,7 @@ const VariableDictionaryForm = () => {
                     initialValues={{
                       variable: "",
                       variableName: "",
+                      templateTypeId:"",
                       deleted: false
                     }}
                     validationSchema={variableValidations}
@@ -101,6 +113,23 @@ const VariableDictionaryForm = () => {
                             />
                             <ErrorMessage
                               name="variable"
+                              component="div"
+                              className="error-message"
+                            />
+                          </div>
+                          <div className="col-sm-4 form-group mb-2">
+                            <label for="pass"> Template Type </label>
+                            <Field
+                              name="templateTypeId"
+                              component={Dropdown}
+                              options={templateTypeOptions}
+                              className={`form-select ${errors.templateTypeId && touched.templateTypeId
+                                  ? "is-invalid"
+                                  : ""
+                                }`}
+                            />
+                            <ErrorMessage
+                              name="templateTypeId"
                               component="div"
                               className="error-message"
                             />

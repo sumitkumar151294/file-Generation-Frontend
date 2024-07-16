@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Dropdown = ({ field, form, options, ...props }) => {
+const Dropdown = ({ field, form, options, onChange, ...props }) => {
   const handleChange = (event) => {
     form.setFieldValue(field.name, event.target.value);
+    onChange && onChange(event.target.value); // Call onChange prop with selected value
   };
 
   return (

@@ -2,9 +2,13 @@
 import React, { useEffect, useState } from "react";
 import VariableDictionaryForm from "./VariableDictionaryForm";
 import { useDispatch, useSelector } from "react-redux";
-import { onGetVariable, onUpdateVariable, onUpdateVariableReset } from "../../Store/Slices/variableSlice";
+import {
+  onGetVariable,
+  onUpdateVariable,
+  onUpdateVariableReset,
+} from "../../Store/Slices/variableSlice";
 import Loader from "../../Components/Loader/Loader";
-import Norecord from '../../Components/NoRecord/NoRecord';
+import Norecord from "../../Components/NoRecord/NoRecord";
 import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import Button from "../../Components/Button/Button";
@@ -15,27 +19,35 @@ const VariableDictionaryList = () => {
   const variableData = useSelector((state) => state?.variableReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
-  const [filterValue, setFilterValue] = useState('');
+  const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
   const templateMasterData = useSelector(
     (state) => state.templateMasterReducer?.gettemplateMasterData
   );
-
   useEffect(() => {
     dispatch(onGetVariable());
   }, []);
   const findMatches = (a, b) => {
     var matches = [];
     b?.forEach(function (element) {
-      if (a?.some(function (str) { return str.includes(element); })) {
+      if (
+        a?.some(function (str) {
+          return str.includes(element);
+        })
+      ) {
         matches.push(element);
       }
     });
     return matches;
-
-  }
-  const result = findMatches(templateMasterData?.map(template => template?.templateContent), variableData?.getVariableData?.map(variable => variable.variableName))
+  };
+  const templateTypeMasterData = useSelector(
+    (state) => state?.templateTypeMasterReducer?.gettemplateTypeMasterData
+  );
+  const result = findMatches(
+    templateMasterData?.map((template) => template?.templateContent),
+    variableData?.getVariableData?.map((variable) => variable.variableName)
+  );
 
   useEffect(() => {
     if (variableData?.getVariableData) {
@@ -58,14 +70,18 @@ const VariableDictionaryList = () => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setFilterValue(value);
-    const filtered = variableData.getVariableData?.filter(item =>
+    const filtered = variableData.getVariableData?.filter((item) =>
       item.variableName.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
   const handleData = (variableData) => {
-    if (result.filter(varname => varname === variableData.variableName).length) {
-      toast.error("Unable to Delete Variable: Variable is in Use, To Proceed first remove from the template")
+    if (
+      result.filter((varname) => varname === variableData.variableName).length
+    ) {
+      toast.error(
+        "Unable to Delete Variable: Variable is in Use, To Proceed first remove from the template"
+      );
     } else {
       const variableDatatoDelete = {
         deleted: true,
@@ -73,22 +89,21 @@ const VariableDictionaryList = () => {
         updatedBy: 0,
         variableName: variableData.variableName,
         variable: variableData?.variable,
-        id: variableData?.id
-      }
-      dispatch(onUpdateVariable(variableDatatoDelete))
+        id: variableData?.id,
+      };
+      dispatch(onUpdateVariable(variableDatatoDelete));
     }
-
-  }
+  };
   useEffect(() => {
     if (variableData?.update_status_code === "201") {
-      toast.success("Deleted Successfully")
-      dispatch(onGetVariable())
-      dispatch(onUpdateVariableReset())
+      toast.success("Deleted Successfully");
+      dispatch(onGetVariable());
+      dispatch(onUpdateVariableReset());
     } else if (variableData?.update_status_code) {
-      toast.error(variableData?.updateMessage)
-      dispatch(onUpdateVariableReset())
+      toast.error(variableData?.updateMessage);
+      dispatch(onUpdateVariableReset());
     }
-  }, [variableData])
+  }, [variableData]);
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const day = date.getDate();
@@ -98,7 +113,7 @@ const VariableDictionaryList = () => {
     const formattedMonth = month < 10 ? `0${month}` : month;
     const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
     return formattedDate;
-  }
+  };
   return (
     <>
       <ScrollToTop />
@@ -143,32 +158,45 @@ const VariableDictionaryList = () => {
                             <tr>
                               <th>Variable Name</th>
                               <th>Variable</th>
+                              <th>Template Type</th>
                               <th>Date</th>
                               <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {filteredData.slice(startIndex, endIndex).map((variableData, index) => (
-                              <tr key={index}>
-                                <td>{variableData.variableName}</td>
-                                <td>{variableData.variable}</td>
-                                <td>{formatDate(variableData.createdOn)}</td>
-                                <td>
-                                  <div className="d-flex">
-
+                            {filteredData
+                              .slice(startIndex, endIndex)
+                              .map((variableData, index) => (
+                                <tr key={index}>
+                                  <td>{variableData.variableName}</td>
+                                  <td>{variableData.variable}</td>
+                                  <td>
+                                    {templateTypeMasterData
+                                      .filter(
+                                        (type) =>
+                                          type.id ===
+                                          variableData.templateTypeId
+                                      )
+                                      .map((type) => type.templateType)}
+                                  </td>
+                                  <td>{formatDate(variableData.createdOn)}</td>
+                                  <td>
                                     <div className="d-flex">
-                                      <Button
-                                        className="btn btn-danger shadow btn-xs sharp"
-                                        icon={"fa fa-trash"}
-                                        onClick={() => handleData(variableData)}
-                                      >
-                                        <i className="fa fa-trash"></i>
-                                      </Button>
+                                      <div className="d-flex">
+                                        <Button
+                                          className="btn btn-danger shadow btn-xs sharp"
+                                          icon={"fa fa-trash"}
+                                          onClick={() =>
+                                            handleData(variableData)
+                                          }
+                                        >
+                                          <i className="fa fa-trash"></i>
+                                        </Button>
+                                      </div>
                                     </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
+                                  </td>
+                                </tr>
+                              ))}
                           </tbody>
                         </table>
                         {filteredData?.length > 5 && (
@@ -177,13 +205,18 @@ const VariableDictionaryList = () => {
                               previousLabel={"<"}
                               nextLabel={" >"}
                               breakLabel={"..."}
-                              pageCount={Math.ceil(variableData?.getVariableData.length / rowsPerPage)}
+                              pageCount={Math.ceil(
+                                variableData?.getVariableData.length /
+                                  rowsPerPage
+                              )}
                               marginPagesDisplayed={2}
                               onPageChange={handlePageChange}
                               containerClassName={"pagination"}
                               activeClassName={"active"}
                               initialPage={page - 1}
-                              previousClassName={page === 0 ? "disabled_Text" : ""}
+                              previousClassName={
+                                page === 0 ? "disabled_Text" : ""
+                              }
                             />
                           </div>
                         )}
