@@ -89,6 +89,7 @@ const VariableDictionaryList = () => {
         updatedBy: 0,
         variableName: variableData.variableName,
         variable: variableData?.variable,
+        templateTypeId: variableData?.templateTypeId,
         id: variableData?.id,
       };
       dispatch(onUpdateVariable(variableDatatoDelete));

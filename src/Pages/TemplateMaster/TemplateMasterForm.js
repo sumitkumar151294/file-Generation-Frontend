@@ -246,6 +246,8 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
                         <div className="row">
                           <div className="col-sm-4 form-group mb-2">
                             <label for="pass"> Template Type </label>
+                            <span className="text-danger">*</span>
+
                             <Field
                               name="templateTypeId"
                               component={Dropdown}
@@ -264,6 +266,8 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
                           </div>
                           <div className="col-sm-6 form-group mb-2">
                             <label>Template Name</label>
+                            <span className="text-danger">*</span>
+
                             <Field
                               type="text"
                               name="templateName"
@@ -353,6 +357,8 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
 
                           <div className="col-sm-4 form-group mb-2">
                             <label> Client Name</label>
+                            <span className="text-danger">*</span>
+
                             <Field
                               name="clientId"
                               component={Dropdown}
@@ -374,6 +380,8 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
 
                           <div className="col-sm-4 form-group mb-2">
                             <label for="pass"> File Type </label>
+                            <span className="text-danger">*</span>
+
                             <Field
                               name="fileTypeId"
                               component={Dropdown}
@@ -393,6 +401,8 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
                           </div>
                           <div className="col-sm-4 form-group mb-2">
                             <label for="pass"> Status </label>
+                            <span className="text-danger">*</span>
+
                             <Field
                               name="enabled"
                               component={Dropdown}

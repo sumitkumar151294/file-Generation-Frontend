@@ -13,9 +13,9 @@ import { onLogout } from "../../Store/Slices/LoginSlice";
 const menuItems = [
   { path: "/dashboard", icon: dashboard, text: "Dashboard" },
   { path: "/file-type", icon: segment, text: "File Type" },
+  { path: "/templatetype-master", icon: section, text: "Template Type Master" },
   { path: "/variable-dictionary", icon: segment, text: "Variable Dictionary" },
   { path: "/client-master", icon: content, text: "Client Master" },
-  { path: "/templatetype-master", icon: section, text: "Template Type Master" },
   { path: "/template-master", icon: add, text: "Template Master" },
 ];
 
