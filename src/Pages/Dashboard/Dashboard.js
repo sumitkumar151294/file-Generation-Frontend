@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
@@ -5,40 +6,40 @@ import { onGetclientMaster } from "../../Store/Slices/clientMasterSlice";
 import { onGettemplateTypeMaster } from "../../Store/Slices/templateTypeMasterSlice";
 import { onGettemplateMaster } from "../../Store/Slices/templateMasterSlice";
 import { onGetdocumentVault } from "../../Store/Slices/documentVaultSlice";
-import ChartYearly from "../../Components/apexChart/ChartYearly";
-import ChartMonthly from "../../Components/apexChart/ChartMonthly";
-import ChartWeekly from "../../Components/apexChart/ChartWeekly";
+import ChartComponent from "../../Components/ChartComponent/ChartComponent"; // Assuming you have a consolidated ChartComponent
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const clientMasterData = useSelector(
-    (state) => state?.clientMasterReducer?.getclientMasterData
-  );
-  const templateMasterData = useSelector(
-    (state) => state?.templateMasterReducer?.gettemplateMasterData
-  );
-  const documentVaultData = useSelector(
-    (state) => state.documentVaultReducer?.getdocumentVaultData
-  );
-  const templateTypemasterData = useSelector(
-    (state) => state.templateTypeMasterReducer?.gettemplateTypeMasterData
-  );
+  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [error, setError] = useState(null); // State to manage errors
+
+  // Redux state selectors
+  const clientMasterData = useSelector(state => state.clientMasterReducer.getclientMasterData);
+  const templateMasterData = useSelector(state => state.templateMasterReducer.gettemplateMasterData);
+  const documentVaultData = useSelector(state => state.documentVaultReducer.getdocumentVaultData);
+  const templateTypemasterData = useSelector(state => state.templateTypeMasterReducer.gettemplateTypeMasterData);
 
   const [activeTab, setActiveTab] = useState('Yearly'); // State to track active tab
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!clientMasterData?.length) {
-        dispatch(onGetclientMaster());
-      }
-      if (!templateTypemasterData?.length) {
-        dispatch(onGettemplateTypeMaster());
-      }
-      if (!templateMasterData?.length) {
-        dispatch(onGettemplateMaster());
-      }
-      if (!documentVaultData?.length) {
-        dispatch(onGetdocumentVault());
+      try {
+        if (!clientMasterData?.length) {
+          await dispatch(onGetclientMaster());
+        }
+        if (!templateTypemasterData?.length) {
+          await dispatch(onGettemplateTypeMaster());
+        }
+        if (!templateMasterData?.length) {
+          await dispatch(onGettemplateMaster());
+        }
+        if (!documentVaultData?.length) {
+          await dispatch(onGetdocumentVault());
+        }
+        setLoading(false);
+      } catch (error) {
+        setError(error.message || 'An error occurred');
+        setLoading(false);
       }
     };
     fetchData();
@@ -47,6 +48,14 @@ const Dashboard = () => {
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
@@ -118,61 +127,40 @@ const Dashboard = () => {
                       <div className="d-flex">
                         <div className="card-action coin-tabs mt-3 mt-sm-0">
                           <ul className="nav nav-tabs" role="tablist">
-                            <li className="nav-item">
-                              <a
-                                className={`nav-link ${activeTab === 'Yearly' ? 'active' : ''}`}
-                                data-bs-toggle="tab"
-                                href="#Yearly"
-                                role="tab"
-                                onClick={() => handleTabClick('Yearly')}
-                              >
-                                Yearly
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                className={`nav-link ${activeTab === 'Monthly' ? 'active' : ''}`}
-                                data-bs-toggle="tab"
-                                href="#Monthly"
-                                role="tab"
-                                onClick={() => handleTabClick('Monthly')}
-                              >
-                                Monthly
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                className={`nav-link ${activeTab === 'Weekly' ? 'active' : ''}`}
-                                data-bs-toggle="tab"
-                                href="#Weekly"
-                                role="tab"
-                                onClick={() => handleTabClick('Weekly')}
-                              >
-                                Weekly
-                              </a>
-                            </li>
+                            {['Yearly', 'Monthly', 'Weekly'].map(tabName => (
+                              <li className="nav-item" key={tabName}>
+                                <a
+                                  className={`nav-link ${activeTab === tabName ? 'active' : ''}`}
+                                  data-bs-toggle="tab"
+                                  href={`#${tabName}`}
+                                  role="tab"
+                                  onClick={() => handleTabClick(tabName)}
+                                >
+                                  {tabName}
+                                </a>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
                     </div>
                     <div className="card-body">
                       <div className="tab-content">
-                        <div className={`tab-pane fade ${activeTab === 'Yearly' ? 'show active' : ''}`} id="Yearly">
-                          <ChartYearly data={documentVaultData} />
-                        </div>
-                        <div className={`tab-pane fade ${activeTab === 'Monthly' ? 'show active' : ''}`} id="Monthly">
-                          <ChartMonthly data={documentVaultData} />
-                        </div>
-                        <div className={`tab-pane fade ${activeTab === 'Weekly' ? 'show active' : ''}`} id="Weekly">
-                          <ChartWeekly data={documentVaultData} />
-                        </div>
+                        {['Yearly', 'Monthly', 'Weekly'].map(tabName => (
+                          <div
+                            key={tabName}
+                            className={`tab-pane fade ${activeTab === tabName ? 'show active' : ''}`}
+                            id={tabName}
+                          >
+                            <ChartComponent data={documentVaultData} chartType={tabName.toLowerCase()} />
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
@@ -181,3 +169,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+/* eslint-enable react-hooks/exhaustive-deps */

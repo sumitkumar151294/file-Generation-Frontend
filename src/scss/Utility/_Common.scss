@@ -539,3 +539,6 @@ gap: 1rem;
 .jodit-workplace{
   min-height: 350px !important;
 }
+.form-control:disabled,.form-select:disabled {
+  cursor: not-allowed !important;
+}

@@ -4,12 +4,12 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import JoditEditor from 'jodit-react';
 
-const HtmlEditor = ({ data, setData, setVariableUsed, seterror }) => {
+const HtmlEditor = ({ data, setData, setVariableUsed,TemplateType }) => {
   const options = [
     'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', '|', 
     'outdent', 'indent', 'align', '|', 'hr', '|', 'fullsize', 'brush', 
     '|', 'table', 'link', '|', 'undo', 'redo', 'source', '|', 
-    'image', 'video', 'file', 'print', 'preview'
+    'image', 'video', 'file', 'preview'
   ];
 
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
@@ -27,8 +27,8 @@ const HtmlEditor = ({ data, setData, setVariableUsed, seterror }) => {
 
   const config = useMemo(
     () => ({
-      readonly: false,
-      placeholder: 'Write something...',
+      readonly: !TemplateType,
+      placeholder: "",
       defaultActionOnPaste: 'insert_as_html',
       defaultLineHeight: 1.5,
       enter: 'div',
@@ -50,7 +50,7 @@ const HtmlEditor = ({ data, setData, setVariableUsed, seterror }) => {
         },
       },
     }),
-    [],
+    [!TemplateType],
   );
 
   const findVariableByName = (variableName) => {

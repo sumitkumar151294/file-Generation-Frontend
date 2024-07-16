@@ -1,20 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../Components/InputField/InputField';
 import { onGetVariable } from '../../Store/Slices/variableSlice';
 
 
-const VariableDictionary = ({ variableUsed }) => {
+const VariableDictionary = ({ variableUsed ,TemplateType}) => {
   const dispatch=useDispatch()
   const [filterValue, setFilterValue] = useState('');
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);
   const handleInputChange = (e) => {
     setFilterValue(e.target.value);
   };
-const variableIsloading=useSelector((state) => state?.variableReducer?.isLoading)
-  const filteredData = variableData?.filter(variable =>
-    variable?.variableName?.toLowerCase().includes(filterValue.toLowerCase())
+  const templateMasterData = useSelector(
+    (state) => state.templateMasterReducer?.postLoading
   );
+const variableIsloading=useSelector((state) => state?.variableReducer?.isLoading)
+  const filteredData =  variableData?.filter(variable =>
+    variable?.variableName?.toLowerCase().includes(filterValue.toLowerCase()) && variable.templateTypeId===TemplateType
+  )
 useEffect(()=>{
 if(!variableData){
   dispatch(onGetVariable())
@@ -40,7 +44,7 @@ if(!variableData){
         </div>
       </div>
       <div className="loafer">
-  {variableIsloading ? (
+  {variableIsloading || templateMasterData ? (
     <div className="loader-container">
       <div className="loader"></div>
     </div>
@@ -81,3 +85,4 @@ if(!variableData){
 }
 
 export default VariableDictionary;
+/* eslint-enable react-hooks/exhaustive-deps */
