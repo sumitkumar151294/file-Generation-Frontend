@@ -27,12 +27,7 @@ const VariableDictionaryForm = () => {
     label: templateType?.templateType,
   }));
   const handleSubmit = (values) => {
-    if (variableData?.getVariableData?.filter(variable => variable?.variableName === values?.variableName).length) {
-      toast.error("Variable with same name already exists")
-    } else {
-
       dispatch(onPostVariable(values));
-    }
   };
   useEffect(() => {
     if (variableData?.post_status_code === "201") {
@@ -119,6 +114,8 @@ const VariableDictionaryForm = () => {
                           </div>
                           <div className="col-sm-4 form-group mb-2">
                             <label for="pass"> Template Type </label>
+                            <span className="text-danger">*</span>
+
                             <Field
                               name="templateTypeId"
                               component={Dropdown}
