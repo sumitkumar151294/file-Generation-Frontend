@@ -9,7 +9,7 @@ export const getClientMasterApi = async (payload) => {
     return data;
   };
   export const putClientMasterApi = async (payload) => {
-    const { data = {} } = await axiosInstance.put(API.putClientMaster, payload);
+    const { data = {} } = await axiosInstance.post(API.updateClientMaster, payload);
     return data;
   };
 
