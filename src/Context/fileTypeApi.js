@@ -8,7 +8,7 @@ export const getfileTypeApi = async (payload) => {
   const { data = {} } = await axiosInstance.get(API.getfileType, payload);
   return data;
 };export const updatefileTypeApi = async (payload) => {
-  const { data = {} } = await axiosInstance.put(API.updatefileType, payload);
+  const { data = {} } = await axiosInstance.post(API.updatefileType, payload);
   return data;
 };
 

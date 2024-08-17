@@ -67,6 +67,25 @@ const VariableDictionaryForm = () => {
                     {({ errors, touched, setFieldValue }) => (
                       <Form>
                         <div className="row">
+                        <div className="col-sm-4 form-group mb-2">
+                            <label for="pass"> Template Type </label>
+                            <span className="text-danger">*</span>
+
+                            <Field
+                              name="templateTypeId"
+                              component={Dropdown}
+                              options={templateTypeOptions}
+                              className={`form-select ${errors.templateTypeId && touched.templateTypeId
+                                  ? "is-invalid"
+                                  : ""
+                                }`}
+                            />
+                            <ErrorMessage
+                              name="templateTypeId"
+                              component="div"
+                              className="error-message"
+                            />
+                          </div>
                           <div className="col-sm-4 form-group mb-2">
                             <label >
                               Variable Name
@@ -85,7 +104,7 @@ const VariableDictionaryForm = () => {
                               placeholder="Enter Variable Name"
                             />
                             <ErrorMessage
-                              name="variable_name"
+                              name="variableName"
                               component="div"
                               className="error-message"
                             />
@@ -112,25 +131,7 @@ const VariableDictionaryForm = () => {
                               className="error-message"
                             />
                           </div>
-                          <div className="col-sm-4 form-group mb-2">
-                            <label for="pass"> Template Type </label>
-                            <span className="text-danger">*</span>
 
-                            <Field
-                              name="templateTypeId"
-                              component={Dropdown}
-                              options={templateTypeOptions}
-                              className={`form-select ${errors.templateTypeId && touched.templateTypeId
-                                  ? "is-invalid"
-                                  : ""
-                                }`}
-                            />
-                            <ErrorMessage
-                              name="templateTypeId"
-                              component="div"
-                              className="error-message"
-                            />
-                          </div>
                           <div className="col-sm-12 form-group mb-0 mt-2">
                             <Button
                               text="Submit"

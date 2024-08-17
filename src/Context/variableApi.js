@@ -8,6 +8,6 @@ export const getVariable = async (payload) => {
   const { data = [] } = await axiosInstance.get(API.getVariable, payload);
   return data;
 };export const updateVariable = async (payload) => {
-  const { data = [] } = await axiosInstance.put(API.updateVariable, payload);
+  const { data = [] } = await axiosInstance.post(API.updateVariable, payload);
   return data;
 };
