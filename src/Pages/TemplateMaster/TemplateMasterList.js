@@ -15,7 +15,24 @@ import {
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
 import { toast } from "react-toastify";
 import { onGettemplateVariableMaster } from "../../Store/Slices/templateVariableMasterSlice";
+import Swal from "sweetalert2";
 const ClientMasterList = () => {
+  const showAlert = (templateMaster) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to Delete ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+     handleData(templateMaster)
+      }
+    });
+  };
   const templateMasterData = useSelector(
     (state) => state?.templateMasterReducer
   );
@@ -28,9 +45,9 @@ const ClientMasterList = () => {
   const fileTypeData = useSelector(
     (state) => state?.fileTypeReducer?.getfileTypeData
   );
-  const templateVariableData=useSelector(state=>state.templateVariableMasterReducer?.posttemplateVariableMasterData)
+  const templateVariableData = useSelector(state => state.templateVariableMasterReducer?.posttemplateVariableMasterData)
   const [templateMaster, setemplateMaster] = useState();
-  const [variableMaster,setVariableMaster]=useState();
+  const [variableMaster, setVariableMaster] = useState();
   const [isDelete, setisDelete] = useState(false);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
@@ -59,6 +76,7 @@ const ClientMasterList = () => {
     templateMasterData?.gettemplateMasterData
   );
   const handleInputChange = (e) => {
+
     const value = e.target.value;
     setFilterValue(value);
     const filtered = templateMasterData?.gettemplateMasterData.filter((item) =>
@@ -67,20 +85,10 @@ const ClientMasterList = () => {
     setFilteredData(filtered);
   };
   const handleData = (templateMaster, isEdit) => {
-    const templateVariableId=templateVariableData?.filter(template=>template?.templateId===templateMaster?.id)
+    const templateVariableId = templateVariableData?.filter(template => template?.templateId === templateMaster?.id)
     const templateMasterInfo = {
-      enabled: templateMaster?.enabled,
-      deleted: true,
-      createdBy: 0,
-      updatedBy: 0,
-      templateName: templateMaster?.templateName,
-      templateContent: templateMaster?.templateContent,
-      clientId: templateMaster?.clientId,
-      templateTypeId: templateMaster?.templateTypeId,
-      fileTypeId: templateMaster?.fileTypeId,
-      isChild: templateMaster?.isChild,
-      childTemplateId: templateMaster?.childTemplateId,
-      id: templateMaster?.id,
+      ...templateMaster,
+      deleted: true
     };
     if (isEdit) {
       setemplateMaster(templateMasterInfo);
@@ -128,7 +136,7 @@ const ClientMasterList = () => {
   return (
     <div className="container-fluid">
       <ScrollToTop />
-      <TemplateMasterForm templateMaster={templateMaster} variableMaster={variableMaster}/>
+      <TemplateMasterForm templateMaster={templateMaster} variableMaster={variableMaster} />
       <div className="container-fluid pt-0">
         <div className="row">
           <div className="col-lg-12">
@@ -239,8 +247,9 @@ const ClientMasterList = () => {
                                       onClick={() =>
                                         handleData(
                                           templateMaster,
-                                          {isEdit: true,
-                                        })
+                                          {
+                                            isEdit: true,
+                                          })
                                       }
                                     >
                                       <i className="fas fa-pencil-alt"></i>
@@ -248,7 +257,7 @@ const ClientMasterList = () => {
                                     <Button
                                       className="btn btn-danger shadow btn-xs sharp"
                                       icon={"fa fa-trash"}
-                                      onClick={() => handleData(templateMaster)}
+                                      onClick={() => showAlert(templateMaster)}
                                     >
                                       <i className="fa fa-trash"></i>
                                     </Button>

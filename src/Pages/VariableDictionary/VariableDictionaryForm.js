@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../Components/Button/Button";
 import Loader from "../../Components/Loader/Loader";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { onGetVariable, onPostVariable, onPostVariableReset } from "../../Store/Slices/variableSlice";
+import {
+  onGetVariable,
+  onPostVariable,
+  onPostVariableReset,
+} from "../../Store/Slices/variableSlice";
 import Dropdown from "../../Components/Dropdown/Dropdown";
 
 const VariableDictionaryForm = () => {
@@ -14,6 +18,7 @@ const VariableDictionaryForm = () => {
   const templateTypeMasterData = useSelector(
     (state) => state?.templateTypeMasterReducer?.gettemplateTypeMasterData
   );
+  const [info, setInfo] = useState(false);
   const dispatch = useDispatch();
   const variableValidations = Yup.object().shape({
     variable: Yup.string().required("Variable is required"),
@@ -21,24 +26,24 @@ const VariableDictionaryForm = () => {
     templateTypeId: Yup.string().required("Template Type is required"),
   });
   const templateTypeOptions = templateTypeMasterData
-  ?.filter((templateType) => templateType?.enabled)
-  .map((templateType) => ({
-    value: templateType?.id,
-    label: templateType?.templateType,
-  }));
+    ?.filter((templateType) => templateType?.enabled)
+    .map((templateType) => ({
+      value: templateType?.id,
+      label: templateType?.templateType,
+    }));
   const handleSubmit = (values) => {
-      dispatch(onPostVariable(values));
+    dispatch(onPostVariable(values));
   };
   useEffect(() => {
     if (variableData?.post_status_code === "201") {
-      toast.success(variableData.postMessage)
-      dispatch(onPostVariableReset())
-      dispatch(onGetVariable())
+      toast.success(variableData.postMessage);
+      dispatch(onPostVariableReset());
+      dispatch(onGetVariable());
     } else if (variableData?.post_status_code) {
-      toast.error(variableData.postMessage)
-      dispatch(onPostVariableReset())
+      toast.error(variableData.postMessage);
+      dispatch(onPostVariableReset());
     }
-  }, [variableData])
+  }, [variableData]);
   return (
     <>
       <div className="row">
@@ -58,8 +63,8 @@ const VariableDictionaryForm = () => {
                     initialValues={{
                       variable: "",
                       variableName: "",
-                      templateTypeId:"",
-                      deleted: false
+                      templateTypeId: "",
+                      deleted: false,
                     }}
                     validationSchema={variableValidations}
                     onSubmit={handleSubmit}
@@ -67,7 +72,7 @@ const VariableDictionaryForm = () => {
                     {({ errors, touched, setFieldValue }) => (
                       <Form>
                         <div className="row">
-                        <div className="col-sm-4 form-group mb-2">
+                          <div className="col-sm-4 form-group mb-2">
                             <label for="pass"> Template Type </label>
                             <span className="text-danger">*</span>
 
@@ -75,10 +80,11 @@ const VariableDictionaryForm = () => {
                               name="templateTypeId"
                               component={Dropdown}
                               options={templateTypeOptions}
-                              className={`form-select ${errors.templateTypeId && touched.templateTypeId
+                              className={`form-select ${
+                                errors.templateTypeId && touched.templateTypeId
                                   ? "is-invalid"
                                   : ""
-                                }`}
+                              }`}
                             />
                             <ErrorMessage
                               name="templateTypeId"
@@ -87,19 +93,49 @@ const VariableDictionaryForm = () => {
                             />
                           </div>
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
-                              Variable Name
-                              <span className="text-danger">*</span>
-                            </label>
+                            <div className="flex">
+                              <label>Variable Name</label>
+                              <div
+                                className="info-icon"
+                                onMouseEnter={() => setInfo(true)}
+                                onMouseLeave={() => setInfo(false)}
+                              >
+                                <i
+                                  className="fa fa-info-circle imginfo"
+                                  aria-hidden="true"
+                                ></i>
+                                {info && (
+                                  <div
+                                    className="infoicon"
+                                    style={{
+                                      color: "black",
+                                      bottom: "1rem",
+                                      borderRadius: "1rem",
+                                    }}
+                                  >
+                                    This is used to genrate the Variable
+                                    <br /> Name for ex:
+                                    <br />
+                                    @variableName1
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                             <Field
                               type="text"
                               name="variableName"
-                              className={`form-control ${errors.variableName && touched.variableName
+                              className={`form-control ${
+                                errors.variableName && touched.variableName
                                   ? "is-invalid"
                                   : ""
-                                }`}
+                              }`}
                               onChange={(e) => {
-                                setFieldValue('variableName', e.target.value.startsWith('@') ? e.target.value : '@' + e.target.value);
+                                setFieldValue(
+                                  "variableName",
+                                  e.target.value.startsWith("@")
+                                    ? e.target.value
+                                    : "@" + e.target.value
+                                );
                               }}
                               placeholder="Enter Variable Name"
                             />
@@ -111,19 +147,19 @@ const VariableDictionaryForm = () => {
                           </div>
 
                           <div className="col-sm-4 form-group mb-2">
-                            <label >
+                            <label>
                               Variable
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
                               name="variable"
-                              className={`form-control ${errors.variable && touched.variable
+                              className={`form-control ${
+                                errors.variable && touched.variable
                                   ? "is-invalid"
                                   : ""
-                                }`}
+                              }`}
                               placeholder="Enter Variable"
-
                             />
                             <ErrorMessage
                               name="variable"

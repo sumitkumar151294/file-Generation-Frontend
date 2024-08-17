@@ -7,17 +7,43 @@ import ReactPaginate from "react-paginate";
 import InputField from "../../Components/InputField/InputField";
 import TemplateTypeMasterForm from "./TemplateTypeMasterForm";
 import Button from "../../Components/Button/Button";
-import { onGettemplateTypeMaster, onUpdatetemplateTypeMaster, onUpdatetemplateTypeMasterReset } from "../../Store/Slices/templateTypeMasterSlice";
+import {
+  onGettemplateTypeMaster,
+  onUpdatetemplateTypeMaster,
+  onUpdatetemplateTypeMasterReset,
+} from "../../Store/Slices/templateTypeMasterSlice";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 const TemplateTypeMasterList = () => {
-  const templateTypeMasterData = useSelector((state) => state?.templateTypeMasterReducer);
+  const showAlert = (templateType) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to Delete ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+     handleData(templateType)
+      }
+    });
+  };
+  const templateTypeMasterData = useSelector(
+    (state) => state?.templateTypeMasterReducer
+  );
+  const clientMasterData = useSelector(
+    (state) => state?.clientMasterReducer?.getclientMasterData
+  );
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const dispatch = useDispatch();
-  const [templateTypeData, setTemplateTypeData] = useState()
-  const [isDelete, setIsdelete] = useState(false)
+  const [templateTypeData, setTemplateTypeData] = useState();
+  const [isDelete, setIsdelete] = useState(false);
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -27,7 +53,8 @@ const TemplateTypeMasterList = () => {
   useEffect(() => {
     if (templateTypeMasterData?.gettemplateTypeMasterData) {
       setFilteredData(templateTypeMasterData?.gettemplateTypeMasterData);
-      const totalItems = templateTypeMasterData?.gettemplateTypeMasterData?.length;
+      const totalItems =
+        templateTypeMasterData?.gettemplateTypeMasterData?.length;
       const totalPages = Math.ceil(totalItems / rowsPerPage);
       if (page > totalPages && page > 1) {
         setPage(page - 1);
@@ -41,28 +68,21 @@ const TemplateTypeMasterList = () => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setFilterValue(value);
-    const filtered = templateTypeMasterData?.gettemplateTypeMasterData.filter((item) =>
-      item.type?.toLowerCase().includes(value.toLowerCase())
+    const filtered = templateTypeMasterData?.gettemplateTypeMasterData.filter(
+      (item) => item.type?.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
   const handleData = (templateTypedata, isEdit) => {
     const filieTypeInfo = {
-      enabled: templateTypedata?.enabled,
+      ...templateTypedata,
       deleted: true,
-      createdBy: 0,
-      updatedBy: 0,
-      clientId: templateTypedata?.clientId,
-      templateType: templateTypedata?.templateType,
-      fileName_Rule: templateTypedata?.fileName_Rule,
-      description: templateTypedata?.description,
-      id: templateTypedata?.id
-    }
+    };
     if (isEdit) {
-      setTemplateTypeData(filieTypeInfo)
+      setTemplateTypeData(filieTypeInfo);
     } else {
-      setIsdelete(true)
-      dispatch(onUpdatetemplateTypeMaster(filieTypeInfo))
+      setIsdelete(true);
+      dispatch(onUpdatetemplateTypeMaster(filieTypeInfo));
     }
   };
   const formatDate = (timestamp) => {
@@ -74,22 +94,22 @@ const TemplateTypeMasterList = () => {
     const formattedMonth = month < 10 ? `0${month}` : month;
     const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
     return formattedDate;
-  }
+  };
   useEffect(() => {
     if (templateTypeMasterData.update_status_code === "201") {
       if (isDelete) {
-        toast.success("Deleted Successfully")
-        setIsdelete(false)
+        toast.success("Deleted Successfully");
+        setIsdelete(false);
       } else {
-        toast.success(templateTypeMasterData.updateMessage)
+        toast.success(templateTypeMasterData.updateMessage);
       }
-      dispatch(onGettemplateTypeMaster())
-      dispatch(onUpdatetemplateTypeMasterReset())
+      dispatch(onGettemplateTypeMaster());
+      dispatch(onUpdatetemplateTypeMasterReset());
     } else if (templateTypeMasterData.update_status_code) {
-      toast.error(templateTypeMasterData.updateMessage)
-      dispatch(onUpdatetemplateTypeMasterReset())
+      toast.error(templateTypeMasterData.updateMessage);
+      dispatch(onUpdatetemplateTypeMasterReset());
     }
-  }, [templateTypeMasterData])
+  }, [templateTypeMasterData]);
 
   return (
     <div className="container-fluid">
@@ -132,8 +152,10 @@ const TemplateTypeMasterList = () => {
                       <table className="table header-border table-responsive-sm">
                         <thead>
                           <tr>
-                            <th>Template Type</th>
+                            <th>Template Name</th>
+                            <th>Template Name Rule</th>
                             <th>Description</th>
+                            <th>Client Name</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -145,7 +167,23 @@ const TemplateTypeMasterList = () => {
                             ?.map((templateType, index) => (
                               <tr key={index}>
                                 <td>{templateType?.templateType}</td>
-                                <td>{templateType?.templateType}</td>
+                                <td>{templateType?.fileName_Rule}</td>
+                                <td>
+                                  {templateType?.description ? (
+                                    templateType?.description.substring(0, 10) +
+                                    "..."
+                                  ) : (
+                                    <span className="hyphen"> -</span>
+                                  )}
+                                </td>
+                                <td>
+                                  {clientMasterData
+                                    ?.filter(
+                                      (client) =>
+                                        client.id === templateType?.clientId
+                                    )
+                                    ?.map((client) => client?.clientName)}
+                                </td>
                                 <td>{formatDate(templateType?.createdOn)}</td>
                                 <td>
                                   <span
@@ -176,7 +214,7 @@ const TemplateTypeMasterList = () => {
                                     <Button
                                       className="btn btn-danger shadow btn-xs sharp"
                                       icon={"fa fa-trash"}
-                                      onClick={() => handleData(templateType)}
+                                      onClick={() => showAlert(templateType)}
                                     >
                                       <i className="fa fa-trash"></i>
                                     </Button>

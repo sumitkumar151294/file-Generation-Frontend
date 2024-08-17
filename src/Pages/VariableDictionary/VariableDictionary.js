@@ -6,6 +6,7 @@ import { onGetVariable } from '../../Store/Slices/variableSlice';
 
 
 const VariableDictionary = ({ variableUsed ,TemplateType}) => {
+  console.log(variableUsed)
   const dispatch=useDispatch()
   const [filterValue, setFilterValue] = useState('');
   const variableData = useSelector((state) => state?.variableReducer?.getVariableData);

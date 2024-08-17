@@ -14,6 +14,7 @@ import {
 import { toast } from "react-toastify";
 import Button from "../../Components/Button/Button";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
+import Swal from "sweetalert2";
 const ClientMasterList = () => {
   const clientMasterData = useSelector((state) => state?.clientMasterReducer);
   const [page, setPage] = useState(1);
@@ -23,7 +24,22 @@ const ClientMasterList = () => {
   const [clientData, setClientData] = useState();
   const dispatch = useDispatch();
   const [isDelete, setisDelete] = useState(false);
-
+  const showAlert = (clientData) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to Delete ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleData(clientData);
+      }
+    });
+  };
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -49,15 +65,8 @@ const ClientMasterList = () => {
   };
   const handleData = (clientData, isEdit) => {
     const clientInfo = {
-      enabled: clientData?.enabled,
+      ...clientData,
       deleted: true,
-      createdBy: 0,
-      updatedBy: 0,
-      clientName: clientData?.clientName,
-      clientCode: clientData.clientCode,
-      description: clientData.description,
-      url: clientData.url,
-      id: clientData.id,
     };
     if (isEdit) {
       setClientData(clientInfo);
@@ -76,10 +85,9 @@ const ClientMasterList = () => {
       }
       dispatch(onGetclientMaster());
       dispatch(onUpdateclientMasterReset());
-    }else if(clientMasterData?.update_status_code){
+    } else if (clientMasterData?.update_status_code) {
       toast.error(clientMasterData.updateMessage);
       dispatch(onUpdateclientMasterReset());
-
     }
   }, [clientMasterData]);
   const formatDate = (timestamp) => {
@@ -96,7 +104,7 @@ const ClientMasterList = () => {
     <>
       <ScrollToTop />
       <div className="container-fluid">
-        <ClientMasterForm clientData={clientData} />
+        <ClientMasterForm clientData={clientData} setClientData={setClientData}/>
         <div className="container-fluid pt-0">
           <div className="row">
             <div className="col-lg-12">
@@ -138,6 +146,7 @@ const ClientMasterList = () => {
                               <th>Client Name</th>
                               <th>Description</th>
                               <th>Client Code</th>
+                              <th>URL</th>
                               <th>Date</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -149,8 +158,17 @@ const ClientMasterList = () => {
                               .map((clientData, index) => (
                                 <tr key={index}>
                                   <td>{clientData.clientName}</td>
-                                  <td>{clientData.description}</td>
+                                  <td>
+                                    {clientData.description || (
+                                      <span className="hyphen">-</span>
+                                    )}
+                                  </td>
                                   <td>{clientData.clientCode}</td>
+                                  <td>
+                                    {clientData.url || (
+                                      <span className="hyphen">-</span>
+                                    )}
+                                  </td>
                                   <td>{formatDate(clientData.createdOn)}</td>
                                   <td>
                                     <span
@@ -181,7 +199,7 @@ const ClientMasterList = () => {
                                       <Button
                                         className="btn btn-danger shadow btn-xs sharp"
                                         icon={"fa fa-trash"}
-                                        onClick={() => handleData(clientData)}
+                                        onClick={() => showAlert(clientData)}
                                       >
                                         <i className="fa fa-trash"></i>
                                       </Button>

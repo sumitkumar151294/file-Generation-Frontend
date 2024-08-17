@@ -13,8 +13,33 @@ import {
   onPostclientMasterReset,
   onUpdateclientMaster,
 } from "../../Store/Slices/clientMasterSlice";
+import Swal from "sweetalert2";
 
 const ClientMasterForm = ({ clientData }) => {
+  const showAlert = (resetForm) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to Reset the Form ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        resetForm()
+        setInitialValue({
+          clientName: "",
+          description: "",
+          url: "",
+          enabled: "",
+          clientCode: "",
+        });
+        setButton("Submit");
+      }
+    });
+  };
   const [button, setButton] = useState("Submit");
   const clientMasterData = useSelector((state) => state.clientMasterReducer);
   const [intialValue, setInitialValue] = useState({
@@ -30,11 +55,13 @@ const ClientMasterForm = ({ clientData }) => {
     enabled: Yup.boolean().required("Status is required"),
     clientCode: Yup.string().required("Client Code is required"),
   });
+
   const handleSubmit = (values) => {
+
     const clientData = {
       ...values,
       deleted: false,
-      enabled:JSON.parse(values.enabled),
+      enabled: JSON.parse(values.enabled),
       clientCode: String(values.clientCode),
     };
     if (button === "Submit") {
@@ -88,17 +115,16 @@ const ClientMasterForm = ({ clientData }) => {
                 </div>
               ) : (
                 <div className="container-fluid">
-
                   <Formik
                     initialValues={intialValue}
                     validationSchema={clientFormValidations}
                     onSubmit={handleSubmit}
                     enableReinitialize={true}
                   >
-                    {({ errors, touched }) => (
+                    {({ errors, touched ,resetForm}) => (
                       <Form>
                         <div className="row">
-                          <div className="col-sm-4 form-group mb-2">
+                          <div className="col-sm-4 form-group mb-4">
                             <label>
                               Client Name
                               <span className="text-danger">*</span>
@@ -132,13 +158,9 @@ const ClientMasterForm = ({ clientData }) => {
                               }`}
                               placeholder="Enter Discription"
                             />
-
                           </div>
                           <div className="col-sm-4 form-group mb-2">
-                            <label>
-                              URL
-                             
-                            </label>
+                            <label>URL</label>
                             <Field
                               type="text"
                               name="url"
@@ -147,7 +169,6 @@ const ClientMasterForm = ({ clientData }) => {
                               }`}
                               placeholder="Enter URL"
                             />
-
                           </div>
 
                           <div className="col-sm-4 form-group mb-2">
@@ -194,11 +215,22 @@ const ClientMasterForm = ({ clientData }) => {
                             />
                           </div>
                           <div className="col-sm-12 form-group mb-0 mt-2">
-                            <Button
-                              text={button}
-                              icon="fa fa-arrow-right"
-                              className="btn btn-primary float-right pad-aa mt-2"
-                            />
+                            <div className="d-flex">
+                              <Button
+                                text={button}
+                                icon="fa fa-arrow-right"
+                                className="btn btn-primary float-right pad-aa mt-2"
+                              />
+                              <Button
+                                text={"Reset"}
+                                icon="fa fa-refresh"
+                                onClick={(e) => {
+                                  e.preventDefault(); // Prevent form submission
+                                  showAlert(resetForm); // Call the reset handler
+                                }}
+                                className="btn btn-primary float-right pad-aa mt-2 ml-6"
+                              />
+                            </div>
                           </div>
                         </div>
                       </Form>

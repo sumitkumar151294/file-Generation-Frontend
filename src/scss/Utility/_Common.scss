@@ -542,3 +542,55 @@ gap: 1rem;
 .form-control:disabled,.form-select:disabled {
   cursor: not-allowed !important;
 }
+.hyphen {
+  font-size: 2rem;
+  color: var(--primary-dark-gray);
+  font-style: normal;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+.info-icon {
+  margin-left: 4px;
+  cursor: pointer;
+  position: relative;
+  margin-top: 2px;
+}
+
+.infoicon {
+  display: inline-block;
+  position: absolute;
+  bottom: 100% !important;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px;
+  background-color: var(--bs-white);
+  font-size: 0.8rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--rgba-primary-25);
+  white-space: nowrap;
+  box-shadow: 0rem 0.25rem 0.25rem var(--rgba-primary-19);
+}
+
+.infoicon::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--bs-white) transparent transparent transparent;
+  font-size: 0.8rem;
+}
+
+
+.infoiconimg::after {
+  left: 60%;
+}
+.info-icon i {
+  color: black;
+}
+.flex{
+  display: flex;
+}

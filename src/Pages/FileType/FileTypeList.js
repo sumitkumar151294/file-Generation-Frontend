@@ -10,6 +10,7 @@ import FileTypeForm from "./FileTypeForm";
 import { onGetfileType, onUpdatefileType, onUpdatefileTypeReset } from "../../Store/Slices/fileTypeSlice";
 import { toast } from "react-toastify";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
+import Swal from "sweetalert2";
 const FileTypeList = () => {
   const fileTypeData = useSelector((state) => state?.fileTypeReducer);
   const [page, setPage] = useState(1);
@@ -19,7 +20,22 @@ const FileTypeList = () => {
   const [fileData, setFileType] = useState();
   const dispatch = useDispatch();
   const [isDelete,setisDelete]=useState(false)
-
+  const showAlert = (fileData) => {
+    Swal.fire({
+      title: "Are you sure you want to Delete ?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleData(fileData)
+      }
+    });
+  };
   const handlePageChange = (selected) => {
     setPage(selected.selected + 1);
   };
@@ -30,7 +46,6 @@ const FileTypeList = () => {
     if (fileTypeData?.getfileTypeData) {
       setFilteredData(fileTypeData?.getfileTypeData);
     }
-
   }, [fileTypeData?.getfileTypeData]);
   const [filterValue, setFilterValue] = useState("");
   const [filteredData, setFilteredData] = useState(
@@ -46,13 +61,8 @@ const FileTypeList = () => {
   };
   const handleData = (fileData, isEdit) => {
     const fileInfo = {
-      enabled: fileData?.enabled,
+     ...fileData,
       deleted: true,
-      createdBy: 0,
-      updatedBy: 0,
-      fileType: fileData.fileType,
-      extension: fileData.extension,
-      id: fileData.id
     }
     if (isEdit) {
       setFileType(fileInfo)
@@ -169,7 +179,7 @@ const FileTypeList = () => {
                                     <Button
                                       className="btn btn-danger shadow btn-xs sharp"
                                       icon={"fa fa-trash"}
-                                      onClick={() => handleData(fileData)}
+                                      onClick={() => showAlert(fileData)}
                                     >
                                       <i className="fa fa-trash"></i>
                                     </Button>

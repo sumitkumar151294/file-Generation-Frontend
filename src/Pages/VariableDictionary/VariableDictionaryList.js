@@ -14,8 +14,25 @@ import InputField from "../../Components/InputField/InputField";
 import Button from "../../Components/Button/Button";
 import { toast } from "react-toastify";
 import ScrollToTop from "../../Components/ScrollToTop/ScrollToTop";
+import Swal from "sweetalert2";
 
 const VariableDictionaryList = () => {
+  const showAlert = (variableData) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to Delete ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+     handleData(variableData)
+      }
+    });
+  };
   const variableData = useSelector((state) => state?.variableReducer);
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(5);
@@ -188,7 +205,7 @@ const VariableDictionaryList = () => {
                                           className="btn btn-danger shadow btn-xs sharp"
                                           icon={"fa fa-trash"}
                                           onClick={() =>
-                                            handleData(variableData)
+                                            showAlert(variableData)
                                           }
                                         >
                                           <i className="fa fa-trash"></i>
