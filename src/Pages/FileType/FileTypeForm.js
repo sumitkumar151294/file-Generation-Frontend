@@ -8,8 +8,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { onGetfileType, onPostfileType, onPostfileTypeReset, onUpdatefileType } from "../../Store/Slices/fileTypeSlice";
+import Swal from "sweetalert2";
 
 const FileTypeForm = ({ fileData }) => {
+
   const [button, setButton] = useState("Submit");
   const fileTypeData = useSelector((state) => state.fileTypeReducer);
   const dispatch = useDispatch();
@@ -29,6 +31,29 @@ const FileTypeForm = ({ fileData }) => {
     extension: "",
     enabled: "",
   })
+
+  const showAlert = (resetForm) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to Reset the Form ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        resetForm()
+        setInitialValue({
+          fileType: "",
+          extension: "",
+          enabled: "",
+        });
+        setButton("Submit");
+      }
+    });
+  };
   const handleSubmit = (values) => {
     const fileTypeDatas = {
       ...values,
@@ -99,7 +124,7 @@ const FileTypeForm = ({ fileData }) => {
                     enableReinitialize={true}
 
                   >
-                    {({ errors, touched }) => (
+                    {({ errors, touched ,resetForm}) => (
                       <Form>
                         <div className="row">
                           <div className="col-sm-4 form-group mb-2">
@@ -164,11 +189,22 @@ const FileTypeForm = ({ fileData }) => {
 
                           </div>
                           <div className="col-sm-12 form-group mb-0 mt-2">
-                            <Button
-                              text={button}
-                              icon="fa fa-arrow-right"
-                              className="btn btn-primary float-right pad-aa mt-2"
-                            />
+                            <div className="d-flex">
+                              <Button
+                                text={button}
+                                icon="fa fa-arrow-right"
+                                className="btn btn-primary float-right pad-aa mt-2"
+                              />
+                              <Button
+                                text={"Reset"}
+                                icon="fa fa-refresh"
+                                onClick={(e) => {
+                                  e.preventDefault(); // Prevent form submission
+                                  showAlert(resetForm); // Call the reset handler
+                                }}
+                                className="btn btn-primary float-right pad-aa mt-2 ml-6"
+                              />
+                            </div>
                           </div>
                         </div>
                       </Form>
