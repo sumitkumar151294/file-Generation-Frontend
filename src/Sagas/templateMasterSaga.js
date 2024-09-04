@@ -39,7 +39,7 @@ function* GettemplateMaster() {
 function* PosttemplateMaster({ payload }) {
   try {
     const posttemplateMasterResponse = yield call(postTemplateMasterApi, payload);
-    if (posttemplateMasterResponse.httpStatusCode === "201") {
+    if (posttemplateMasterResponse.httpStatusCode === "200") {
       yield put(
     onPosttemplateMasterSuccess({
 
@@ -69,7 +69,7 @@ function* UpdatetemplateMaster({ payload }) {
       updateTemplateMasterApi,
       payload
     );
-    if (updatetemplateMasterResponse.httpStatusCode === "201") {
+    if (updatetemplateMasterResponse.httpStatusCode === "200") {
       yield put(
         onUpdatetemplateMasterSuccess({
           data: updatetemplateMasterResponse.response,

@@ -40,7 +40,7 @@ function* PosttemplateVariableMaster({ payload }) {
   try {
 
     const posttemplateVariableMasterResponse = yield call(postTemplateVaribleApi, payload);
-    if (posttemplateVariableMasterResponse.httpStatusCode === "201") {
+    if (posttemplateVariableMasterResponse.httpStatusCode === "200") {
       yield put(
     onPosttemplateVariableMasterSuccess({
           postData: posttemplateVariableMasterResponse.response,
@@ -66,7 +66,7 @@ function* UpdatetemplateVariableMaster({ payload }) {
       updateTemplateVaribleApi,
       payload
     );
-    if (updatetemplateVariableMasterResponse.httpStatusCode === "201") {
+    if (updatetemplateVariableMasterResponse.httpStatusCode === "200") {
       yield put(
         onUpdatetemplateVariableMasterSuccess({
           data: updatetemplateVariableMasterResponse.response,

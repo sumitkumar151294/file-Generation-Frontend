@@ -72,7 +72,7 @@ const FileTypeList = () => {
     }
   };
   useEffect(() => {
-    if (fileTypeData.update_status_code === "201") {
+    if (fileTypeData.update_status_code === "200") {
       if(isDelete){
         toast.success("Deleted Successfully")
         setisDelete(false)

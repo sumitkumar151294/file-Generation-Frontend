@@ -39,7 +39,7 @@ function* GetclientMaster() {
 function* PostclientMaster({ payload }) {
   try {
     const postclientMasterResponse = yield call(postClientMasterApi, payload);
-    if (postclientMasterResponse.httpStatusCode === "201") {
+    if (postclientMasterResponse.httpStatusCode === "200") {
       yield put(
     onPostclientMasterSuccess({
           postData: postclientMasterResponse.response,
@@ -66,7 +66,7 @@ function* UpdateclientMaster({ payload }) {
       putClientMasterApi,
       payload
     );
-    if (updateclientMasterResponse.httpStatusCode === "201") {
+    if (updateclientMasterResponse.httpStatusCode === "200") {
       yield put(
         onUpdateclientMasterSuccess({
           data: updateclientMasterResponse.response,

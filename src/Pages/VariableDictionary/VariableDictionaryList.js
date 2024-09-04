@@ -113,7 +113,7 @@ const VariableDictionaryList = () => {
     }
   };
   useEffect(() => {
-    if (variableData?.update_status_code === "201") {
+    if (variableData?.update_status_code === "200") {
       toast.success("Deleted Successfully");
       dispatch(onGetVariable());
       dispatch(onUpdateVariableReset());

@@ -216,7 +216,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
     }
   };
   useEffect(() => {
-    if (templateMasterData?.post_status_code === "201") {
+    if (templateMasterData?.post_status_code === "200") {
       toast.success(templateMasterData.postMessage);
       dispatch(onPosttemplateVariableMaster(templateVariableData));
       dispatch(onGettemplateMaster());
@@ -225,7 +225,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
     } else if (templateMasterData?.post_status_code) {
       toast.error(templateMasterData.postMessage);
       dispatch(onPosttemplateMasterReset());
-    } else if (templateMasterData?.update_status_code === "201") {
+    } else if (templateMasterData?.update_status_code === "200") {
       setTemplateType("");
     }
   }, [templateMasterData]);

@@ -96,7 +96,7 @@ const TemplateTypeMasterList = () => {
     return formattedDate;
   };
   useEffect(() => {
-    if (templateTypeMasterData.update_status_code === "201") {
+    if (templateTypeMasterData.update_status_code === "200") {
       if (isDelete) {
         toast.success("Deleted Successfully");
         setIsdelete(false);

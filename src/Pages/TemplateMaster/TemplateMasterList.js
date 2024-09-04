@@ -109,7 +109,7 @@ const ClientMasterList = () => {
     return formattedDate;
   };
   useEffect(() => {
-    if (templateMasterData?.update_status_code === "201") {
+    if (templateMasterData?.update_status_code === "200") {
       if (isDelete) {
         toast.success("Deleted Successfully");
         setisDelete(false);

@@ -35,7 +35,7 @@ const VariableDictionaryForm = () => {
     dispatch(onPostVariable(values));
   };
   useEffect(() => {
-    if (variableData?.post_status_code === "201") {
+    if (variableData?.post_status_code === "200") {
       toast.success(variableData.postMessage);
       dispatch(onPostVariableReset());
       dispatch(onGetVariable());

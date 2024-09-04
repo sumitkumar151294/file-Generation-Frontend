@@ -45,7 +45,7 @@ const LoginPage = () => {
       sessionStorage.clear();}
   },[])
   useEffect(() => {
-    if (Sumbit && loginData.status_code === "201") {
+    if (Sumbit && loginData.status_code === "200") {
       toast.success(loginData?.message);
       sessionStorage.setItem("userLogin",loginData?.isUserLogin)
       navigate("/dashboard");

@@ -76,7 +76,7 @@ const ClientMasterList = () => {
     }
   };
   useEffect(() => {
-    if (clientMasterData?.update_status_code === "201") {
+    if (clientMasterData?.update_status_code === "200") {
       if (isDelete) {
         toast.success("Deleted Successfully");
         setisDelete(false);

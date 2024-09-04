@@ -39,7 +39,7 @@ function* GetfileType() {
 function* PostfileType({ payload }) {
   try {
     const postfileTypeResponse = yield call(postfileTypeApi, payload);
-    if (postfileTypeResponse.httpStatusCode === "201") {
+    if (postfileTypeResponse.httpStatusCode === "200") {
       yield put(
     onPostfileTypeSuccess({
           postData: postfileTypeResponse.response,
@@ -62,12 +62,14 @@ function* PostfileType({ payload }) {
 }
 
 function* UpdatefileType({ payload }) {
+  
   try {
     const updatefileTypeResponse = yield call(
       updatefileTypeApi,
       payload
     );
-    if (updatefileTypeResponse.httpStatusCode === "201") {
+    if (updatefileTypeResponse.httpStatusCode === "200") {
+      console.log(updatefileTypeResponse.httpStatusCode);
       yield put(
         onUpdatefileTypeSuccess({
           data: updatefileTypeResponse.response,

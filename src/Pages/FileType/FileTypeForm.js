@@ -81,7 +81,7 @@ const FileTypeForm = ({ fileData }) => {
 
   };
   useEffect(() => {
-    if (fileTypeData?.post_status_code === "201") {
+    if (fileTypeData?.post_status_code === "200") {
       toast.success(fileTypeData.postMessage)
       dispatch(onGetfileType())
       dispatch(onPostfileTypeReset())

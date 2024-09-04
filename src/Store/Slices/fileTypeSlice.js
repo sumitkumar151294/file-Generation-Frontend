@@ -57,7 +57,7 @@ export const fileType = createSlice({
         };
       },
     onPostfileTypeSuccess: (state, { payload }) => {
-
+       
       const { data = [], message = "", status_code = 200 } = payload;
       return {
         ...state,

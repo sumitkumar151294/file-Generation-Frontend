@@ -75,7 +75,6 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
     if (button === "Submit") {
       dispatch(onPosttemplateTypeMaster(templateTypeData));
     } else {
-      dispatch(onUpdatetemplateTypeMaster(templateTypeData));
       setInitialValue({
         templateType: "",
         description: "",
@@ -84,10 +83,11 @@ const TemplateTypeMasterForm = ({ templateTypeData }) => {
         clientId: "",
       });
       setButton("Submit");
+      dispatch(onUpdatetemplateTypeMaster(templateTypeData));
     }
   };
   useEffect(() => {
-    if (templateTypemasterData?.post_status_code === "201") {
+    if (templateTypemasterData?.post_status_code === "200") {
       toast.success(templateTypemasterData.postMessage);
       dispatch(onPosttemplateTypeMasterReset());
       dispatch(onGettemplateTypeMaster());

@@ -79,7 +79,7 @@ const ClientMasterForm = ({ clientData }) => {
     }
   };
   useEffect(() => {
-    if (clientMasterData?.post_status_code === "201") {
+    if (clientMasterData?.post_status_code === "200") {
       toast.success(clientMasterData.postMessage);
       dispatch(onGetclientMaster());
       dispatch(onPostclientMasterReset());

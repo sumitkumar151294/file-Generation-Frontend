@@ -39,7 +39,7 @@ function* GetVariable() {
 function* PostVariable({ payload }) {
   try {
     const postVariableResponse = yield call(postVariable, payload);
-    if (postVariableResponse.httpStatusCode === "201") {
+    if (postVariableResponse.httpStatusCode === "200") {
       yield put(
         onPostVariableSuccess({
           postData: postVariableResponse.response,
@@ -67,7 +67,7 @@ function* UpdateVariable({ payload }) {
       updateVariable,
       payload
     );
-    if (updateVariableResponse.httpStatusCode === "201") {
+    if (updateVariableResponse.httpStatusCode === "200") {
       yield put(
         onUpdateVariableSuccess({
           data: updateVariableResponse.response,
