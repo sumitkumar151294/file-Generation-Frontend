@@ -62,14 +62,12 @@ function* PostfileType({ payload }) {
 }
 
 function* UpdatefileType({ payload }) {
-  
   try {
     const updatefileTypeResponse = yield call(
       updatefileTypeApi,
       payload
     );
     if (updatefileTypeResponse.httpStatusCode === "200") {
-      console.log(updatefileTypeResponse.httpStatusCode);
       yield put(
         onUpdatefileTypeSuccess({
           data: updatefileTypeResponse.response,
