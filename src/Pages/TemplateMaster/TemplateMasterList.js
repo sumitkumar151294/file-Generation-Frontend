@@ -179,6 +179,7 @@ const ClientMasterList = () => {
                             <th>Template Name</th>
                             <th>Category</th>
                             <th>Client Code</th>
+                            <th>Child ID</th>
                             <th>File Type</th>
                             <th>Template type</th>
                             <th>Date</th>
@@ -202,6 +203,7 @@ const ClientMasterList = () => {
                                     )
                                     ?.map((client) => client?.clientCode)}
                                 </td>
+                                <td>{templateMaster?.childTemplateId}</td>
                                 <td>
                                   {fileTypeData
                                     ?.filter(
