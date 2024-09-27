@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import JoditEditor from 'jodit-react';
 
@@ -57,9 +57,8 @@ const HtmlEditor = ({ data, setData, setVariableUsed,TemplateType }) => {
     return variableData.find(item => item.variableName === variableName);
   };
 
-  const handleChange = (content) => {
-    setData(content);
-    const variableData = extractVariables(content);
+  useEffect(()=>{
+    const variableData = extractVariables(data);
     const mySet = [];
     variableData.forEach(item => {
       const data = findVariableByName(item);
@@ -72,6 +71,13 @@ const HtmlEditor = ({ data, setData, setVariableUsed,TemplateType }) => {
     });
 
     setVariableUsed(mySet);
+  },[data])
+
+
+
+  const handleChange = (content) => {
+    setData(content);
+    
   };
 
   return (
