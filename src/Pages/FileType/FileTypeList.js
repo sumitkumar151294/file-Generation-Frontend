@@ -139,7 +139,7 @@ const FileTypeList = () => {
                       <table className="table header-border table-responsive-sm">
                         <thead>
                           <tr>
-                            <th>File Name</th>
+                            <th>File Type</th>
                             <th>File Extension</th>
                             <th>Date</th>
                             <th>Status</th>

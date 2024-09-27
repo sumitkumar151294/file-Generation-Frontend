@@ -234,6 +234,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       setInitialValue(templateMaster);
       setTempContent(templateMaster?.templateContent);
+      setClientID(templateMaster?.clientId)
       setButton("Update");
       setTemplateType(templateMaster?.templateTypeId);
     }
@@ -389,7 +390,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
                                     Use Variables like &#123;&#123;@variableName
                                     &#125;&#125;
                                     <br /> & Use Child Id like
-                                    &#123;&#123;#chidId&#125;&#125;
+                                    &#123;&#123;#childId&#125;&#125;
                                   </div>
                                 )}
                               </div>
