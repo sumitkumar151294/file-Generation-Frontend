@@ -163,6 +163,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
     fileTypeId: Yup.string().required("File Type is required"),
     enabled: Yup.string().required("Status is required"),
   });
+  console.log("variableUsed",variableUsed)
   const templateVariableData = variableUsed.map((variable) => ({
     enabled: true,
     deleted: false,
@@ -171,6 +172,18 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
     templateId: templateMasterData?.postData?.[0]?.id,
     variableId: variable,
   }));
+  const UpdatetemplateVariableData = variableUsed.map((variable) => ({
+    enabled: true,
+    deleted: false,
+    createdBy: 0,
+    updatedBy: 0,
+    templateId: templateMaster.id,
+    variableId: variable,
+  }));
+  const filteredVariables = UpdatetemplateVariableData.filter(variable => 
+    !updatedVariables.some(d => d.variableId === variable.variableId)
+);
+
   const updatevariables = updatedVariables?.map((variable) => ({
     enabled: variable.isremoved ? false : true,
     deleted: false,
@@ -180,6 +193,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
     variableId: variable.variableId,
     id: variable.id,
   }));
+  console.log("updatevariables",updatevariables)
   const handleSumbit = (values) => {
     if (!tempContent) {
       setError("Templent Content is required");
@@ -202,6 +216,7 @@ const TemplateMasterForm = ({ templateMaster, variableMaster }) => {
       } else {
         dispatch(onUpdatetemplateMaster(templateMasterData));
         dispatch(onUpdatetemplateVariableMaster(updatevariables));
+        filteredVariables.length && dispatch(onPosttemplateVariableMaster(filteredVariables));
         setInitialValue({
           clientId: "",
           templateName: "",
